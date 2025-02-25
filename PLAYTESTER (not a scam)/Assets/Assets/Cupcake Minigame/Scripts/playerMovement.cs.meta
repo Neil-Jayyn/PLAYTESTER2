@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: f601bbf8f155c6b4ea43dc29cbf99d70
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - cupcake: {fileID: 2180351799122136472, guid: dcc6995cab8a1b74eaa30ad4c5ab33e7,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
