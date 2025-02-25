@@ -18,8 +18,6 @@ public class enemyMovement : MonoBehaviour
     [SerializeField] private Color color7;
     private int colorChoice;
 
-    private int amountBounced;
-
     SpriteRenderer spriteRenderer;
  
     // Start is called before the first frame update
@@ -28,7 +26,6 @@ public class enemyMovement : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         speed=Random.Range(minSpeed,maxSpeed); //randomize speed of people
         SetPersonColor();
-        amountBounced = 0;
   
     }
 
@@ -40,34 +37,18 @@ public class enemyMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        //if it hits the walls of the game, move other way only one time, then you leave the area
+        //if it hits the walls of the game, move other way
         if (other.gameObject.tag == "LBoundary")
         {
-            if (amountBounced < 3)
-            {
-                speed *= -1;
-                spriteRenderer.flipX = false;
-                amountBounced++;
-            }
-            else {
-                Destroy(gameObject);
-            }
-            
+            speed *= -1;
+            spriteRenderer.flipX= false;
 
         }
 
         if (other.gameObject.tag == "RBoundary")
         {
-            if (amountBounced < 3)
-            {
-                speed *= -1;
-                spriteRenderer.flipX = true;
-                amountBounced++;
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
+            speed *= -1;
+            spriteRenderer.flipX = true;
 
         }
     }

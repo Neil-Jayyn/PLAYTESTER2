@@ -42,7 +42,7 @@ public class CupcakeGameManager : MonoBehaviour
 
     //sound effect
     public AudioSource sfx;
-    [SerializeField] public AudioClip sfxNormalYay;
+    public AudioClip sfxNormalYay;
     public AudioClip sfxGlitchedYay;
 
     void Start()

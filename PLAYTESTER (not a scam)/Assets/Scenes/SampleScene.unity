@@ -1361,8 +1361,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4291189214
-  m_fontColor: {r: 0.8705883, g: 0.34901962, b: 0.77647066, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -5070,7 +5070,6 @@ GameObject:
   m_Component:
   - component: {fileID: 996181061}
   - component: {fileID: 996181060}
-  - component: {fileID: 996181062}
   m_Layer: 0
   m_Name: CupcakeGameManager
   m_TagString: Untagged
@@ -5106,9 +5105,6 @@ MonoBehaviour:
   bg: {fileID: 1250666813}
   bgNormal: {fileID: 21300000, guid: c780591c38cf582419c990e670a2677e, type: 3}
   bgGlitched: {fileID: 21300000, guid: 30d79089f5cf9ce43a1ea1412c2babef, type: 3}
-  sfx: {fileID: 996181062}
-  sfxNormalYay: {fileID: 8300000, guid: afde4557cb2f3a34299d901d08902578, type: 3}
-  sfxGlitchedYay: {fileID: 8300000, guid: c5a4d81cf1fa001418cb682554e31e9b, type: 3}
 --- !u!4 &996181061
 Transform:
   m_ObjectHideFlags: 0
@@ -5123,102 +5119,6 @@ Transform:
   m_Father: {fileID: 1294802981}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &996181062
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 996181059}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
-  m_Volume: 0.49
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!1 &1008427762
 GameObject:
   m_ObjectHideFlags: 0
@@ -6052,7 +5952,7 @@ MonoBehaviour:
   GlitchMusicPlayer: {fileID: 0}
   mainTrack: {fileID: 8300000, guid: 9a132410a000e5f4683b15d27f3ff3b6, type: 3}
   cupcakeTrack: {fileID: 8300000, guid: 42c41f2d7d9ac3b4fa201bd273201c14, type: 3}
-  coinTrack: {fileID: 8300000, guid: 325fabe154ed2f84f83aa17d9968b63f, type: 3}
+  coinTrack: {fileID: 8300000, guid: 5a723fc95381783478b5f7c5e626cd5f, type: 3}
   duckTrack: {fileID: 8300000, guid: d1df0692134d87644afd7090aafc4415, type: 3}
   glitchedCoinTrack: {fileID: 8300000, guid: c91ac2125c6dc37449e78a092ca5f9f4, type: 3}
   isGlitchActive: 0
@@ -8361,6 +8261,7 @@ MonoBehaviour:
   - {fileID: 1743122962}
   - {fileID: 856263250}
   - {fileID: 1755187668}
+  pointsText: {fileID: 1310706691}
 --- !u!4 &1455379866
 Transform:
   m_ObjectHideFlags: 0
@@ -9966,12 +9867,52 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!4 &1636105561 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6644066653670924412, guid: 22eea322b68a85742942e07cf0f0a6c2,
-    type: 3}
-  m_PrefabInstance: {fileID: 6644066652085689637}
+--- !u!1 &1636105559
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1636105561}
+  - component: {fileID: 1636105560}
+  m_Layer: 0
+  m_Name: EnemySpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1636105560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1636105559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 705cc23ff0078cc46bfe5971d6cbdfec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  person: {fileID: 1940733105284932544, guid: fa732fa53a206114cb18416091e8cd6f, type: 3}
+  numEnemies: 12
+  playCupcakeMinigame: 0
+--- !u!4 &1636105561
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1636105559}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 41.7, y: 47.07, z: 0}
+  m_LocalScale: {x: 0.91, y: 0.91, z: 0.91}
+  m_Children: []
+  m_Father: {fileID: 1294802981}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1641972008
 GameObject:
   m_ObjectHideFlags: 0
@@ -11306,13 +11247,12 @@ MonoBehaviour:
   GlitchEffect: {fileID: 519420030}
   AnalogGlitchEffect: {fileID: 519420033}
   timerText: {fileID: 1396497652}
-  scoreText: {fileID: 1310706691}
-  points: 0
   sfx: {fileID: 1745545159}
   normalSFX: {fileID: 8300000, guid: cd9f7f66f72a4f4448e3395fba39c777, type: 3}
   glitchedSFX: {fileID: 8300000, guid: 76d3be4b7c97dc8468a84962da56d030, type: 3}
   playerRenderer: {fileID: 1455379864}
   glitchPlayerColor: {r: 0, g: 0, b: 0, a: 1}
+  points: 0
 --- !u!224 &1745545158
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12318,8 +12258,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4291189214
-  m_fontColor: {r: 0.8705883, g: 0.34901962, b: 0.77647066, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -12842,7 +12782,7 @@ PrefabInstance:
     - target: {fileID: 2871342514137233607, guid: 6abad5ead0c1d3e4b8465ee9e4fc9ae6,
         type: 3}
       propertyPath: myScreenLocation.z
-      value: -10
+      value: -2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6abad5ead0c1d3e4b8465ee9e4fc9ae6, type: 3}
@@ -14667,72 +14607,3 @@ PrefabInstance:
     - {fileID: 0}
     - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 47003a35ff8a5a34cb996f822ed28f12, type: 3}
---- !u!1001 &6644066652085689637
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1294802981}
-    m_Modifications:
-    - target: {fileID: 6644066653670924402, guid: 22eea322b68a85742942e07cf0f0a6c2,
-        type: 3}
-      propertyPath: m_Name
-      value: EnemySpawner
-      objectReference: {fileID: 0}
-    - target: {fileID: 6644066653670924412, guid: 22eea322b68a85742942e07cf0f0a6c2,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 6644066653670924412, guid: 22eea322b68a85742942e07cf0f0a6c2,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 42.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6644066653670924412, guid: 22eea322b68a85742942e07cf0f0a6c2,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 47.17
-      objectReference: {fileID: 0}
-    - target: {fileID: 6644066653670924412, guid: 22eea322b68a85742942e07cf0f0a6c2,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6644066653670924412, guid: 22eea322b68a85742942e07cf0f0a6c2,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6644066653670924412, guid: 22eea322b68a85742942e07cf0f0a6c2,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6644066653670924412, guid: 22eea322b68a85742942e07cf0f0a6c2,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6644066653670924412, guid: 22eea322b68a85742942e07cf0f0a6c2,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6644066653670924412, guid: 22eea322b68a85742942e07cf0f0a6c2,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6644066653670924412, guid: 22eea322b68a85742942e07cf0f0a6c2,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6644066653670924412, guid: 22eea322b68a85742942e07cf0f0a6c2,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 22eea322b68a85742942e07cf0f0a6c2, type: 3}
