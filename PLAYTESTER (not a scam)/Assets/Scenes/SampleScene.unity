@@ -5090,7 +5090,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc40184528b778c48a66479db104e644, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameDuration: 1
+  gameDuration: 60
   scoreText: {fileID: 320443653}
   scorePoints: 0
   timerText: {fileID: 1894740861}
@@ -6052,7 +6052,7 @@ MonoBehaviour:
   GlitchMusicPlayer: {fileID: 0}
   mainTrack: {fileID: 8300000, guid: 9a132410a000e5f4683b15d27f3ff3b6, type: 3}
   cupcakeTrack: {fileID: 8300000, guid: 42c41f2d7d9ac3b4fa201bd273201c14, type: 3}
-  coinTrack: {fileID: 8300000, guid: 5a723fc95381783478b5f7c5e626cd5f, type: 3}
+  coinTrack: {fileID: 8300000, guid: 325fabe154ed2f84f83aa17d9968b63f, type: 3}
   duckTrack: {fileID: 8300000, guid: d1df0692134d87644afd7090aafc4415, type: 3}
   glitchedCoinTrack: {fileID: 8300000, guid: c91ac2125c6dc37449e78a092ca5f9f4, type: 3}
   isGlitchActive: 0
