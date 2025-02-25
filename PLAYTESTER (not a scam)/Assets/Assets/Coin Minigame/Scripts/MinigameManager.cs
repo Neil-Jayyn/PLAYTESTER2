@@ -32,6 +32,7 @@ public class MinigameManager : MonoBehaviour
     public AudioSource sfx;
     public AudioClip normalSFX;
     public AudioClip glitchedSFX;
+    //public AudioClip normalBadCoinSFX; 
 
 
     // General variables
