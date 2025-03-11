@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 8662074612052584715}
   m_LocalRotation: {x: 0, y: 0, z: 0.00056638685, w: 0.9999999}
   m_LocalPosition: {x: -0.0532, y: 0.71, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -99,9 +99,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6
-  sfx: {fileID: -2213437618859810360}
-  sfxYay: {fileID: 8300000, guid: afde4557cb2f3a34299d901d08902578, type: 3}
-  sfxGlitchedYay: {fileID: 8300000, guid: c5a4d81cf1fa001418cb682554e31e9b, type: 3}
 --- !u!61 &7632920635408830086
 BoxCollider2D:
   m_ObjectHideFlags: 0

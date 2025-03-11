@@ -19,6 +19,9 @@ public class enemyMovement : MonoBehaviour
     private int colorChoice;
 
     SpriteRenderer spriteRenderer;
+
+    [SerializeField] public bool isLeftSpawner;
+
  
     // Start is called before the first frame update
     void Start()
@@ -32,30 +35,46 @@ public class enemyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector2.left * speed * Time.deltaTime);
+        SetDirectionPerson(isLeftSpawner);
+        if (isLeftSpawner)
+        {
+            transform.Translate(Vector2.right * speed * Time.deltaTime);
+        }
+        else {
+            transform.Translate(Vector2.left * speed * Time.deltaTime);
+        }
+        
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         //if it hits the walls of the game, move other way
-        if (other.gameObject.tag == "LBoundary")
-        {
-            speed *= -1;
-            spriteRenderer.flipX= false;
-
-        }
-
+        
         if (other.gameObject.tag == "RBoundary")
         {
-            speed *= -1;
-            spriteRenderer.flipX = true;
+            Destroy(gameObject);
 
+        }
+        if (other.gameObject.tag == "LBoundary")
+        {
+            Destroy(gameObject);
+
+        }
+    }
+
+    public void SetDirectionPerson(bool isLeftSpawner) {
+        if (isLeftSpawner)
+        {
+            spriteRenderer.flipX = false;
+        }
+        else {
+            spriteRenderer.flipX = true;
         }
     }
 
     private void SetPersonColor()
     {  //set each person to diff color
-        colorChoice = Random.Range(0, 8); //randomize index of choice
+        colorChoice = Random.Range(0, 7); //randomize index of choice
         switch (colorChoice)
         {
             case 0:
@@ -79,11 +98,8 @@ public class enemyMovement : MonoBehaviour
             case 6:
                 spriteRenderer.color = color7;
                 break;
-            case 7:
-                spriteRenderer.color = Color.white;
-                break;
             default:
-                spriteRenderer.color = Color.red;
+                spriteRenderer.color = Color.white;
                 break;
         }
     }
