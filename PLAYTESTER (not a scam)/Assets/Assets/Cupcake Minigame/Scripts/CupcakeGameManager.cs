@@ -75,6 +75,7 @@ public class CupcakeGameManager : MonoBehaviour
 
         //set the playCupcakeMinigame in the EnemySpawner script so the game plays
         GameObject.Find("EnemySpawner").GetComponent<EnemySpawner>().playCupcakeMinigame = true;
+        GameObject.Find("EnemySpawner (1)").GetComponent<EnemySpawner>().playCupcakeMinigame = true;
         GameObject.Find("cupcakeHolder").GetComponent<playerMovement>().playCupcakeMinigame = true;
 
         

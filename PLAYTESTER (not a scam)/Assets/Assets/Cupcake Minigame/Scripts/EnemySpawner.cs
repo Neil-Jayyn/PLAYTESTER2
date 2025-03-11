@@ -9,8 +9,10 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private int numEnemies;
     private int currentNumEnemies;
     private float waitTime;
+    [SerializeField] public bool isLeftEnemySpawner;
 
     public bool playCupcakeMinigame; //turned to true by the cupcake game manager script
+
 
     // Start is called before the first frame update
     void Start()
@@ -25,8 +27,9 @@ public class EnemySpawner : MonoBehaviour
         {
             //spawn enemies after each spawn wait time with a max amount of people
             waitTime -= Time.deltaTime;
-            if (waitTime <= 0 && currentNumEnemies < numEnemies)
+            if ((waitTime <= 0 || currentNumEnemies==0)&& currentNumEnemies < numEnemies)
             {
+                person.GetComponent<enemyMovement>().isLeftSpawner = isLeftEnemySpawner;
                 Instantiate(person, transform.position, Quaternion.identity);
                 setSpawnTime();
                 currentNumEnemies++;
@@ -35,7 +38,7 @@ public class EnemySpawner : MonoBehaviour
     }
 
     void setSpawnTime(){
-        waitTime=Random.Range(0.5f,3.0f);
+        waitTime=Random.Range(0.5f,4.0f);
     }
 
     public void KilledEnemy()
