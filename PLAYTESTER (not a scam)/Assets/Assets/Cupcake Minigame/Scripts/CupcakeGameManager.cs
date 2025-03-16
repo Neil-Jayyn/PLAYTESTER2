@@ -15,10 +15,11 @@ public class CupcakeGameManager : MonoBehaviour
 
     //timer text
     public TMP_Text timerText;
-    public float timeRemaining = 0;
+    public float timeRemaining = 30f;
     
     private bool gameOver;
     public bool gamePlaying;
+    private bool tutorialPlaying;
 
     private int timesPlayed;
 
@@ -45,15 +46,23 @@ public class CupcakeGameManager : MonoBehaviour
     public AudioClip sfxNormalYay;
     public AudioClip sfxGlitchedYay;
 
+    public GameObject popup;
+    Vector3 popupHome;
+    GameObject freezeOverlay;
+
     void Start()
     {
         gamePlaying = false;
         timesPlayed = 0;
 
         UIController = GameObject.Find("UI Controller").GetComponent<ComputerUIScript>();
+        popup = GameObject.Find("Popup");
+        freezeOverlay = GameObject.Find("FreezeOverlay");
         //MainGameManager = GameObject.Find("Game Manager");
         sfx=GetComponent<AudioSource>();
-       
+        popupHome = new Vector3(0, 10, 0);
+        GameObject.Find("cupcakeHolder").GetComponent<Animator>().enabled = false;
+
     }
 
     //This is the function that will be called by the AppScript script. It should contain
@@ -72,11 +81,12 @@ public class CupcakeGameManager : MonoBehaviour
         timerText.text = "Time Left: " + gameDuration.ToString();
         //StartCoroutine(GlitchCheckRoutine());
 
-
+        /*
         //set the playCupcakeMinigame in the EnemySpawner script so the game plays
         GameObject.Find("EnemySpawner").GetComponent<EnemySpawner>().playCupcakeMinigame = true;
         GameObject.Find("EnemySpawner (1)").GetComponent<EnemySpawner>().playCupcakeMinigame = true;
         GameObject.Find("cupcakeHolder").GetComponent<playerMovement>().playCupcakeMinigame = true;
+        */
 
         
         //set the timer for the game
@@ -85,13 +95,18 @@ public class CupcakeGameManager : MonoBehaviour
         // If it is the first time playing, tutorial popup
         if (timesPlayed == 1)
         {
+            tutorialPlaying = true;
             glitchFrequency = 0;
-            UIController.TriggerPopup(new Vector3(50, 50, -5), "Use the left and right arrow keys to move and spacebar to drop.\r\nGive cupcakes to everyone!\r\n");
+            UIController.TriggerPopup(new Vector3(50, 50, -9), "Use the left and right arrow keys to move and spacebar to drop.\r\nGive cupcakes to everyone!\r\n");
+            freezeOverlay.SetActive(true);
+ 
         } else if (timesPlayed == 2)
         {
+            tutorialPlaying=false;
             glitchFrequency = 0.3f;
         } else // day 3; need a variable to determine which route to take
         {
+            tutorialPlaying=false;
            
         }
 
@@ -103,18 +118,35 @@ public class CupcakeGameManager : MonoBehaviour
     void Update()
     {
 
-        if(gamePlaying)
+        if (gamePlaying) //camera moved over to minigame
         {
-            timeRemaining -= Time.deltaTime;
-            timerText.text = "Time Left: " + Mathf.RoundToInt(timeRemaining);
-
-            if(timeRemaining <= 0)
+            if (popup.transform.position == popupHome) //if tutorial left screen
             {
-                GameOver();
+                tutorialPlaying = false;
+                InitializeCupcakeGame();
+            }
+
+            if (!tutorialPlaying) //tutorial left screen or no tutorial
+            {
+                freezeOverlay.SetActive(false);
+                timeRemaining -= Time.deltaTime;
+                timerText.text = "Time Left: " + Mathf.RoundToInt(timeRemaining);
+
+                if (timeRemaining <= 0)
+                {
+                    GameOver();
+                }
             }
         }
 
 
+    }
+
+    void InitializeCupcakeGame() {
+        GameObject.Find("EnemySpawner").GetComponent<EnemySpawner>().playCupcakeMinigame = true;
+        GameObject.Find("EnemySpawner (1)").GetComponent<EnemySpawner>().playCupcakeMinigame = true;
+        GameObject.Find("cupcakeHolder").GetComponent<playerMovement>().playCupcakeMinigame = true;
+        GameObject.Find("cupcakeHolder").GetComponent<Animator>().enabled = true;
     }
 
     IEnumerator GlitchCheckRoutine()

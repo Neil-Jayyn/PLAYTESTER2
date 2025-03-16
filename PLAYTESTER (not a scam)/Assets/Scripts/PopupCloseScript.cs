@@ -18,7 +18,6 @@ public class PopupCloseScript : MonoBehaviour
         popup = GameObject.Find("Popup");
         bigPopup = GameObject.Find("Company Popup");
         popupHome = new Vector3(0, 10, 0);
-
         audio = GetComponent<AudioSource>();
     }
 
