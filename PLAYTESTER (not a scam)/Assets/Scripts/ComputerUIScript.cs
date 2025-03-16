@@ -7,6 +7,7 @@ public class ComputerUIScript : MonoBehaviour
     //DECLARE VARIABLES
     public static GameObject camera;
     private static GameObject popup;
+    private static GameObject bigPopup;
 
     // Start is called before the first frame update
     void Start()
@@ -14,6 +15,7 @@ public class ComputerUIScript : MonoBehaviour
         // GET ALL OBJECTS
         camera = GameObject.Find("Main Camera");
         popup = GameObject.Find("Popup");
+        bigPopup = GameObject.Find("Company Popup");
 
         //SET VARIABLES
         //initialize camera to the first position in the game (title screen)
@@ -38,8 +40,25 @@ public class ComputerUIScript : MonoBehaviour
     public void TriggerPopup(Vector3 pos, string text)
     {
         popup = GameObject.Find("Popup");
+
+        //trigger close popup first so that if another popup is showing it will close it, then display the new one
+        GameObject.Find("Close Popup").GetComponent<PopupCloseScript>().ClosePopup();
+
+
         popup.GetComponent<Transform>().position = pos;
         popup.transform.GetChild(1).transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().SetText(text);
         
+    }
+
+    public void TriggerCompanyPopup(Vector3 pos, string text)
+    {
+        bigPopup = GameObject.Find("Company Popup");
+
+        //trigger close popup first so that if another popup is showing it will close it, then display the new one
+        GameObject.Find("Close Popup").GetComponent<PopupCloseScript>().ClosePopup();
+
+        bigPopup.GetComponent<Transform>().position = pos;
+        bigPopup.transform.GetChild(1).transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().SetText(text);
+
     }
 }

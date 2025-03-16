@@ -83,9 +83,8 @@ public class GameManagerScript : MonoBehaviour
         LexaTitle = GameObject.Find("Lexa Title Text").GetComponent<TMPro.TextMeshProUGUI>();
         CleeTitle = GameObject.Find("Clee Title Text").GetComponent<TMPro.TextMeshProUGUI>();
 
-        // DEBUG: make a popup appear
-        UIController.GetComponent<ComputerUIScript>().TriggerPopup(new Vector3(0,0,-2), "You will playtest three minigames daily. Aim for getting high scores. Please. Good performance gives us good data.");
-
+        // TO START: make a popup appear
+        DisplayCompanyMessage();
 
         // Slow down the title screen animation, news app captcha button
         GameObject.Find("PlayTesterAnimation").GetComponent<Animator>().speed = 0.5f;
@@ -153,6 +152,9 @@ public class GameManagerScript : MonoBehaviour
 
         //Update news articles
         UpdateNews();
+
+        //Display new company message
+        DisplayCompanyMessage();
     }
 
     public int GetHP()
@@ -219,11 +221,40 @@ public class GameManagerScript : MonoBehaviour
     //Function called by the AppScript when the EMP happens.
     public void StartEMP()
     {
-        //Add in here the audio cutting out or other effects
+        //TODO: Add in here the audio cutting out or other effects
 
         EMPHappened = true;
         UIController.GetComponent<ComputerUIScript>().GoToPosition(EMPLocation);
         UpdateNews();
+        DisplayCompanyMessage();
+
+    }
+
+    public void DisplayCompanyMessage()
+    {
+        if(day == 1)
+        {
+            UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(new Vector3(0, 0, -2), "Good tidings, playtester. Thank you for responding to our job advertisement on List of Craig. We are very ecstatic to have you. \r\n\r\nYour job is simple. You will playtest three minigames daily. Aim for getting high scores. Please. Good performance gives us good data. You will be rewarded.\r\n\r\nOur last employee had to be let go due to performance issues. Do not be scared. You will do better. Perform your best and you will have the best results. \r\n\r\nGood luck. Have fun.\r\n");
+        }
+        else if(day == 2 && !EMPHappened)
+        {
+            //regular day 2 message
+            UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(new Vector3(0, 0, -2), "You are doing well. Keep playing to the best of your ability. We are getting good data from you. Focus on your job. You will be rewarded.\r\n");
+
+        }
+        else if(day == 2 && EMPHappened)
+        {
+            //day 2 post emp message
+            UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(new Vector3(0, 0, -2), "There was an error with the operating system. We apologize for the inconvenience; you may proceed to delete the memory of the error from your hippocampus. We have fixed the system and you are able to complete your work today. Focus on acquiring high scores in the minigames. Do not be distracted by other worldly events. You will be rewarded.");
+
+        }
+        else
+        {
+            //TODO: add more cases here for the company popups once the writing is in the drive
+        }
+
+
+            return;
     }
 
     //Updates the news articles

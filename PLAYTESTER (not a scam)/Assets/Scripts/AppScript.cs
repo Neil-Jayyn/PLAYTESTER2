@@ -18,8 +18,9 @@ public class AppScript : MonoBehaviour
     public bool canBeClicked;
     public bool isMinigameButton = false; //Special case for the play minigame button
     public bool isClockOutButton = false; //Special case for the clock out button
-    public bool isCaptchaButton = false;
-    public bool isStartButton = false;
+    public bool isCaptchaButton = false; //special case for captcha button
+    public bool isStartButton = false; //special case for the start button
+    public bool isCompanyMessageButton = false; //special case for the company message button
     private Vector3 cupcakeGameLocation = new Vector3(50, 50, -10);
     private Vector3 coinGameLocation = new Vector3(50, 35, -10);
     private Vector3 duckGameLocation = new Vector3(50, 20, -10);
@@ -137,6 +138,10 @@ public class AppScript : MonoBehaviour
                 }
 
             }
+            else if(isCompanyMessageButton)
+            {
+                GameManager.GetComponent<GameManagerScript>().DisplayCompanyMessage();
+            }
             else
             {
                 if (isCaptchaButton)
@@ -149,7 +154,7 @@ public class AppScript : MonoBehaviour
                 }
                 // All normal apps will execute this script:
                 UIController.GetComponent<ComputerUIScript>().GoToPosition(myScreenLocation);
-                
+
             }
             
         }
