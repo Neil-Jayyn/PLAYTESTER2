@@ -25,6 +25,8 @@ public class AppScript : MonoBehaviour
     private Vector3 coinGameLocation = new Vector3(50, 35, -10);
     private Vector3 duckGameLocation = new Vector3(50, 20, -10);
 
+    private Vector3 complicitEndingLocation = new Vector3(120, 50, -10);
+
     // Audio
     public AudioClip captchaSFX; // sfx for captcha confirmation
     public AudioClip clickSFX; // sfx for start button click
@@ -128,6 +130,15 @@ public class AppScript : MonoBehaviour
                 {
                     //player has finished day 3
                     //TODO: trigger an ending here
+
+                    //Checks from HP what ending they have (RN PLACEHOLDER NUMBERS)
+                    int ending=GameManager.GetComponent<GameManagerScript>().CheckPlayerEnding();
+
+                    //TODO: go to pos of each ending
+                    if (ending == 2) { 
+                        //COMPLICIT ENDING
+                        UIController.GetComponent<ComputerUIScript>().GoToPosition(complicitEndingLocation);
+                    }
                     UIController.GetComponent<ComputerUIScript>().TriggerPopup(new Vector3(0, 0, -2), "You beat the game! Text here depends on your score.");
                 }
                 else
