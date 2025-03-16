@@ -193,7 +193,8 @@ public class CupcakeGameManager : MonoBehaviour
         GameObject.Find("EnemySpawner").GetComponent<EnemySpawner>().playCupcakeMinigame = false;
 
         //TODO: calculate score to send to the hp based on the points earned in the round
-        int score = -12; //for now just let this be the max
+
+        int score = ScoreCalculation(scorePoints); //for now just let this be the max
 
         //Go back to the main script and say that the game is done:
         GameObject.Find("Game Manager").GetComponent<GameManagerScript>().CompletedMinigame(score);
@@ -226,6 +227,18 @@ public class CupcakeGameManager : MonoBehaviour
         }
     }
 
+    private int ScoreCalculation(int points) { //TODO: actually implement score calculation
+        int score;
+        if (points >=10)
+        {
+            score = -12;
+        }
+        else {
+            score =0;
+        }
+
+        return score;
+    }
 
 
 

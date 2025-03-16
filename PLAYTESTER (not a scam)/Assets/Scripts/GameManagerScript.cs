@@ -313,4 +313,23 @@ public class GameManagerScript : MonoBehaviour
 
         return;
     }
+
+    public int CheckPlayerEnding() {
+        //checks and gives which ending the player got
+        //TODO: actually change placeholders to be final things
+        int ending;
+        int finalHP = GetHP();
+        if (finalHP > 80)
+        {
+            ending = 0; //rebellion
+        }
+        else if (finalHP > 40)
+        {
+            ending = 1; //confusion
+        }
+        else { 
+            ending = 2; //complicit
+        }
+        return ending;
+    }
 }
