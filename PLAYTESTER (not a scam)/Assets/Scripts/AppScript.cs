@@ -138,6 +138,7 @@ public class AppScript : MonoBehaviour
                     if (ending == 2) { 
                         //COMPLICIT ENDING
                         UIController.GetComponent<ComputerUIScript>().GoToPosition(complicitEndingLocation);
+                        
                     }
                     UIController.GetComponent<ComputerUIScript>().TriggerPopup(new Vector3(0, 0, -2), "You beat the game! Text here depends on your score.");
                 }

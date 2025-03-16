@@ -66,6 +66,7 @@
      <Compile Include="Assets\Assets\Cupcake Minigame\Scripts\SpriteChanger.cs" />
      <Compile Include="Assets\Assets\Cupcake Minigame\Scripts\enemyMovement.cs" />
      <Compile Include="Assets\Assets\Cupcake Minigame\Scripts\playerMovement.cs" />
+     <Compile Include="Assets\Assets\Cupcake Minigame\Scripts\speedyEnemyMovement.cs" />
      <Compile Include="Assets\Assets\Duck Minigame\Scripts\DuckGameManager.cs" />
      <Compile Include="Assets\Assets\Duck Minigame\Scripts\DuckSpriteChanger.cs" />
      <Compile Include="Assets\Assets\Duck Minigame\Scripts\Player.cs" />
