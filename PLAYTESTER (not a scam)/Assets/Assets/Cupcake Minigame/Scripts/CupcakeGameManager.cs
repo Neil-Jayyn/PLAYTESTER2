@@ -15,7 +15,7 @@ public class CupcakeGameManager : MonoBehaviour
 
     //timer text
     public TMP_Text timerText;
-    public float timeRemaining = 30f;
+    public float timeRemaining = 0f;
     
     private bool gameOver;
     public bool gamePlaying;

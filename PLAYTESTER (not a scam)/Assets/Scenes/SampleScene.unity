@@ -4113,7 +4113,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a80e1b671d9d7a4c8e5b30f3fea3b4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crosshairSprite: {fileID: 0}
+  crosshairSprite: {fileID: 561572459}
+  gamePlaying: 0
 --- !u!1 &565782220
 GameObject:
   m_ObjectHideFlags: 0
@@ -9255,9 +9256,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   person: {fileID: 1940733105284932544, guid: fa732fa53a206114cb18416091e8cd6f, type: 3}
+  speedyPerson: {fileID: 7209209932762806836, guid: 255390f4ccacd8640a74ce98c3f61b84,
+    type: 3}
   numEnemies: 16
   isLeftEnemySpawner: 0
   playCupcakeMinigame: 0
+  constSpeedWaitTime: 21
+  isSpeedyObject: 0
+  numSpeedyObjects: 0
 --- !u!1 &1229086807
 GameObject:
   m_ObjectHideFlags: 0
@@ -13387,9 +13393,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   person: {fileID: 1940733105284932544, guid: fa732fa53a206114cb18416091e8cd6f, type: 3}
+  speedyPerson: {fileID: 7209209932762806836, guid: 255390f4ccacd8640a74ce98c3f61b84,
+    type: 3}
   numEnemies: 25
   isLeftEnemySpawner: 1
   playCupcakeMinigame: 0
+  constSpeedWaitTime: 15
+  isSpeedyObject: 0
+  numSpeedyObjects: 0
 --- !u!4 &1636105561
 Transform:
   m_ObjectHideFlags: 0
@@ -17272,7 +17283,7 @@ GameObject:
   - component: {fileID: 1976904049}
   - component: {fileID: 1976904050}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Complicit GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
