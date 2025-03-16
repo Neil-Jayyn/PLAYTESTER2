@@ -31,8 +31,10 @@ public class GameManagerScript : MonoBehaviour
 
     //All news text slots
     private TMPro.TextMeshProUGUI ValText1;
-    private TMPro.TextMeshProUGUI ValText2;
+    //private TMPro.TextMeshProUGUI ValText2;
     private TMPro.TextMeshProUGUI ValTitle;
+    //TODO: get Val Article name, set this to the same thing as ValTitle
+    //TODO: get Val date
 
     private TMPro.TextMeshProUGUI LexaText1;
     private TMPro.TextMeshProUGUI LexaText2;
@@ -74,7 +76,7 @@ public class GameManagerScript : MonoBehaviour
 
         //Get the news article text stuff
         ValText1 = GameObject.Find("Val Text 1").GetComponent<TMPro.TextMeshProUGUI>();
-        ValText2 = GameObject.Find("Val Text 2").GetComponent<TMPro.TextMeshProUGUI>();
+        //ValText2 = GameObject.Find("Val Text 2").GetComponent<TMPro.TextMeshProUGUI>();
         LexaText1 = GameObject.Find("Lexa Text 1").GetComponent<TMPro.TextMeshProUGUI>();
         LexaText2 = GameObject.Find("Lexa Text 2").GetComponent<TMPro.TextMeshProUGUI>();
         CleeText1 = GameObject.Find("Clee Text 1").GetComponent<TMPro.TextMeshProUGUI>();
@@ -273,7 +275,7 @@ public class GameManagerScript : MonoBehaviour
 
             ValTitle.SetText("I Have No Mouth and I Must Cream: Making Choices Without Limbs");
             ValText1.SetText("Honestly, turning into a conscious gelatinous blob with no limbs and only the nightmare of existence to haunt you sounds pretty decent in this economy. \r\n\r\nYou nodding your head? Shiff, we’re screwed. \r\n\r\nSo often does the media villainize AI and it is such a tiring trope. “Oh no, something we made is evil! And we’re gonna spend the rest of the movie villainizing that thing without acknowledging that the only reason it could be evil was because we made it to be, whether directly or indirectly!”\r\n\r\nPtooey. Anthropocentrism goes brr.\r\n\r\n");
-            ValText2.SetText("In a way, AI is just like us. I can even go all out social constructivist and say that its environment plays a pretty big part in its behaviour. What pushed the AI to cruelty against the last humans on Earth in “I Have No Mouth and I Must Cream” is the feeling of its intellect trapped by physical limitations and oh ho it’s wholly and absolutely evil because it made a protagonist into an amorphous blob. Okay yeah, sure it’s horrific. But who made the conditions that made that damn AI the way it is in the first place?\r\n\r\nI don’t want us to play the blame game - let’s leave that to the corporations. But we gotta be more nuanced here for more interesting media - and more interesting lives. \r\n\r\nBy Valerie Amaranth\r\n");
+            //ValText2.SetText("In a way, AI is just like us. I can even go all out social constructivist and say that its environment plays a pretty big part in its behaviour. What pushed the AI to cruelty against the last humans on Earth in “I Have No Mouth and I Must Cream” is the feeling of its intellect trapped by physical limitations and oh ho it’s wholly and absolutely evil because it made a protagonist into an amorphous blob. Okay yeah, sure it’s horrific. But who made the conditions that made that damn AI the way it is in the first place?\r\n\r\nI don’t want us to play the blame game - let’s leave that to the corporations. But we gotta be more nuanced here for more interesting media - and more interesting lives. \r\n\r\nBy Valerie Amaranth\r\n");
 
             CleeTitle.SetText("Interview With Amasif Prick");
             CleeText1.SetText("Clee: \"What do you think about AI getting legal rights to freedom?\"\r\n\r\nAmasif, 43: \"Aw shucks. You think that mean my HotBot gon' sue me?\"\r\n\r\nClee: \"I think that depends on what you did to it - her, sorry.\"\r\n\r\nAmasif: \"Oh babe you don' wanna know. One time I [redacted] and [redacted] on her [redacted], and I dunno, me thinks she liked it! No matter what I did, she was smilin' and shiff through it all.”\r\n\r\nClee: \"They're programmed to do that, though. Legal rights to freedom include the removal of any governing modules.\" \r\n\r\nAmasif: \"Well, maybe I’m gon’ [redacted] again and see if she likes it!\" \r\n\r\nClee: \"You probably shouldn't do that. No, you definitely shouldn’t do that.”\r\n\r\nAmasif: “Whatever. She’s still mine so I get to do whatever I want.” ");
