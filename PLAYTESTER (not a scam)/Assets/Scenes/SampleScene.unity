@@ -5705,7 +5705,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: ef4b74a3929f1ef47a54d4e8c5db5ba5,
+      objectReference: {fileID: 21300000, guid: ccf43b80b4bc4414f92d76d25fd9e290,
         type: 3}
     - target: {fileID: 2213119004800428331, guid: 47003a35ff8a5a34cb996f822ed28f12,
         type: 3}
@@ -5735,22 +5735,22 @@ PrefabInstance:
     - target: {fileID: 3089632284252778133, guid: 47003a35ff8a5a34cb996f822ed28f12,
         type: 3}
       propertyPath: m_Size.x
-      value: 0.4046329
+      value: 0.31547213
       objectReference: {fileID: 0}
     - target: {fileID: 3089632284252778133, guid: 47003a35ff8a5a34cb996f822ed28f12,
         type: 3}
       propertyPath: m_Size.y
-      value: 0.123342335
+      value: 0.30659866
       objectReference: {fileID: 0}
     - target: {fileID: 3089632284252778133, guid: 47003a35ff8a5a34cb996f822ed28f12,
         type: 3}
       propertyPath: m_Offset.x
-      value: 0.00009958446
+      value: 0.0026229322
       objectReference: {fileID: 0}
     - target: {fileID: 3089632284252778133, guid: 47003a35ff8a5a34cb996f822ed28f12,
         type: 3}
       propertyPath: m_Offset.y
-      value: -0.0017335415
+      value: -0.00003669411
       objectReference: {fileID: 0}
     - target: {fileID: 3089632284252778133, guid: 47003a35ff8a5a34cb996f822ed28f12,
         type: 3}
@@ -5775,12 +5775,12 @@ PrefabInstance:
     - target: {fileID: 3089632284252778133, guid: 47003a35ff8a5a34cb996f822ed28f12,
         type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 0.42
+      value: 0.32
       objectReference: {fileID: 0}
     - target: {fileID: 3089632284252778133, guid: 47003a35ff8a5a34cb996f822ed28f12,
         type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 0.14
+      value: 0.32
       objectReference: {fileID: 0}
     - target: {fileID: 3089632284252778134, guid: 47003a35ff8a5a34cb996f822ed28f12,
         type: 3}
@@ -5790,27 +5790,27 @@ PrefabInstance:
     - target: {fileID: 3089632284252778134, guid: 47003a35ff8a5a34cb996f822ed28f12,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 10.100165
+      value: 3.9330616
       objectReference: {fileID: 0}
     - target: {fileID: 3089632284252778134, guid: 47003a35ff8a5a34cb996f822ed28f12,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 6.3815937
+      value: 3.8993652
       objectReference: {fileID: 0}
     - target: {fileID: 3089632284252778134, guid: 47003a35ff8a5a34cb996f822ed28f12,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 9.982395
+      value: 5.812156
       objectReference: {fileID: 0}
     - target: {fileID: 3089632284252778134, guid: 47003a35ff8a5a34cb996f822ed28f12,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.08
+      value: -6.65
       objectReference: {fileID: 0}
     - target: {fileID: 3089632284252778134, guid: 47003a35ff8a5a34cb996f822ed28f12,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.01
+      value: 0.07
       objectReference: {fileID: 0}
     - target: {fileID: 3089632284252778134, guid: 47003a35ff8a5a34cb996f822ed28f12,
         type: 3}
@@ -6340,8 +6340,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -8.52, y: -6.16}
-  m_SizeDelta: {x: 7.3268356, y: 8.819538}
+  m_AnchoredPosition: {x: -10.09, y: -4.95}
+  m_SizeDelta: {x: 4.5488195, y: 8.819538}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &804242187
 MonoBehaviour:
@@ -6390,8 +6390,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.4
-  m_fontSizeBase: 0.4
+  m_fontSize: 0.3
+  m_fontSizeBase: 0.3
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -6402,7 +6402,7 @@ MonoBehaviour:
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: -33.29
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
