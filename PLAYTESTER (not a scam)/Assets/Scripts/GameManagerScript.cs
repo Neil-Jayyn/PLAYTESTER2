@@ -37,6 +37,10 @@ public class GameManagerScript : MonoBehaviour
     private Vector3 check1Location = new Vector3(1.55f, 2.3f, 0);
     private Vector3 check2Location = new Vector3(1.55f, 1.73f, 0);
     private Vector3 check3Location = new Vector3(1.55f, 1.16f, 0);
+    public TMPro.TextMeshProUGUI CupcakeLBText;
+    public TMPro.TextMeshProUGUI CoinLBText;
+    public TMPro.TextMeshProUGUI DuckLBText;
+
 
 
 
@@ -253,6 +257,129 @@ public class GameManagerScript : MonoBehaviour
 
         isGlitchActive = false;
 
+    }
+
+    //Refresh the text for the minigame (first param, 1, 2 or 3) using the player's score
+    public void RefreshLeaderboard(int gameNum, int score)
+    {
+        int[] cupcakeScores = { 21, 16, 13, 10 };
+        string[] cupcakeNames = { "xXcleeXx", "mikehawk", "caitkilla", "hughjanus" };
+        int[] coinScores = { 19, 15, 14, 12 };
+        string[] coinNames = { "gtgfast", "dixinormus", "benxdover", "80085"};
+        int[] duckScores = { 34, 30, 28, 24 };
+        string[] duckNames = { "bigguns" , "baiter69", "ivanaparty", "m4ft0n"};
+
+
+        string stringToPush = "";
+
+        if (gameNum == 1)
+        {
+            bool printedPlayer = false;
+            //cupcake minigame
+            int i = 0;
+            while (i < 4)
+            {
+                if (cupcakeScores[i] >= score)
+                {
+                    stringToPush += cupcakeNames[i] + " " + cupcakeScores[i] + "\n";
+                    i++;
+                }
+                else
+                {
+                    //print player score then print all remaining names
+                    printedPlayer = true;
+                    stringToPush += "Playtester " + score + "\n";
+                    while(i < 4)
+                    {
+                        stringToPush += cupcakeNames[i] + " " + cupcakeScores[i] + "\n";
+                        i++;
+                    }
+                }
+            }
+            if(!printedPlayer)
+            {
+                //haven't printed player yet, player was last, add it now
+                stringToPush += "Playtester " + score + "\n";
+
+            }
+
+            //PRINT TO SCREEN
+            CupcakeLBText.SetText(stringToPush);
+
+        }
+        else if (gameNum == 2)
+        {
+            //coin minigame
+            bool printedPlayer = false;
+            int i = 0;
+            while (i < 4)
+            {
+                if (coinScores[i] >= score)
+                {
+                    stringToPush += coinNames[i] + " " + coinScores[i] + "\n";
+                    i++;
+                }
+                else
+                {
+                    //print player score then print all remaining names
+                    printedPlayer = true;
+                    stringToPush += "Playtester " + score + "\n";
+                    while (i < 4)
+                    {
+                        stringToPush += coinNames[i] + " " + coinScores[i] + "\n";
+                        i++;
+                    }
+                }
+            }
+            if (!printedPlayer)
+            {
+                //haven't printed player yet, player was last, add it now
+                stringToPush += "Playtester " + score + "\n";
+
+            }
+
+            //PRINT TO SCREEN
+            CoinLBText.SetText(stringToPush);
+        }
+        else if(gameNum == 3)
+        {
+            //duck minigame
+            bool printedPlayer = false;
+            int i = 0;
+            while (i < 4)
+            {
+                if (duckScores[i] >= score)
+                {
+                    stringToPush += duckNames[i] + " " + duckScores[i] + "\n";
+                    i++;
+                }
+                else
+                {
+                    //print player score then print all remaining names
+                    printedPlayer = true;
+                    stringToPush += "Playtester " + score + "\n";
+                    while (i < 4)
+                    {
+                        stringToPush += duckNames[i] + " " + duckScores[i] + "\n";
+                        i++;
+                    }
+                }
+            }
+            if (!printedPlayer)
+            {
+                //haven't printed player yet, player was last, add it now
+                stringToPush += "Playtester " + score + "\n";
+
+            }
+
+            //PRINT TO SCREEN
+            DuckLBText.SetText(stringToPush);
+        }
+
+        Debug.Log(stringToPush);
+
+
+        return;
     }
 
     //Function called by the AppScript when the EMP happens.

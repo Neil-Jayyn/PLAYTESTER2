@@ -11,6 +11,7 @@ public class DuckGameManager : MonoBehaviour
     public bool gameOver;
     private int timesPlayed;
     public ComputerUIScript UIController;
+    private GameObject MainGameManager;
 
     float timeRemaining;
     public float gameDuration = 30;
@@ -29,6 +30,10 @@ public class DuckGameManager : MonoBehaviour
     public AudioClip normalSFX;
     public AudioClip glitchedSFX;
 
+    //leaderboard text
+    public TMP_Text LeaderboardText;
+
+
     void Start()
     {
         gameOver = true;
@@ -36,6 +41,7 @@ public class DuckGameManager : MonoBehaviour
         UpdateScoreText();
         timesPlayed = 0;
         UIController = GameObject.Find("UI Controller").GetComponent<ComputerUIScript>();
+        MainGameManager = GameObject.Find("Game Manager");
 
         // SFX
         audioSources = GetComponents<AudioSource>();
@@ -119,17 +125,35 @@ public class DuckGameManager : MonoBehaviour
     {
         gameOver = true;
 
-        //TODO: calculate score
-        int scoreChange = -12; //for now just set it to the max
+        int scoreChange = CalculateScore(score); 
 
         //Tell the game manager that the game is over
-        GameObject.Find("Game Manager").GetComponent<GameManagerScript>().CompletedMinigame(scoreChange);
+        MainGameManager.GetComponent<GameManagerScript>().CompletedMinigame(scoreChange);
+        MainGameManager.GetComponent<GameManagerScript>().RefreshLeaderboard(3, score);
+
+
+        //Update leaderboard text
+        LeaderboardText.SetText(score + " Points!");
 
         //Go to the leaderboard
         UIController.GetComponent<ComputerUIScript>().GoToPosition(new Vector3(90, 20, -10)); //go to the leaderboard
 
         score = 0;
         UpdateScoreText();
+    }
+
+    private int CalculateScore(int pointsEarned)
+    {
+        float score = pointsEarned * -11;
+        //Let 18 be a reasonably good score to achieve
+        score = score / 18;
+
+        if (score < -12) //dont let the score go beyond -12, since this is the max
+        {
+            score = -12;
+        }
+
+        return (int)score;
     }
 
 

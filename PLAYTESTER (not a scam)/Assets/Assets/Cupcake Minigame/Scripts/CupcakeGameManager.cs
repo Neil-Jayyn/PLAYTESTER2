@@ -50,6 +50,9 @@ public class CupcakeGameManager : MonoBehaviour
     Vector3 popupHome;
     GameObject freezeOverlay;
 
+    // Leaderboard variables
+    public TMP_Text LeaderboardText;
+
     void Start()
     {
         gamePlaying = false;
@@ -58,10 +61,11 @@ public class CupcakeGameManager : MonoBehaviour
         UIController = GameObject.Find("UI Controller").GetComponent<ComputerUIScript>();
         popup = GameObject.Find("Popup");
         freezeOverlay = GameObject.Find("FreezeOverlay");
-        //MainGameManager = GameObject.Find("Game Manager");
+        MainGameManager = GameObject.Find("Game Manager");
         sfx=GetComponent<AudioSource>();
         popupHome = new Vector3(0, 10, 0);
         GameObject.Find("cupcakeHolder").GetComponent<Animator>().enabled = false;
+
 
     }
 
@@ -194,7 +198,9 @@ public class CupcakeGameManager : MonoBehaviour
 
         //TODO: calculate score to send to the hp based on the points earned in the round
 
-        int score = ScoreCalculation(scorePoints); //for now just let this be the max
+        int score = ScoreCalculation(scorePoints);
+        LeaderboardText.SetText(scorePoints + " Points!");
+        MainGameManager.GetComponent<GameManagerScript>().RefreshLeaderboard(1, scorePoints);
 
         //Go back to the main script and say that the game is done:
         GameObject.Find("Game Manager").GetComponent<GameManagerScript>().CompletedMinigame(score);
@@ -227,17 +233,20 @@ public class CupcakeGameManager : MonoBehaviour
         }
     }
 
-    private int ScoreCalculation(int points) { //TODO: actually implement score calculation
-        int score;
-        if (points >=10)
+    private int ScoreCalculation(int points) {
+        float score;
+
+        //these calculation are from LILY, based on the high score I got of 17 (so let 16 be a very good score)
+        score = points * -11;
+        score /= 16;
+        
+        //dont let score go beyond -12 (max)
+        if (score < -12) 
         {
             score = -12;
         }
-        else {
-            score =0;
-        }
 
-        return score;
+        return (int)score;
     }
 
 

@@ -46,6 +46,9 @@ public class MinigameManager : MonoBehaviour
     public Color glitchPlayerColor = new Color(0f, 0f, 0f, 1f); // Black
     private Color normalPlayerColor;
 
+    //leaderboard text
+    public TMP_Text LeaderboardText;
+
     
 
     void Start()
@@ -151,16 +154,35 @@ public class MinigameManager : MonoBehaviour
     {
         isGameOver = true;
         timerText.text = "Time's Up!";
+
+        LeaderboardText.SetText(points + " Points!");
+
         UIController.GetComponent<ComputerUIScript>().GoToPosition(new Vector3(90, 35, -10)); //go to the leaderboard
 
-        //TODO: calculate score change to HP
-        int score = -12; //for now just let it be the max
+        int score = CalculateScore(points); 
+
+        //update the dashboard leaderboards
+        MainGameManager.GetComponent<GameManagerScript>().RefreshLeaderboard(2, points);
 
         //tell the game manager that the minigame is done
         MainGameManager.GetComponent<GameManagerScript>().CompletedMinigame(score);
 
         
         
+    }
+
+    private int CalculateScore(int pointsEarned)
+    {
+        float score = pointsEarned * -11;
+        //Let 16 be a reasonably good score to achieve -> update this once speed is added
+        score = score / 16;
+
+        if (score < -12) //dont let the score go beyond -12, since this is the max
+        {
+            score = -12;
+        }
+
+        return (int)score;
     }
 
     //Get the status of the game

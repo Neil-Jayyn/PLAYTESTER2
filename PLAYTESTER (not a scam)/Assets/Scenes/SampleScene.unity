@@ -1932,7 +1932,7 @@ GameObject:
   - component: {fileID: 283921901}
   - component: {fileID: 283921902}
   m_Layer: 0
-  m_Name: LeaderBoard
+  m_Name: Cupcake LB BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2597,7 +2597,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Duck LB Text
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 056f489945de60d4c8e012934af15070, type: 2}
   m_sharedMaterial: {fileID: 8625224350627069026, guid: 056f489945de60d4c8e012934af15070,
@@ -2637,7 +2637,7 @@ MonoBehaviour:
   m_textAlignment: 65535
   m_characterSpacing: -5
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: 35
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -4324,7 +4324,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 90, y: 20, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 299877188}
@@ -7568,7 +7568,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 956436491}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.3215, y: 0.0781, z: 0}
+  m_LocalPosition: {x: 0.3215, y: 0.0781, z: 0.05}
   m_LocalScale: {x: 0.3464411, y: 0.21326998, z: 4.7189183}
   m_Children: []
   m_Father: {fileID: 966581503}
@@ -8044,6 +8044,7 @@ MonoBehaviour:
   sfxNormalYay: {fileID: 8300000, guid: afde4557cb2f3a34299d901d08902578, type: 3}
   sfxGlitchedYay: {fileID: 8300000, guid: c5a4d81cf1fa001418cb682554e31e9b, type: 3}
   popup: {fileID: 0}
+  LeaderboardText: {fileID: 1641972010}
 --- !u!4 &996181061
 Transform:
   m_ObjectHideFlags: 0
@@ -9408,6 +9409,9 @@ MonoBehaviour:
   glitchedCoinTrack: {fileID: 8300000, guid: c91ac2125c6dc37449e78a092ca5f9f4, type: 3}
   isGlitchActive: 0
   glitchDuration: 1
+  CupcakeLBText: {fileID: 1312449477}
+  CoinLBText: {fileID: 1813534012}
+  DuckLBText: {fileID: 357279307}
   coinMinigameManager: {fileID: 1745545157}
 --- !u!82 &1106845547
 AudioSource:
@@ -9889,7 +9893,7 @@ GameObject:
   - component: {fileID: 1137797536}
   - component: {fileID: 1137797537}
   m_Layer: 0
-  m_Name: LeaderBoard (1)
+  m_Name: Coin LB BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11257,7 +11261,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Cupcake LB Text
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 056f489945de60d4c8e012934af15070, type: 2}
   m_sharedMaterial: {fileID: 8625224350627069026, guid: 056f489945de60d4c8e012934af15070,
@@ -11297,7 +11301,7 @@ MonoBehaviour:
   m_textAlignment: 65535
   m_characterSpacing: -5
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: 35
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -12239,8 +12243,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: 100000000000 Points!!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 056f489945de60d4c8e012934af15070, type: 2}
+  m_sharedMaterial: {fileID: 8625224350627069026, guid: 056f489945de60d4c8e012934af15070,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -12625,6 +12630,7 @@ MonoBehaviour:
   audioSources: []
   normalSFX: {fileID: 8300000, guid: 204a21aac7b57a642bef9a556eaa1b75, type: 3}
   glitchedSFX: {fileID: 8300000, guid: dc9619ee71ca1f14d8a35b5b94c6de15, type: 3}
+  LeaderboardText: {fileID: 1923811283}
 --- !u!4 &1471116593
 Transform:
   m_ObjectHideFlags: 0
@@ -12938,7 +12944,7 @@ GameObject:
   - component: {fileID: 1496243517}
   - component: {fileID: 1496243518}
   m_Layer: 0
-  m_Name: LeaderBoard (2)
+  m_Name: Duck LB BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14890,8 +14896,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: 10000000 Points!!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 056f489945de60d4c8e012934af15070, type: 2}
+  m_sharedMaterial: {fileID: 8625224350627069026, guid: 056f489945de60d4c8e012934af15070,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -16529,6 +16536,7 @@ MonoBehaviour:
   glitchedSFX: {fileID: 8300000, guid: 76d3be4b7c97dc8468a84962da56d030, type: 3}
   playerRenderer: {fileID: 1455379864}
   glitchPlayerColor: {r: 0, g: 0, b: 0, a: 1}
+  LeaderboardText: {fileID: 1444463759}
 --- !u!224 &1745545158
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17222,7 +17230,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1802540036}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.3202, y: 0.0755, z: 0}
+  m_LocalPosition: {x: 0.3202, y: 0.0755, z: 0.05}
   m_LocalScale: {x: 0.34644133, y: 0.21326998, z: 4.7189183}
   m_Children: []
   m_Father: {fileID: 1029638514}
@@ -17636,7 +17644,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Coin LB Text
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 056f489945de60d4c8e012934af15070, type: 2}
   m_sharedMaterial: {fileID: 8625224350627069026, guid: 056f489945de60d4c8e012934af15070,
@@ -17676,7 +17684,7 @@ MonoBehaviour:
   m_textAlignment: 65535
   m_characterSpacing: -5
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: 35
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -18533,8 +18541,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: 1000000000000000 Points!!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 056f489945de60d4c8e012934af15070, type: 2}
+  m_sharedMaterial: {fileID: 8625224350627069026, guid: 056f489945de60d4c8e012934af15070,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
