@@ -13,6 +13,7 @@ TagManager:
   - EvilCoin
   - LBoundary
   - RBoundary
+  - SpeedyPerson
   layers:
   - Default
   - TransparentFX

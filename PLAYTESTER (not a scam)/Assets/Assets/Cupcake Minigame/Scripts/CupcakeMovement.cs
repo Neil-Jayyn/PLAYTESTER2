@@ -38,33 +38,21 @@ public class CupcakeMovement : MonoBehaviour
         if (collision.gameObject.tag == "Person")
         {
             GameManager.SfxCupcakeHit(GameManager.isGlitch); //plays yay sfx through game manager
-            /* Do sfx through the minigame manager instead
-            if (sfxYay != null)
-            {
-                if (!GameManager.isGlitch)
-                {
-                    sfx.clip = sfxYay;
-                    sfx.Play();
-                } else // means the glitch is occuring
-                {
-                    sfx.clip = sfxGlitchedYay;
-                    sfx.Play();
-                }
-            }*/
             GameManager.AddPoints(1);
             
             //decrease total enemies on screen
             GameObject.Find("EnemySpawner").GetComponent<EnemySpawner>().KilledEnemy();
             Destroy(collision.gameObject);
-            Destroy(gameObject);
-
-            
-        }  
-    }
-
-    public void DestroyCupcake(bool hasHitPerson) { 
-        if (hasHitPerson)
+            Destroy(gameObject); 
+        }
+        if (collision.gameObject.tag == "SpeedyPerson")
         {
+            GameManager.SfxCupcakeHit(GameManager.isGlitch); //plays yay sfx through game manager
+            GameManager.AddPoints(3);
+
+            //decrease total enemies on screen
+            GameObject.Find("EnemySpawner").GetComponent<EnemySpawner>().KilledEnemy();
+            Destroy(collision.gameObject);
             Destroy(gameObject);
         }
     }

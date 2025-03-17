@@ -49,6 +49,8 @@ public class CupcakeGameManager : MonoBehaviour
     public GameObject popup;
     Vector3 popupHome;
     GameObject freezeOverlay;
+    EnemySpawner spawner1;
+    EnemySpawner spawner2;
 
     // Leaderboard variables
     public TMP_Text LeaderboardText;
@@ -65,6 +67,9 @@ public class CupcakeGameManager : MonoBehaviour
         sfx=GetComponent<AudioSource>();
         popupHome = new Vector3(0, 10, 0);
         GameObject.Find("cupcakeHolder").GetComponent<Animator>().enabled = false;
+
+        spawner1 = GameObject.Find("EnemySpawner").GetComponent<EnemySpawner>();
+        spawner2 = GameObject.Find("EnemySpawner (1)").GetComponent<EnemySpawner>();
 
 
     }
@@ -84,14 +89,6 @@ public class CupcakeGameManager : MonoBehaviour
         //normalcupcakeColor = cupcakeRenderer.color;
         timerText.text = "Time Left: " + gameDuration.ToString();
         //StartCoroutine(GlitchCheckRoutine());
-
-        /*
-        //set the playCupcakeMinigame in the EnemySpawner script so the game plays
-        GameObject.Find("EnemySpawner").GetComponent<EnemySpawner>().playCupcakeMinigame = true;
-        GameObject.Find("EnemySpawner (1)").GetComponent<EnemySpawner>().playCupcakeMinigame = true;
-        GameObject.Find("cupcakeHolder").GetComponent<playerMovement>().playCupcakeMinigame = true;
-        */
-
         
         //set the timer for the game
         timeRemaining = gameDuration;
@@ -108,10 +105,17 @@ public class CupcakeGameManager : MonoBehaviour
         {
             tutorialPlaying=false;
             glitchFrequency = 0.3f;
+            freezeOverlay.SetActive(false);
+            spawner1.SetNumOfEnemies(25);
+            spawner2.SetNumOfEnemies(20);
+            
         } else // day 3; need a variable to determine which route to take
         {
             tutorialPlaying=false;
-           
+            freezeOverlay.SetActive(false);
+            spawner1.SetNumOfEnemies(27);
+            spawner2.SetNumOfEnemies(18);
+
         }
 
         // Start glitch checking
@@ -128,10 +132,14 @@ public class CupcakeGameManager : MonoBehaviour
             {
                 tutorialPlaying = false;
                 InitializeCupcakeGame();
+            }else if (tutorialPlaying == false)
+            {
+                InitializeCupcakeGame();
             }
 
             if (!tutorialPlaying) //tutorial left screen or no tutorial
             {
+                //InitializeCupcakeGame();
                 freezeOverlay.SetActive(false);
                 timeRemaining -= Time.deltaTime;
                 timerText.text = "Time Left: " + Mathf.RoundToInt(timeRemaining);
@@ -195,6 +203,7 @@ public class CupcakeGameManager : MonoBehaviour
 
         //set the enemy spawner script to false
         GameObject.Find("EnemySpawner").GetComponent<EnemySpawner>().playCupcakeMinigame = false;
+        GameObject.Find("EnemySpawner (1)").GetComponent<EnemySpawner>().playCupcakeMinigame = false;
 
         //TODO: calculate score to send to the hp based on the points earned in the round
 
@@ -206,6 +215,8 @@ public class CupcakeGameManager : MonoBehaviour
         GameObject.Find("Game Manager").GetComponent<GameManagerScript>().CompletedMinigame(score);
 
         GameObject.Find("cupcakeHolder").GetComponent<playerMovement>().playCupcakeMinigame = false;
+        GameObject.Find("cupcakeHolder").GetComponent<Animator>().enabled = false;
+
 
         //TODO: add a wait a second before go to the leaderboard screen.
         GameObject.Find("UI Controller").GetComponent<ComputerUIScript>().GoToPosition(new Vector3(90, 50, -10)); //go to the leaderboard

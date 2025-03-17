@@ -37,14 +37,14 @@ public class EnemySpawner : MonoBehaviour
         {
             //spawn enemies after each spawn wait time with a max amount of people
             waitTime -= Time.deltaTime;
-            speedyWaitTime-=Time.deltaTime;
+            speedyWaitTime -= Time.deltaTime;
 
             if (speedyWaitTime <= 0)
             {
                 isSpeedyObject = true;
             }
 
-            if ((waitTime <= 0 || currentNumEnemies==0)&& currentNumEnemies < numEnemies)
+            if ((waitTime <= 0 || currentNumEnemies == 0) && currentNumEnemies < numEnemies)
             {
                 if (!isSpeedyObject)
                 {
@@ -54,7 +54,8 @@ public class EnemySpawner : MonoBehaviour
                     setSpawnTime();
                     currentNumEnemies++;
                 }
-                else {
+                else
+                {
                     if (numSpeedyObjects < 1)
                     {
                         speedyPerson.GetComponent<speedyEnemyMovement>().isLeftSpawner = isLeftEnemySpawner;
@@ -67,15 +68,31 @@ public class EnemySpawner : MonoBehaviour
                 }
             }
         }
+        else {
+            Debug.Log("Reset Spawner");
+            resetSpawner();
+        }
     }
 
     void setSpawnTime(){
         waitTime=Random.Range(0.5f,4.0f);
     }
 
+    void resetSpawner() {
+        currentNumEnemies = 0;
+        numSpeedyObjects= 0;
+        setSpawnTime();
+        setSpeedySpawnTime() ;
+
+
+    }
     public void setSpeedySpawnTime() {
         isSpeedyObject = false;
         speedyWaitTime = constSpeedWaitTime;
+    }
+
+    public void SetNumOfEnemies(int num) {
+        numEnemies = num;
     }
 
     public void KilledEnemy()
