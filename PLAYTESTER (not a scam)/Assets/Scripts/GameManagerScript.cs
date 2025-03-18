@@ -6,6 +6,7 @@ public class GameManagerScript : MonoBehaviour
 {
     //The game manager will be in charge of progressing the game and calling any UI functions it needs
 
+    //STATE VARIABLES
     public int day; // Tracks which day it is (1 to 3)
     public int minigamesPlayed; // RESETS EACH DAY, tracks how many minigames have been completed (0 to 3)
     public int HP; //Tracks the current HP (0 to 100)
@@ -41,7 +42,8 @@ public class GameManagerScript : MonoBehaviour
     public TMPro.TextMeshProUGUI CoinLBText;
     public TMPro.TextMeshProUGUI DuckLBText;
 
-
+    //Company popup location
+    private Vector3 companyPopupLocation = new Vector3(-1, 1.7f, -2);
 
 
     //All news text slots
@@ -63,6 +65,9 @@ public class GameManagerScript : MonoBehaviour
     // Reference to coin runner minigame manager
     public MinigameManager coinMinigameManager;
 
+    //BIOS and EMP related screen info
+    private TMPro.TextMeshProUGUI biosText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -79,6 +84,7 @@ public class GameManagerScript : MonoBehaviour
         cupcakeCheck = GameObject.Find("Cupcake Check");
         coinCheck = GameObject.Find("Coin Check");
         duckCheck = GameObject.Find("Duck Check");
+        biosText = GameObject.Find("EMP Text").GetComponent<TMPro.TextMeshProUGUI>();
 
         //Hide the checkmarks
         HideCheckmarks();
@@ -124,6 +130,7 @@ public class GameManagerScript : MonoBehaviour
 
         //Update news articles
         UpdateNews();
+
     }
 
     // Update is called once per frame
@@ -177,8 +184,6 @@ public class GameManagerScript : MonoBehaviour
         if (minigamesPlayed >= 1) { cupcakeCheck.transform.position = check1Location; } //display first check
         if (minigamesPlayed >= 2) { coinCheck.transform.position = check2Location; } //display second check
         if (minigamesPlayed == 3) { duckCheck.transform.position = check3Location; } //display third check
-
-
 
     }
 
@@ -392,24 +397,58 @@ public class GameManagerScript : MonoBehaviour
         UpdateNews();
         DisplayCompanyMessage();
 
+        BootUpSequence();
+
     }
+
+    //Computer boot up sequence, slowly display the text to the screen
+    public void BootUpSequence()
+    {
+        string bios = "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh";
+        
+        StartCoroutine(SlowDisplayText(bios));
+
+    }
+
+    IEnumerator SlowDisplayText(string bios)
+    {
+        float between = 0.005f; //time between characters appearing
+
+
+        string toDisplay = "";
+        int len = (int)bios.Length;
+
+        for (int i = 0; i < len;)
+        {
+
+            //display next char
+            toDisplay += bios[i];
+            biosText.SetText(toDisplay);
+            i++;
+            yield return new WaitForSeconds(between);
+
+
+        }
+        yield return new WaitForSeconds(0.5f);
+    }
+
 
     public void DisplayCompanyMessage()
     {
         if(day == 1)
         {
-            UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(new Vector3(0, 0, -2), "Good tidings, playtester. Thank you for responding to our job advertisement on List of Craig. We are very ecstatic to have you. \r\n\r\nYour job is simple. You will playtest three minigames daily. Aim for getting high scores. Please. Good performance gives us good data. You will be rewarded.\r\n\r\nOur last employee had to be let go due to performance issues. Do not be scared. You will do better. Perform your best and you will have the best results. \r\n\r\nGood luck. Have fun.\r\n");
+            UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(companyPopupLocation, "Good tidings, playtester. Thank you for responding to our job advertisement on List of Craig. We are very ecstatic to have you. \r\n\r\nYour job is simple. You will playtest three minigames daily. Aim for getting high scores. Please. Good performance gives us good data. You will be rewarded.\r\n\r\nOur last employee had to be let go due to performance issues. Do not be scared. You will do better. Perform your best and you will have the best results. \r\n\r\nGood luck. Have fun.\r\n");
         }
         else if(day == 2 && !EMPHappened)
         {
             //regular day 2 message
-            UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(new Vector3(0, 0, -2), "You are doing well. Keep playing to the best of your ability. We are getting good data from you. Focus on your job. You will be rewarded.\r\n");
+            UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(companyPopupLocation, "You are doing well. Keep playing to the best of your ability. We are getting good data from you. Focus on your job. You will be rewarded.\r\n");
 
         }
         else if(day == 2 && EMPHappened)
         {
             //day 2 post emp message
-            UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(new Vector3(0, 0, -2), "There was an error with the operating system. We apologize for the inconvenience; you may proceed to delete the memory of the error from your hippocampus. We have fixed the system and you are able to complete your work today. Focus on acquiring high scores in the minigames. Do not be distracted by other worldly events. You will be rewarded.");
+            UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(companyPopupLocation, "There was an error with the operating system. We apologize for the inconvenience; you may proceed to delete the memory of the error from your hippocampus. We have fixed the system and you are able to complete your work today. Focus on acquiring high scores in the minigames. Do not be distracted by other worldly events. You will be rewarded.");
 
         }
         else

@@ -69,7 +69,6 @@ public class EnemySpawner : MonoBehaviour
             }
         }
         else {
-            Debug.Log("Reset Spawner");
             resetSpawner();
         }
     }
