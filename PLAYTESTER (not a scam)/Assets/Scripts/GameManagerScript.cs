@@ -188,7 +188,7 @@ public class GameManagerScript : MonoBehaviour
         if (minigamesPlayed >= 2) { coinCheck.transform.position = check2Location; } //display second check
         if (minigamesPlayed == 3) { duckCheck.transform.position = check3Location; } //display third check
 
-        StartCoroutine(SlowDisplayGoodAndEvilBios());
+        //StartCoroutine(SlowDisplayGoodAndEvilBios());
     }
 
     //Called by pressing clock out button when all games have been played

@@ -23,6 +23,11 @@ public class DuckGameManager : MonoBehaviour
     private float glitchWaitTime = 1f;
     public bool isGlitch = false;
 
+    //bg glitch
+    public GameObject bg;
+    public Sprite bgNormal;
+    public Sprite bgGlitched;
+
     // kino effect
     public DigitalGlitch GlitchEffect;
     public AnalogGlitch AnalogGlitchEffect;
@@ -71,8 +76,10 @@ public class DuckGameManager : MonoBehaviour
 
     void Update()
     {
+        Debug.Log("DuckGame " + gameOver);
         if (!gameOver) //camera moved over to duck game
         {
+            
 
             if (!hasInitialized) //if game didnt start yet
              {
@@ -143,6 +150,7 @@ public class DuckGameManager : MonoBehaviour
         GameObject.Find("SpawnManager").GetComponent<SpawnManager>().SpawnStart();
         GameObject.Find("SpawnManagerFast").GetComponent<SpawnManagerFast>().SpawnStart();
         GameObject.Find("DuckPlayer").GetComponent<SpriteRenderer>().enabled = true;
+        StartCoroutine(GlitchCheckRoutine());
     }
 
     IEnumerator GlitchCheckRoutine()
@@ -166,6 +174,8 @@ public class DuckGameManager : MonoBehaviour
         GlitchEffect.intensity = Random.Range(0f, 0.3f); // can adjust
         AnalogGlitchEffect.colorDrift = Random.Range(0f, 0.3f);
         audioSources[0].clip = glitchedSFX;
+        SpriteRenderer spriteRenderer = bg.GetComponent<SpriteRenderer>(); // initialize to change background
+        spriteRenderer.sprite = bgGlitched;
 
         yield return new WaitForSeconds(1f); // Glitch lasts 1 second
 
@@ -176,6 +186,7 @@ public class DuckGameManager : MonoBehaviour
             audioSources[0].clip = normalSFX;
             GlitchEffect.intensity = 0;
             AnalogGlitchEffect.colorDrift = 0;
+            spriteRenderer.sprite = bgNormal;
         }
 
     }

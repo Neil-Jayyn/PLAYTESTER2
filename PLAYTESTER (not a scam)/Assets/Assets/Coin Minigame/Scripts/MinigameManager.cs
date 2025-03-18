@@ -10,6 +10,8 @@ public class MinigameManager : MonoBehaviour
     GameObject SpawnMg;
     GameObject MainGameManager;
 
+    //stupid fix for camera going back to main desktop
+    private Vector3 coinGameLocation = new Vector3(50, 35, -10);
 
     // Manages glitches 
     public float glitchFreq; // Set based on the day and situation
@@ -121,7 +123,9 @@ public class MinigameManager : MonoBehaviour
     }
 
     void Update() {
-        if (!isGameOver) { 
+        Debug.Log("CoiNRunner " + isGameOver);
+        if (!isGameOver) {
+   
             CheckIfTutorialClosed();
         }
     }
