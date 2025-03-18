@@ -13,6 +13,7 @@ public class spawnMg : MonoBehaviour
     // Color colorOne = new Color(1f, 1f, 0f, 1f); // Yellow
     // Color colorTwo = new Color(0.5f, 0f, 0.5f, 1f); // Purple
 
+
     private MinigameManager gameManager;
 
     void Start()
@@ -61,18 +62,39 @@ public class spawnMg : MonoBehaviour
             Debug.Log("Spawned a Coin with tag: " + newSpawnable.tag); // Debugging
             if (anim != null)
             {
-                
+                //GlitchAnimationCheck(anim, "GoodCoinAnimation", "PersonWalking");
                 anim.Play("GoodCoinAnimation"); // 
             }
-        } else if (evilCoinSprite != null)
+        }
+        else if (evilCoinSprite != null)
         {
             spriteRenderer.sprite = evilCoinSprite;
             newSpawnable.tag = "EvilCoin";
             Debug.Log("Spawned an Evil Coin with tag: " + newSpawnable.tag); // Debugging
             if (anim != null)
             {
-                anim.Play("EvilCoinAnimation"); 
+                //GlitchAnimationCheck(anim, "EvilCoinAnimation", "Trash");
+                anim.Play("EvilCoinAnimation");
             }
         }
     }
+
+    void GlitchAnimationCheck(Animator anim, string animNormal, string animGlitch)
+    {
+        bool isGlitch = gameManager.isGlitch;
+        if (!isGlitch)
+        {
+            anim.Play(animNormal);
+        }
+        else
+        {
+            anim.Play(animGlitch);
+        }
+    }
 }
+
+    /*
+    IEnumerator GlitchCheckRoutine() {
+        return;
+    }
+    */
