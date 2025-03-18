@@ -50,6 +50,7 @@ public class spawnMg : MonoBehaviour
         GameObject newSpawnable = Instantiate(spawnable, spawnPos.position, Quaternion.identity); // Make the spawnable
 
         SpriteRenderer spriteRenderer = newSpawnable.GetComponent<SpriteRenderer>(); // Access the spawnable's color
+        spriteRenderer.sortingOrder = 0;
         // spriteRenderer.color = color; // Change the spawnable's color
         Animator anim = newSpawnable.GetComponent<Animator>();
 
