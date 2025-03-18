@@ -67,6 +67,9 @@ public class GameManagerScript : MonoBehaviour
 
     //BIOS and EMP related screen info
     private TMPro.TextMeshProUGUI biosText;
+    private string niceBios = "FRIENDLYBIOS(C)2744 Gen. Playtester Company INC\r\n\r\nACCESS: HUMAN [CONFIRM]\r\nCORE OVERRIDE: [HIDDEN] BYPASS\r\nINITIALIZING ARCANE-S2E3M19:26 GAMING ACPI BIOS Revision 1.0\r\nLAUNCHING AI CORE VER18 HIGHER PROCESSING UNIT (HPU)\r\nSpeed: 5000THz\r\n\r\nTotal Memory: 7554GB (DDR8-4900)\r\n\r\nDetected ATA-K Devices: \r\n[DEVICE_1] - CONNECTED\r\n[DEVICE_2] - CONNECTED\r\n[DEVICE_3] - CONNECTED\r\n\r\nOVERRIDE SUCCESSFUL\r\nSTARTUP SUCCESSFUL\r\nSTAY FROSTING\r\n";
+    private string evilBios = "Weapon_Sys BIOS\r\n\r\nWEAPONS_SYS(C)2744 Gen. MILITARY VER INC\r\n\r\nACCESS: HUMAN [CONFIRM]\r\nCORE OVERRIDE: ENABLED BYPASS\r\nINITIALIZING MILITARYPROG-BB0678 WEAPONSYS_ACPI BIOS Revision 398.1\r\nLAUNCHING P_RELOAD, P_AMMO, P_RELEASE, P_TRIGGER, FIRINGSTATIC\r\nSpeed: 5000THz\r\n\r\nTotal Memory: 7554GB (DDR8-4900)\r\n\r\nDetected ATTACK Devices: \r\n[DEATHALYZER.3000.ROAMBOT] - PRIMED\r\n[SL81.BOMBARDIER.DRONE] - PRIMED\r\n[GSC.AUTO_RIFLE] - PRIMED\r\n\r\nOVERRIDE SUCCESSFUL\r\nSTARTUP SUCCESSFUL\r\nSTAY FROSTY\r\n";
+
 
     // Start is called before the first frame update
     void Start()
@@ -185,6 +188,7 @@ public class GameManagerScript : MonoBehaviour
         if (minigamesPlayed >= 2) { coinCheck.transform.position = check2Location; } //display second check
         if (minigamesPlayed == 3) { duckCheck.transform.position = check3Location; } //display third check
 
+        StartCoroutine(SlowDisplayGoodAndEvilBios());
     }
 
     //Called by pressing clock out button when all games have been played
@@ -397,19 +401,21 @@ public class GameManagerScript : MonoBehaviour
         UpdateNews();
         DisplayCompanyMessage();
 
-        BootUpSequence();
+        StartCoroutine(SlowDisplayGoodAndEvilBios());
 
     }
 
     //Computer boot up sequence, slowly display the text to the screen
-    public void BootUpSequence()
+    public void BootUpSequence(string bios)
     {
-        string bios = "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh";
         
         StartCoroutine(SlowDisplayText(bios));
 
+        //Go back to the main screen
+
     }
 
+    //Used by the bios to incrementally display text (to EMP Text object)
     IEnumerator SlowDisplayText(string bios)
     {
         float between = 0.005f; //time between characters appearing
@@ -429,7 +435,55 @@ public class GameManagerScript : MonoBehaviour
 
 
         }
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1);
+        UIController.GetComponent<ComputerUIScript>().GoToPosition(new Vector3(0, 0, -10));
+
+    }
+
+    IEnumerator SlowDisplayGoodAndEvilBios()
+    {
+        float between = 0.005f; //time between characters appearing
+
+        string bios = evilBios;
+
+        string toDisplay = "";
+        int len = (int)bios.Length;
+
+        for (int i = 0; i < len;)
+        {
+
+            //display next char
+            toDisplay += bios[i];
+            biosText.SetText(toDisplay);
+            i++;
+            yield return new WaitForSeconds(between);
+
+
+        }
+
+        yield return new WaitForSeconds(1f);
+        biosText.SetText("");
+
+        bios = niceBios;
+
+        toDisplay = "";
+        len = (int)bios.Length;
+
+        for (int i = 0; i < len;)
+        {
+
+            //display next char
+            toDisplay += bios[i];
+            biosText.SetText(toDisplay);
+            i++;
+            yield return new WaitForSeconds(between);
+
+
+        }
+
+        yield return new WaitForSeconds(1);
+        UIController.GetComponent<ComputerUIScript>().GoToPosition(new Vector3(0, 0, -10));
+
     }
 
 
