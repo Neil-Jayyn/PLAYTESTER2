@@ -10,6 +10,7 @@ public class MinigameManager : MonoBehaviour
     GameObject SpawnMg;
     GameObject MainGameManager;
 
+
     // Manages glitches 
     public float glitchFreq; // Set based on the day and situation
     public float glitchWaitTime = 1f;
@@ -23,6 +24,13 @@ public class MinigameManager : MonoBehaviour
     // Timer management 
     public TMP_Text timerText;
     private bool isGameOver;
+
+    //Tutorial freeze management (Neila note: The code for it is bad but it works)
+    private bool isTutorialPlaying; //checks if there is a tutorial on screen
+    public GameObject popup;
+    Vector3 popupHome;
+    private bool hasInitialized; //checks if the game started game elements yet 
+    public GameObject freezeOverlay;
 
     //Score management
     public TMP_Text scoreText;
@@ -57,6 +65,8 @@ public class MinigameManager : MonoBehaviour
         MainGameManager = GameObject.Find("Game Manager");
         SpawnMg = GameObject.Find("SpawnMg");
 
+        GameObject.Find("Player").GetComponent<Animator>().enabled = false;
+
         // SFX
         sfx = GetComponent<AudioSource>();
         sfx.clip = normalSFX;
@@ -67,16 +77,20 @@ public class MinigameManager : MonoBehaviour
         points = 0;
         timesPlayed = 0;
         isGlitch = false;
+        hasInitialized = false;
+
+        //tutorial freeze
+        popup = GameObject.Find("Popup");
+        popupHome = new Vector3(0, 10, 0);
 
     }
 
     //This function is called by the AppScript and should start all the setup needed for the minigame
     public void StartCoinMinigame()
     {
+        freezeOverlay.SetActive(true);
         isGameOver = false;
-        SpawnMg.GetComponent<spawnMg>().SpawnMgStart();
-        StartCoroutine(GlitchCheckRoutine());
-        StartCoroutine(StartMinigameTimer());
+        //InitializeCoinrunnerGame();
 
         points = 0;
         ++timesPlayed;
@@ -84,17 +98,27 @@ public class MinigameManager : MonoBehaviour
         //If it is the first time playing, tutorial popup amd no glitches
         if (timesPlayed == 1)
         {
+            Debug.Log("First Time Playing CoinRunner");
             glitchFreq = 0f;
-            UIController.TriggerPopup(new Vector3(50, 36, -5), "Use the up and down arrows to move lanes. Grab all the gold coins!");
+            UIController.TriggerPopup(new Vector3(50, 36, -8), "Use the up and down arrows to move lanes. Grab all the gold coins!");
+            isTutorialPlaying = true;
         } else if (timesPlayed == 2)
         {
             glitchFreq = 0.3f;
+            isTutorialPlaying = false;
         } else // day 3; need a variable to determine which route to take
         {
+            isTutorialPlaying = false;
 
         }
 
 
+    }
+
+    void Update() {
+        if (!isGameOver) { 
+            CheckIfTutorialClosed();
+        }
     }
 
     IEnumerator GlitchCheckRoutine()
@@ -200,6 +224,34 @@ public class MinigameManager : MonoBehaviour
     void UpdateScore()
     {
         scoreText.text = "Points: "+points.ToString();
+    }
+
+    void CheckIfTutorialClosed()
+    {
+        if (!isGameOver&&!hasInitialized)
+        {
+            if (popup.transform.position == popupHome) //if tutorial left screen
+            {
+                isTutorialPlaying = false;
+                hasInitialized = true;
+                InitializeCoinrunnerGame();
+            }
+            else if (isTutorialPlaying == false)
+            {
+                hasInitialized = true;
+                InitializeCoinrunnerGame();
+            }
+        }
+    }
+
+    void InitializeCoinrunnerGame() {
+        freezeOverlay.SetActive(false);
+        SpawnMg.GetComponent<spawnMg>().SpawnMgStart();
+        StartCoroutine(GlitchCheckRoutine());
+        StartCoroutine(StartMinigameTimer());
+        GameObject.Find("bg1").GetComponent<scrollBg>().startCoinMinigame = true;
+        GameObject.Find("bg2").GetComponent<scrollBg>().startCoinMinigame = true;
+        GameObject.Find("Player").GetComponent<Animator>().enabled = true;
     }
     
 

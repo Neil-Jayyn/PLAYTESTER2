@@ -98,7 +98,7 @@ public class CupcakeGameManager : MonoBehaviour
         {
             tutorialPlaying = true;
             glitchFrequency = 0;
-            UIController.TriggerPopup(new Vector3(50, 50, -9), "Use the left and right arrow keys to move and spacebar to drop.\r\nGive cupcakes to everyone!\r\n");
+            UIController.TriggerPopup(new Vector3(50, 50, -9.1f), "Use the left and right arrow keys to move and spacebar to drop.\r\nGive cupcakes to everyone!\r\n");
             freezeOverlay.SetActive(true);
  
         } else if (timesPlayed == 2)
