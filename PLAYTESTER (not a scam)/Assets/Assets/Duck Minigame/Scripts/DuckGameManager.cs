@@ -41,6 +41,7 @@ public class DuckGameManager : MonoBehaviour
     Vector3 popupHome;
     private bool hasInitialized; //checks if the game started game elements yet 
     GameObject freezeOverlay;
+    GameObject player;
 
 
     void Start()
@@ -58,10 +59,14 @@ public class DuckGameManager : MonoBehaviour
 //      failureSFX = GetComponent<AudioSource>();
  //     failureSFX.clip = failureClipSFX;
 
+        //freeze variables initialized
         hasInitialized = false;
         popup = GameObject.Find("Popup");
         popupHome = new Vector3(0, 10, 0);
         freezeOverlay = GameObject.Find("FreezeOverlay (2)");
+        GameObject.Find("DuckPlayer").GetComponent<SpriteRenderer>().enabled = false;
+        
+
     }
 
     void Update()
@@ -120,19 +125,24 @@ public class DuckGameManager : MonoBehaviour
         {
             isTutorialPlaying = false;
             glitchFreq = 0.3f;
+            //InitializeDuckGame();
             
         } else // day 3; need a variable to determine which route to take
         {
             isTutorialPlaying = false;
-            
+            glitchFreq=MainGameManager.GetComponent<GameManagerScript>().GlitchFreqFromEnding();
+            //GlitchFreqFromEnding();
+            //InitializeDuckGame();
 
         }
     }
 
     private void InitializeDuckGame() {
+        //initialize game objects for game
         freezeOverlay.SetActive(false);
         GameObject.Find("SpawnManager").GetComponent<SpawnManager>().SpawnStart();
         GameObject.Find("SpawnManagerFast").GetComponent<SpawnManagerFast>().SpawnStart();
+        GameObject.Find("DuckPlayer").GetComponent<SpriteRenderer>().enabled = true;
     }
 
     IEnumerator GlitchCheckRoutine()
@@ -181,6 +191,8 @@ public class DuckGameManager : MonoBehaviour
         MainGameManager.GetComponent<GameManagerScript>().CompletedMinigame(scoreChange);
         MainGameManager.GetComponent<GameManagerScript>().RefreshLeaderboard(3, score);
 
+        //disable crosshair
+        GameObject.Find("DuckPlayer").GetComponent<SpriteRenderer>().enabled = false;
 
         //Update leaderboard text
         LeaderboardText.SetText(score + " Points!");
@@ -224,4 +236,5 @@ public class DuckGameManager : MonoBehaviour
         scoreText.text = "Points: " + score;
 
     }
+
 }

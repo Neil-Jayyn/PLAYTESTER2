@@ -8,6 +8,8 @@ public class playerMovement : MonoBehaviour
     public GameObject bomb;
     public float speed = 1.85f;
 
+    public float reloadRate = 1;
+
     //reload time and overtime 
     private float waitTime = 1.5f;
     private float overtime = 3.0f;
@@ -41,6 +43,7 @@ public class playerMovement : MonoBehaviour
         if (playCupcakeMinigame)
         {
             anim.SetBool("isReloading", true);
+            anim.speed = reloadRate;
             //reload time
             waitTime -= Time.deltaTime;
 
@@ -57,9 +60,11 @@ public class playerMovement : MonoBehaviour
             //reload time and overtime handling
             if (waitTime <= 0.0f)//if cupcake is ready to drop
             {
-                isReady= true;
+                anim.speed = 1;
+                isReady = true;
                 if (isReady==true && readyTime >= 0.0F) //ding 
                 {
+                 
                     anim.SetBool("isReady", true);
                     //have isReady state true
                     readyTime -= Time.deltaTime;
@@ -68,6 +73,7 @@ public class playerMovement : MonoBehaviour
                 }
                 else
                 {
+
                     anim.SetBool("isReady", false);
                     if (Input.GetKeyDown(KeyCode.Space)) //player drops cupcake
                     {

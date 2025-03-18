@@ -571,6 +571,7 @@ public class GameManagerScript : MonoBehaviour
         //TODO: actually change placeholders to be final things
         int ending;
         int finalHP = GetHP();
+        Debug.Log("HP:"+finalHP);
         if (finalHP > 80)
         {
             ending = 0; //rebellion
@@ -583,6 +584,22 @@ public class GameManagerScript : MonoBehaviour
             ending = 2; //complicit
         }
         return ending;
+    }
+
+    public float GlitchFreqFromEnding()
+    {
+        float glitchFreq=0;
+        int ending =CheckPlayerEnding();
+        switch (ending)
+        {
+            case 0://rebellion
+                glitchFreq = 0.8f; break;
+            case 1://confusion
+                glitchFreq = 0.3f; break;
+            case 2://complicit
+                glitchFreq = 0.1f; break;
+        }
+        return glitchFreq;
     }
 
     //Hide all the checkmarks on the dashboard

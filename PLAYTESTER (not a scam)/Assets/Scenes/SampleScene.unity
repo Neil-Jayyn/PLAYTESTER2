@@ -2939,7 +2939,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 221.82, y: 124.375}
+  m_AnchoredPosition: {x: 221.4, y: 138.5}
   m_SizeDelta: {x: 442, y: 248.75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &393119546
@@ -4357,7 +4357,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -15, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 299877188}
@@ -4498,7 +4498,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 561572457}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1585051074}
@@ -8335,7 +8335,7 @@ GameObject:
   - component: {fileID: 1008427763}
   - component: {fileID: 1008427765}
   m_Layer: 8
-  m_Name: Player
+  m_Name: DuckPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10075,7 +10075,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1125858653}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.06, y: -0.34, z: 0}
+  m_LocalPosition: {x: -0.03, y: -0.34, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1585051074}
@@ -13269,7 +13269,7 @@ MonoBehaviour:
   scoreText: {fileID: 137213159}
   gameOver: 0
   UIController: {fileID: 0}
-  gameDuration: 60
+  gameDuration: 5
   timerText: {fileID: 1029863823}
   isGlitch: 0
   GlitchEffect: {fileID: 519420030}
@@ -17174,7 +17174,7 @@ MonoBehaviour:
   UIController: {fileID: 0}
   glitchFreq: 0.3
   glitchWaitTime: 1
-  gameDur: 1
+  gameDur: 5
   isGlitch: 0
   GlitchEffect: {fileID: 519420030}
   AnalogGlitchEffect: {fileID: 519420033}
@@ -19639,6 +19639,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dedb8e28d93cab341bd0f4959e3fd004, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameOver: 0
 --- !u!1001 &1979447541
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20433,6 +20434,7 @@ MonoBehaviour:
   cupcake: {fileID: 8662074612052584715, guid: dcc6995cab8a1b74eaa30ad4c5ab33e7, type: 3}
   bomb: {fileID: 8887735693401374855, guid: 4c708fbb42c50ac46a2e31a7c34c2474, type: 3}
   speed: 6.3
+  reloadRate: 1
   playCupcakeMinigame: 0
   anim: {fileID: 2033651218}
   isReloading: 0

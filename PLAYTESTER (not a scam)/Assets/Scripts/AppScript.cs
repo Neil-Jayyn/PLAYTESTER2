@@ -26,6 +26,9 @@ public class AppScript : MonoBehaviour
     private Vector3 duckGameLocation = new Vector3(50, 20, -10);
 
     private Vector3 complicitEndingLocation = new Vector3(120, 50, -10);
+    private Vector3 confusionEndingLocation = new Vector3(120, 35, -10);
+    private Vector3 rebellionEndingLocation = new Vector3(120, 20, -10);
+
 
     // Audio
     public AudioClip captchaSFX; // sfx for captcha confirmation
@@ -135,11 +138,22 @@ public class AppScript : MonoBehaviour
                     int ending=GameManager.GetComponent<GameManagerScript>().CheckPlayerEnding();
 
                     //TODO: go to pos of each ending
-                    if (ending == 2) { 
-                        //COMPLICIT ENDING
-                        UIController.GetComponent<ComputerUIScript>().GoToPosition(complicitEndingLocation);
-                        
+                    switch (ending) {
+                        case 0:
+                            Debug.Log("rebellion ending");
+                            UIController.GetComponent<ComputerUIScript>().GoToPosition(rebellionEndingLocation);
+                            break;
+                        case 1: 
+                            Debug.Log("confusion ending");
+                            UIController.GetComponent<ComputerUIScript>().GoToPosition(confusionEndingLocation);
+                            break;
+
+                        case 2:
+                            Debug.Log("complicit ending");
+                            UIController.GetComponent<ComputerUIScript>().GoToPosition(complicitEndingLocation);
+                            break;
                     }
+
                     UIController.GetComponent<ComputerUIScript>().TriggerPopup(new Vector3(0, 0, -2), "You beat the game! Text here depends on your score.");
                 }
                 else
@@ -147,6 +161,7 @@ public class AppScript : MonoBehaviour
                     //TODO: add anything fancy we want to happen transition wise, maybe make popup appear or fade to black
                     GameManager.GetComponent<GameManagerScript>().CompletedDay();
                     UIController.GetComponent<ComputerUIScript>().TriggerPopup(new Vector3(0, 0, -2), "Welcome to another day of work!");
+                    GameManager.GetComponent<GameManagerScript>().CheckPlayerEnding();
                 }
 
             }
