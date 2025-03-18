@@ -6,7 +6,8 @@ using Kino;
 
 public class DuckGameManager : MonoBehaviour
 {
-    public TMP_Text scoreText;  // Reference to TextMeshPro to show the score
+    public TMP_Text scoreText;// Reference to TextMeshPro to show the score
+    
     private int score = 0;
     public bool gameOver;
     private int timesPlayed;
@@ -15,6 +16,7 @@ public class DuckGameManager : MonoBehaviour
 
     float timeRemaining;
     public float gameDuration = 30;
+    public TMP_Text timerText; //TMP to show timer
 
     // Glitch variables
     private float glitchFreq;
@@ -33,6 +35,13 @@ public class DuckGameManager : MonoBehaviour
     //leaderboard text
     public TMP_Text LeaderboardText;
 
+    //Tutorial freeze management (Neila note: The code for it is bad but it works)
+    //private bool isTutorialPlaying; //checks if there is a tutorial on screen
+    //ublic GameObject popup;
+    //Vector3 popupHome;
+    //private bool hasInitialized; //checks if the game started game elements yet 
+    //public GameObject freezeOverlay;
+
 
     void Start()
     {
@@ -48,21 +57,45 @@ public class DuckGameManager : MonoBehaviour
         audioSources[0].clip = normalSFX;
 //      failureSFX = GetComponent<AudioSource>();
  //     failureSFX.clip = failureClipSFX;
+
+        //hasInitialized = false;
+        //popup = GameObject.Find("Popup");
+        //popupHome = new Vector3(0, 10, 0);
     }
 
     void Update()
     {
         if (!gameOver)
         {
+
+            //if (popup.transform.position == popupHome&&!hasInitialized) //if tutorial left screen
+           // {
+                //isTutorialPlaying = false;
+                //hasInitialized = true;
+            //InitializeDuckGame();
+            //}
             timeRemaining -= Time.deltaTime;
+            timerText.text = "Time Left: " + Mathf.RoundToInt(timeRemaining);
 
             if (timeRemaining <= 0)
             {
                 GameOver();
             }
-
         }
+            /*
+            else if (!isTutorialPlaying)
+            {
+                hasInitialized = true;
+                InitializeCoinrunnerGame();
+            }
+            */
+
+            //if (!isTutorialPlaying)
+            //{
+                
+            //}
     }
+
 
     //This function is called by the AppScript and should handle setting up everything for the duck minigame
     public void StartDuckMinigame()
@@ -71,18 +104,25 @@ public class DuckGameManager : MonoBehaviour
         score = 0;
         ++timesPlayed;
         timeRemaining = gameDuration;
+        timerText.text = "Time Left: " + gameDuration.ToString();
 
-        StartCoroutine(GlitchCheckRoutine());
+
+        //StartCoroutine(GlitchCheckRoutine());
 
         if (timesPlayed == 1)
         {
+            //isTutorialPlaying = true;
             glitchFreq = 0;
             UIController.TriggerPopup(new Vector3(48f, 22.5f, -5), "Use the mouse to aim and left click to shoot.Take down all the ducks!");
         } else if (timesPlayed == 2)
         {
+            //isTutorialPlaying = false;
             glitchFreq = 0.3f;
+            //InitializeDuckGame();
         } else // day 3; need a variable to determine which route to take
         {
+            //isTutorialPlaying = false;
+            //InitializeDuckGame();
 
         }
     }
@@ -125,7 +165,9 @@ public class DuckGameManager : MonoBehaviour
     {
         gameOver = true;
 
-        int scoreChange = CalculateScore(score); 
+        int scoreChange = CalculateScore(score);
+        timerText.text = "Time's up!";
+        timerText.text = "Time's up!";
 
         //Tell the game manager that the game is over
         MainGameManager.GetComponent<GameManagerScript>().CompletedMinigame(scoreChange);
@@ -170,4 +212,10 @@ public class DuckGameManager : MonoBehaviour
         scoreText.text = "Points: " + score;
 
     }
+
+    void InitializeDuckGame() {
+        
+        GameObject.Find("SpawnManager").GetComponent<SpawnManager>().SpawnStart();
+        GameObject.Find("SpawnManagerFast").GetComponent<SpawnManagerFast>().SpawnStart();
+}
 }

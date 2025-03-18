@@ -88,7 +88,6 @@ public class MinigameManager : MonoBehaviour
     //This function is called by the AppScript and should start all the setup needed for the minigame
     public void StartCoinMinigame()
     {
-        freezeOverlay.SetActive(true);
         isGameOver = false;
         //InitializeCoinrunnerGame();
 
@@ -102,13 +101,18 @@ public class MinigameManager : MonoBehaviour
             glitchFreq = 0f;
             UIController.TriggerPopup(new Vector3(50, 36, -8), "Use the up and down arrows to move lanes. Grab all the gold coins!");
             isTutorialPlaying = true;
+            freezeOverlay.SetActive(true);
         } else if (timesPlayed == 2)
         {
             glitchFreq = 0.3f;
             isTutorialPlaying = false;
+            InitializeCoinrunnerGame();
+            freezeOverlay.SetActive(false);
         } else // day 3; need a variable to determine which route to take
         {
             isTutorialPlaying = false;
+            InitializeCoinrunnerGame();
+            freezeOverlay.SetActive(false);
 
         }
 
@@ -236,11 +240,13 @@ public class MinigameManager : MonoBehaviour
                 hasInitialized = true;
                 InitializeCoinrunnerGame();
             }
-            else if (isTutorialPlaying == false)
+            /*
+            else if (!isTutorialPlaying)
             {
                 hasInitialized = true;
                 InitializeCoinrunnerGame();
             }
+            */
         }
     }
 
