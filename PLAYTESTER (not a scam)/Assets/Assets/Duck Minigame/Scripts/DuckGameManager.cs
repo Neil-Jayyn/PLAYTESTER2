@@ -36,11 +36,11 @@ public class DuckGameManager : MonoBehaviour
     public TMP_Text LeaderboardText;
 
     //Tutorial freeze management (Neila note: The code for it is bad but it works)
-    //private bool isTutorialPlaying; //checks if there is a tutorial on screen
-    //ublic GameObject popup;
-    //Vector3 popupHome;
-    //private bool hasInitialized; //checks if the game started game elements yet 
-    //public GameObject freezeOverlay;
+    private bool isTutorialPlaying; //checks if there is a tutorial on screen
+    public GameObject popup;
+    Vector3 popupHome;
+    private bool hasInitialized; //checks if the game started game elements yet 
+    GameObject freezeOverlay;
 
 
     void Start()
@@ -58,42 +58,42 @@ public class DuckGameManager : MonoBehaviour
 //      failureSFX = GetComponent<AudioSource>();
  //     failureSFX.clip = failureClipSFX;
 
-        //hasInitialized = false;
-        //popup = GameObject.Find("Popup");
-        //popupHome = new Vector3(0, 10, 0);
+        hasInitialized = false;
+        popup = GameObject.Find("Popup");
+        popupHome = new Vector3(0, 10, 0);
+        freezeOverlay = GameObject.Find("FreezeOverlay (2)");
     }
 
     void Update()
     {
-        if (!gameOver)
+        if (!gameOver) //camera moved over to duck game
         {
 
-            //if (popup.transform.position == popupHome&&!hasInitialized) //if tutorial left screen
-           // {
-                //isTutorialPlaying = false;
-                //hasInitialized = true;
-            //InitializeDuckGame();
-            //}
-            timeRemaining -= Time.deltaTime;
-            timerText.text = "Time Left: " + Mathf.RoundToInt(timeRemaining);
+            if (!hasInitialized) //if game didnt start yet
+             {
+                if (popup.transform.position == popupHome)
+                { //if popup closed
+                    isTutorialPlaying = false;
+                    hasInitialized = true;
+                    InitializeDuckGame();
+                }
+                else if (!isTutorialPlaying) { 
+                    InitializeDuckGame(); 
+                    hasInitialized=true; 
+                }
+            }
 
-            if (timeRemaining <= 0)
+            if (!isTutorialPlaying) //start game when tutorial is closed or when no tutorial
             {
-                GameOver();
+                timeRemaining -= Time.deltaTime;
+                timerText.text = "Time Left: " + Mathf.RoundToInt(timeRemaining);
+
+                if (timeRemaining <= 0)
+                {
+                    GameOver();
+                }
             }
         }
-            /*
-            else if (!isTutorialPlaying)
-            {
-                hasInitialized = true;
-                InitializeCoinrunnerGame();
-            }
-            */
-
-            //if (!isTutorialPlaying)
-            //{
-                
-            //}
     }
 
 
@@ -111,20 +111,28 @@ public class DuckGameManager : MonoBehaviour
 
         if (timesPlayed == 1)
         {
-            //isTutorialPlaying = true;
+           
+            isTutorialPlaying = true;
+            Debug.Log("first time playing");
             glitchFreq = 0;
-            UIController.TriggerPopup(new Vector3(48f, 22.5f, -5), "Use the mouse to aim and left click to shoot.Take down all the ducks!");
+            UIController.TriggerPopup(new Vector3(48f, 22.5f, -9.1f), "Use the mouse to aim and left click to shoot.Take down all the ducks!");
         } else if (timesPlayed == 2)
         {
-            //isTutorialPlaying = false;
+            isTutorialPlaying = false;
             glitchFreq = 0.3f;
-            //InitializeDuckGame();
+            
         } else // day 3; need a variable to determine which route to take
         {
-            //isTutorialPlaying = false;
-            //InitializeDuckGame();
+            isTutorialPlaying = false;
+            
 
         }
+    }
+
+    private void InitializeDuckGame() {
+        freezeOverlay.SetActive(false);
+        GameObject.Find("SpawnManager").GetComponent<SpawnManager>().SpawnStart();
+        GameObject.Find("SpawnManagerFast").GetComponent<SpawnManagerFast>().SpawnStart();
     }
 
     IEnumerator GlitchCheckRoutine()
@@ -180,6 +188,10 @@ public class DuckGameManager : MonoBehaviour
         //Go to the leaderboard
         UIController.GetComponent<ComputerUIScript>().GoToPosition(new Vector3(90, 20, -10)); //go to the leaderboard
 
+        freezeOverlay.SetActive(true);
+        hasInitialized = false;
+
+
         score = 0;
         UpdateScoreText();
     }
@@ -212,10 +224,4 @@ public class DuckGameManager : MonoBehaviour
         scoreText.text = "Points: " + score;
 
     }
-
-    void InitializeDuckGame() {
-        
-        GameObject.Find("SpawnManager").GetComponent<SpawnManager>().SpawnStart();
-        GameObject.Find("SpawnManagerFast").GetComponent<SpawnManagerFast>().SpawnStart();
-}
 }

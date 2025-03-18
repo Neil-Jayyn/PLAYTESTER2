@@ -106,13 +106,13 @@ public class MinigameManager : MonoBehaviour
         {
             glitchFreq = 0.3f;
             isTutorialPlaying = false;
-            InitializeCoinrunnerGame();
-            freezeOverlay.SetActive(false);
+            //InitializeCoinrunnerGame();
+            
         } else // day 3; need a variable to determine which route to take
         {
             isTutorialPlaying = false;
-            InitializeCoinrunnerGame();
-            freezeOverlay.SetActive(false);
+            //InitializeCoinrunnerGame();
+            
 
         }
 
@@ -183,6 +183,8 @@ public class MinigameManager : MonoBehaviour
         isGameOver = true;
         timerText.text = "Time's Up!";
 
+        DisableCoinRunnerGame();
+
         LeaderboardText.SetText(points + " Points!");
 
         UIController.GetComponent<ComputerUIScript>().GoToPosition(new Vector3(90, 35, -10)); //go to the leaderboard
@@ -232,6 +234,7 @@ public class MinigameManager : MonoBehaviour
 
     void CheckIfTutorialClosed()
     {
+        //check if game initialised or in a tutorial
         if (!isGameOver&&!hasInitialized)
         {
             if (popup.transform.position == popupHome) //if tutorial left screen
@@ -239,6 +242,10 @@ public class MinigameManager : MonoBehaviour
                 isTutorialPlaying = false;
                 hasInitialized = true;
                 InitializeCoinrunnerGame();
+            }
+            else if (!isTutorialPlaying) {
+                InitializeCoinrunnerGame();
+                hasInitialized = true;
             }
             /*
             else if (!isTutorialPlaying)
@@ -251,6 +258,7 @@ public class MinigameManager : MonoBehaviour
     }
 
     void InitializeCoinrunnerGame() {
+        //start all game components to start game
         freezeOverlay.SetActive(false);
         SpawnMg.GetComponent<spawnMg>().SpawnMgStart();
         StartCoroutine(GlitchCheckRoutine());
@@ -258,6 +266,14 @@ public class MinigameManager : MonoBehaviour
         GameObject.Find("bg1").GetComponent<scrollBg>().startCoinMinigame = true;
         GameObject.Find("bg2").GetComponent<scrollBg>().startCoinMinigame = true;
         GameObject.Find("Player").GetComponent<Animator>().enabled = true;
+    }
+
+    void DisableCoinRunnerGame() {
+        //disable all game components
+        freezeOverlay.SetActive(true);
+        GameObject.Find("bg1").GetComponent<scrollBg>().startCoinMinigame = false;
+        GameObject.Find("bg2").GetComponent<scrollBg>().startCoinMinigame = false;
+        GameObject.Find("Player").GetComponent<Animator>().enabled = false;
     }
     
 

@@ -8,15 +8,15 @@ public class CupcakeGameManager : MonoBehaviour
 {
     [SerializeField]public float gameDuration = 60f;
 
+    //score handling
     public TMP_Text scoreText;
     public int scorePoints;
 
-    //int currentDay;
-
-    //timer text
+    //timer handling
     public TMP_Text timerText;
     public float timeRemaining = 0f;
     
+    //game states
     private bool gameOver;
     public bool gamePlaying;
     private bool tutorialPlaying;
@@ -46,9 +46,11 @@ public class CupcakeGameManager : MonoBehaviour
     public AudioClip sfxNormalYay;
     public AudioClip sfxGlitchedYay;
 
+    //tutorial freeze
     public GameObject popup;
     Vector3 popupHome;
     GameObject freezeOverlay;
+
     EnemySpawner spawner1;
     EnemySpawner spawner2;
 
@@ -61,11 +63,12 @@ public class CupcakeGameManager : MonoBehaviour
         timesPlayed = 0;
 
         UIController = GameObject.Find("UI Controller").GetComponent<ComputerUIScript>();
-        popup = GameObject.Find("Popup");
-        freezeOverlay = GameObject.Find("FreezeOverlay");
         MainGameManager = GameObject.Find("Game Manager");
-        sfx=GetComponent<AudioSource>();
+        sfx = GetComponent<AudioSource>();
+
+        popup = GameObject.Find("Popup");
         popupHome = new Vector3(0, 10, 0);
+        freezeOverlay = GameObject.Find("FreezeOverlay");
         GameObject.Find("cupcakeHolder").GetComponent<Animator>().enabled = false;
 
         spawner1 = GameObject.Find("EnemySpawner").GetComponent<EnemySpawner>();
@@ -86,9 +89,7 @@ public class CupcakeGameManager : MonoBehaviour
         scorePoints = 0;
         UpdateScoreText();
 
-        //normalcupcakeColor = cupcakeRenderer.color;
         timerText.text = "Time Left: " + gameDuration.ToString();
-        //StartCoroutine(GlitchCheckRoutine());
         
         //set the timer for the game
         timeRemaining = gameDuration;
@@ -128,12 +129,13 @@ public class CupcakeGameManager : MonoBehaviour
 
         if (gamePlaying) //camera moved over to minigame
         {
-            if (popup.transform.position == popupHome) //if tutorial left screen
+            if (tutorialPlaying == false)
+            {
+                InitializeCupcakeGame();
+            } 
+            else if (popup.transform.position == popupHome) //if tutorial left screen
             {
                 tutorialPlaying = false;
-                InitializeCupcakeGame();
-            }else if (tutorialPlaying == false)
-            {
                 InitializeCupcakeGame();
             }
 
@@ -198,10 +200,11 @@ public class CupcakeGameManager : MonoBehaviour
     {
         gamePlaying = false;
         gameOver = true;
+        tutorialPlaying = true;
         timerText.text = "Game Stop!";
         //Time.timeScale = 0f; // Stop everything
 
-        //set the enemy spawner script to false
+        //set the enemy spawners script to false
         GameObject.Find("EnemySpawner").GetComponent<EnemySpawner>().playCupcakeMinigame = false;
         GameObject.Find("EnemySpawner (1)").GetComponent<EnemySpawner>().playCupcakeMinigame = false;
 
@@ -214,6 +217,7 @@ public class CupcakeGameManager : MonoBehaviour
         //Go back to the main script and say that the game is done:
         GameObject.Find("Game Manager").GetComponent<GameManagerScript>().CompletedMinigame(score);
 
+        //disable oven
         GameObject.Find("cupcakeHolder").GetComponent<playerMovement>().playCupcakeMinigame = false;
         GameObject.Find("cupcakeHolder").GetComponent<Animator>().enabled = false;
 
@@ -259,36 +263,4 @@ public class CupcakeGameManager : MonoBehaviour
 
         return (int)score;
     }
-
-
-
-
-    /*
-     aaah
-    IEnumerator GlitchCheckRoutine()
-    {
-        while (!gameOver)
-        {
-            yield return new WaitForSeconds(glitchRestTime); // Check every second
-
-            if (glitchFrequency > 0 && Random.value < glitchFrequency) // If we get a random value less than the glitch frequency, the glitches will occur
-            {
-                StartCoroutine(ActivateGlitch());
-            }
-        }
-    }
-    IEnumerator ActivateGlitch()
-    {
-        // Apply glitch effects
-        cupcakeRenderer.color = glitchColor;
-
-        yield return new WaitForSeconds(1f); // Glitch lasts 1 second
-
-        // Revert to normal if the glitch frequency isn't 100%
-        if (glitchFrequency != 1)
-        {
-            cupcakeRenderer.color = normalcupcakeColor;
-        }
-
-    }*/
 }

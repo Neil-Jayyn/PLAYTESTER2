@@ -5,8 +5,8 @@ using UnityEngine;
 public class enemyMovement : MonoBehaviour
 { 
     public float speed;
-    [SerializeField] private float maxSpeed;
-    [SerializeField] private float minSpeed;
+    [SerializeField] public float maxSpeed;
+    [SerializeField] public  float minSpeed;
 
     //color choice
     [SerializeField] Color color1= new Color(0f,32f,101f,1f);
@@ -102,5 +102,15 @@ public class enemyMovement : MonoBehaviour
                 spriteRenderer.color = Color.white;
                 break;
         }
+    }
+
+    public void SetSpeedRange(float min,float max) { 
+        minSpeed= min;
+        maxSpeed= max;
+    }
+
+    public void ResetSpeedRange(float min, float max) {
+        minSpeed = min;
+        maxSpeed = max;
     }
 }
