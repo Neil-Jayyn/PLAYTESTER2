@@ -3,24 +3,40 @@
   "WorkspaceRootPath": "C:\\Users\\User\\Documents\\GitHub\\PLAYTESTER2\\PLAYTESTER (not a scam)\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{548880D0-CE1B-082E-6B94-80A99DC88EB8}|Assembly-CSharp.csproj|c:\\users\\user\\documents\\github\\playtester2\\playtester (not a scam)\\assets\\assets\\duck minigame\\scripts\\duckgamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{548880D0-CE1B-082E-6B94-80A99DC88EB8}|Assembly-CSharp.csproj|solutionrelative:assets\\assets\\duck minigame\\scripts\\duckgamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{548880D0-CE1B-082E-6B94-80A99DC88EB8}|Assembly-CSharp.csproj|c:\\users\\user\\documents\\github\\playtester2\\playtester (not a scam)\\assets\\assets\\duck minigame\\scripts\\spawnmanagerfast.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{548880D0-CE1B-082E-6B94-80A99DC88EB8}|Assembly-CSharp.csproj|solutionrelative:assets\\assets\\duck minigame\\scripts\\spawnmanagerfast.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{548880D0-CE1B-082E-6B94-80A99DC88EB8}|Assembly-CSharp.csproj|C:\\Users\\User\\Documents\\GitHub\\PLAYTESTER2\\PLAYTESTER (not a scam)\\assets\\assets\\coin minigame\\scripts\\minigamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{548880D0-CE1B-082E-6B94-80A99DC88EB8}|Assembly-CSharp.csproj|solutionrelative:assets\\assets\\coin minigame\\scripts\\minigamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{548880D0-CE1B-082E-6B94-80A99DC88EB8}|Assembly-CSharp.csproj|c:\\users\\user\\documents\\github\\playtester2\\playtester (not a scam)\\assets\\assets\\duck minigame\\scripts\\spawnmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{548880D0-CE1B-082E-6B94-80A99DC88EB8}|Assembly-CSharp.csproj|solutionrelative:assets\\assets\\duck minigame\\scripts\\spawnmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{548880D0-CE1B-082E-6B94-80A99DC88EB8}|Assembly-CSharp.csproj|c:\\users\\user\\documents\\github\\playtester2\\playtester (not a scam)\\assets\\assets\\coin minigame\\scripts\\spawnmg.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{548880D0-CE1B-082E-6B94-80A99DC88EB8}|Assembly-CSharp.csproj|solutionrelative:assets\\assets\\coin minigame\\scripts\\spawnmg.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{548880D0-CE1B-082E-6B94-80A99DC88EB8}|Assembly-CSharp.csproj|c:\\users\\user\\documents\\github\\playtester2\\playtester (not a scam)\\assets\\assets\\coin minigame\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{548880D0-CE1B-082E-6B94-80A99DC88EB8}|Assembly-CSharp.csproj|solutionrelative:assets\\assets\\coin minigame\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{548880D0-CE1B-082E-6B94-80A99DC88EB8}|Assembly-CSharp.csproj|c:\\users\\user\\documents\\github\\playtester2\\playtester (not a scam)\\assets\\assets\\coin minigame\\scripts\\minigamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{548880D0-CE1B-082E-6B94-80A99DC88EB8}|Assembly-CSharp.csproj|solutionrelative:assets\\assets\\coin minigame\\scripts\\minigamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{548880D0-CE1B-082E-6B94-80A99DC88EB8}|Assembly-CSharp.csproj|C:\\Users\\User\\Documents\\GitHub\\PLAYTESTER2\\PLAYTESTER (not a scam)\\assets\\assets\\cupcake minigame\\scripts\\cupcakegamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{548880D0-CE1B-082E-6B94-80A99DC88EB8}|Assembly-CSharp.csproj|solutionrelative:assets\\assets\\cupcake minigame\\scripts\\cupcakegamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{548880D0-CE1B-082E-6B94-80A99DC88EB8}|Assembly-CSharp.csproj|C:\\Users\\User\\Documents\\GitHub\\PLAYTESTER2\\PLAYTESTER (not a scam)\\assets\\assets\\cupcake minigame\\scripts\\enemymovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{548880D0-CE1B-082E-6B94-80A99DC88EB8}|Assembly-CSharp.csproj|solutionrelative:assets\\assets\\cupcake minigame\\scripts\\enemymovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{548880D0-CE1B-082E-6B94-80A99DC88EB8}|Assembly-CSharp.csproj|C:\\Users\\User\\Documents\\GitHub\\PLAYTESTER2\\PLAYTESTER (not a scam)\\assets\\assets\\cupcake minigame\\scripts\\enemyspawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{548880D0-CE1B-082E-6B94-80A99DC88EB8}|Assembly-CSharp.csproj|solutionrelative:assets\\assets\\cupcake minigame\\scripts\\enemyspawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{548880D0-CE1B-082E-6B94-80A99DC88EB8}|Assembly-CSharp.csproj|C:\\Users\\User\\Documents\\GitHub\\PLAYTESTER2\\PLAYTESTER (not a scam)\\assets\\assets\\coin minigame\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{548880D0-CE1B-082E-6B94-80A99DC88EB8}|Assembly-CSharp.csproj|solutionrelative:assets\\assets\\coin minigame\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{548880D0-CE1B-082E-6B94-80A99DC88EB8}|Assembly-CSharp.csproj|C:\\Users\\User\\Documents\\GitHub\\PLAYTESTER2\\PLAYTESTER (not a scam)\\assets\\assets\\cupcake minigame\\scripts\\cupcakemovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -35,10 +51,6 @@
       "RelativeMoniker": "D:0:0:{548880D0-CE1B-082E-6B94-80A99DC88EB8}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\appscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{548880D0-CE1B-082E-6B94-80A99DC88EB8}|Assembly-CSharp.csproj|C:\\Users\\User\\Documents\\GitHub\\PLAYTESTER2\\PLAYTESTER (not a scam)\\assets\\assets\\cupcake minigame\\scripts\\enemymovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{548880D0-CE1B-082E-6B94-80A99DC88EB8}|Assembly-CSharp.csproj|solutionrelative:assets\\assets\\cupcake minigame\\scripts\\enemymovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{548880D0-CE1B-082E-6B94-80A99DC88EB8}|Assembly-CSharp.csproj|C:\\Users\\User\\Documents\\GitHub\\PLAYTESTER2\\PLAYTESTER (not a scam)\\assets\\assets\\cupcake minigame\\scripts\\speedyenemymovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{548880D0-CE1B-082E-6B94-80A99DC88EB8}|Assembly-CSharp.csproj|solutionrelative:assets\\assets\\cupcake minigame\\scripts\\speedyenemymovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -50,11 +62,50 @@
       "DocumentGroups": [
         {
           "DockedWidth": 315,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "SpawnManagerFast.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Documents\\GitHub\\PLAYTESTER2\\PLAYTESTER (not a scam)\\Assets\\Assets\\Duck Minigame\\Scripts\\SpawnManagerFast.cs",
+              "RelativeDocumentMoniker": "Assets\\Assets\\Duck Minigame\\Scripts\\SpawnManagerFast.cs",
+              "ToolTip": "C:\\Users\\User\\Documents\\GitHub\\PLAYTESTER2\\PLAYTESTER (not a scam)\\Assets\\Assets\\Duck Minigame\\Scripts\\SpawnManagerFast.cs",
+              "RelativeToolTip": "Assets\\Assets\\Duck Minigame\\Scripts\\SpawnManagerFast.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAQwBUAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-18T02:28:12.024Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "SpawnManager.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Documents\\GitHub\\PLAYTESTER2\\PLAYTESTER (not a scam)\\Assets\\Assets\\Duck Minigame\\Scripts\\SpawnManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Assets\\Duck Minigame\\Scripts\\SpawnManager.cs",
+              "ToolTip": "C:\\Users\\User\\Documents\\GitHub\\PLAYTESTER2\\PLAYTESTER (not a scam)\\Assets\\Assets\\Duck Minigame\\Scripts\\SpawnManager.cs",
+              "RelativeToolTip": "Assets\\Assets\\Duck Minigame\\Scripts\\SpawnManager.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAzwBIAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-18T02:28:09.246Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "DuckGameManager.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Documents\\GitHub\\PLAYTESTER2\\PLAYTESTER (not a scam)\\Assets\\Assets\\Duck Minigame\\Scripts\\DuckGameManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Assets\\Duck Minigame\\Scripts\\DuckGameManager.cs",
+              "ToolTip": "C:\\Users\\User\\Documents\\GitHub\\PLAYTESTER2\\PLAYTESTER (not a scam)\\Assets\\Assets\\Duck Minigame\\Scripts\\DuckGameManager.cs",
+              "RelativeToolTip": "Assets\\Assets\\Duck Minigame\\Scripts\\DuckGameManager.cs",
+              "ViewState": "AgIAAHEAAAAAAAAAAAAgwHsAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-18T02:06:27.594Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "player.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\GitHub\\PLAYTESTER2\\PLAYTESTER (not a scam)\\Assets\\Assets\\Coin Minigame\\Scripts\\player.cs",
               "RelativeDocumentMoniker": "Assets\\Assets\\Coin Minigame\\Scripts\\player.cs",
@@ -62,18 +113,17 @@
               "RelativeToolTip": "Assets\\Assets\\Coin Minigame\\Scripts\\player.cs",
               "ViewState": "AgIAAAgAAAAAAAAAAAAAwCwAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-18T01:26:43.601Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-18T01:26:43.601Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "spawnMg.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\GitHub\\PLAYTESTER2\\PLAYTESTER (not a scam)\\Assets\\Assets\\Coin Minigame\\Scripts\\spawnMg.cs",
               "RelativeDocumentMoniker": "Assets\\Assets\\Coin Minigame\\Scripts\\spawnMg.cs",
               "ToolTip": "C:\\Users\\User\\Documents\\GitHub\\PLAYTESTER2\\PLAYTESTER (not a scam)\\Assets\\Assets\\Coin Minigame\\Scripts\\spawnMg.cs",
               "RelativeToolTip": "Assets\\Assets\\Coin Minigame\\Scripts\\spawnMg.cs",
-              "ViewState": "AgIAACwAAAAAAAAAAAAgwDEAAABEAAAAAAAAAA==",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAAwDEAAABEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-18T01:09:39.008Z",
               "EditorCaption": ""
@@ -86,14 +136,14 @@
               "RelativeDocumentMoniker": "Assets\\Assets\\Coin Minigame\\Scripts\\MinigameManager.cs",
               "ToolTip": "C:\\Users\\User\\Documents\\GitHub\\PLAYTESTER2\\PLAYTESTER (not a scam)\\Assets\\Assets\\Coin Minigame\\Scripts\\MinigameManager.cs",
               "RelativeToolTip": "Assets\\Assets\\Coin Minigame\\Scripts\\MinigameManager.cs",
-              "ViewState": "AgIAAFoAAAAAAAAAAAAYwGkAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAOQAAAAAAAAAAAAqwFIAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-18T00:21:34.462Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 10,
               "Title": "scrollBg.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\GitHub\\PLAYTESTER2\\PLAYTESTER (not a scam)\\Assets\\Assets\\Coin Minigame\\Scripts\\scrollBg.cs",
               "RelativeDocumentMoniker": "Assets\\Assets\\Coin Minigame\\Scripts\\scrollBg.cs",
@@ -105,7 +155,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 12,
               "Title": "speedyEnemyMovement.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\GitHub\\PLAYTESTER2\\PLAYTESTER (not a scam)\\Assets\\Assets\\Cupcake Minigame\\Scripts\\speedyEnemyMovement.cs",
               "RelativeDocumentMoniker": "Assets\\Assets\\Cupcake Minigame\\Scripts\\speedyEnemyMovement.cs",
@@ -117,7 +167,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 11,
               "Title": "AppScript.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\GitHub\\PLAYTESTER2\\PLAYTESTER (not a scam)\\Assets\\Scripts\\AppScript.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\AppScript.cs",
@@ -129,33 +179,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "CupcakeGameManager.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\GitHub\\PLAYTESTER2\\PLAYTESTER (not a scam)\\Assets\\Assets\\Cupcake Minigame\\Scripts\\CupcakeGameManager.cs",
               "RelativeDocumentMoniker": "Assets\\Assets\\Cupcake Minigame\\Scripts\\CupcakeGameManager.cs",
               "ToolTip": "C:\\Users\\User\\Documents\\GitHub\\PLAYTESTER2\\PLAYTESTER (not a scam)\\Assets\\Assets\\Cupcake Minigame\\Scripts\\CupcakeGameManager.cs",
               "RelativeToolTip": "Assets\\Assets\\Cupcake Minigame\\Scripts\\CupcakeGameManager.cs",
-              "ViewState": "AgIAACMAAAAAAAAAAAAAwGQAAAA/AAAAAAAAAA==",
+              "ViewState": "AgIAAKUAAAAAAAAAAAAowJAAAABRAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-11T08:34:00.522Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "EnemySpawner.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\GitHub\\PLAYTESTER2\\PLAYTESTER (not a scam)\\Assets\\Assets\\Cupcake Minigame\\Scripts\\EnemySpawner.cs",
               "RelativeDocumentMoniker": "Assets\\Assets\\Cupcake Minigame\\Scripts\\EnemySpawner.cs",
               "ToolTip": "C:\\Users\\User\\Documents\\GitHub\\PLAYTESTER2\\PLAYTESTER (not a scam)\\Assets\\Assets\\Cupcake Minigame\\Scripts\\EnemySpawner.cs",
               "RelativeToolTip": "Assets\\Assets\\Cupcake Minigame\\Scripts\\EnemySpawner.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAAwEcAAAAnAAAAAAAAAA==",
+              "ViewState": "AgIAABYAAAAAAAAAAAAIwFAAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-25T02:44:13.749Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 9,
               "Title": "CupcakeMovement.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\GitHub\\PLAYTESTER2\\PLAYTESTER (not a scam)\\Assets\\Assets\\Cupcake Minigame\\Scripts\\CupcakeMovement.cs",
               "RelativeDocumentMoniker": "Assets\\Assets\\Cupcake Minigame\\Scripts\\CupcakeMovement.cs",
@@ -163,20 +213,20 @@
               "RelativeToolTip": "Assets\\Assets\\Cupcake Minigame\\Scripts\\CupcakeMovement.cs",
               "ViewState": "AgIAACAAAAAAAAAAAAAgwCgAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-10T05:17:50.132Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-10T05:17:50.132Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 6,
               "Title": "enemyMovement.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\GitHub\\PLAYTESTER2\\PLAYTESTER (not a scam)\\Assets\\Assets\\Cupcake Minigame\\Scripts\\enemyMovement.cs",
               "RelativeDocumentMoniker": "Assets\\Assets\\Cupcake Minigame\\Scripts\\enemyMovement.cs",
               "ToolTip": "C:\\Users\\User\\Documents\\GitHub\\PLAYTESTER2\\PLAYTESTER (not a scam)\\Assets\\Assets\\Cupcake Minigame\\Scripts\\enemyMovement.cs",
               "RelativeToolTip": "Assets\\Assets\\Cupcake Minigame\\Scripts\\enemyMovement.cs",
-              "ViewState": "AgIAAC0AAAAAAAAAAAAYwDsAAAAgAAAAAAAAAA==",
+              "ViewState": "AgIAACIAAAAAAAAAAAAQwDsAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-24T03:00:14.237Z"
+              "WhenOpened": "2025-02-24T03:00:14.237Z",
+              "EditorCaption": ""
             }
           ]
         }

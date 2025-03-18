@@ -14,6 +14,10 @@ public class SpawnManagerFast : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+       // StartCoroutine(SpawnItems());
+    }
+
+    public void SpawnStart() {
         StartCoroutine(SpawnItems());
     }
 

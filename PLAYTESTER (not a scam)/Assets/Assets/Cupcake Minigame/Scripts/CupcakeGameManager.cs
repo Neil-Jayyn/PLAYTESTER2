@@ -6,7 +6,7 @@ using Kino;
 
 public class CupcakeGameManager : MonoBehaviour
 {
-    public float gameDuration = 30f;
+    [SerializeField]public float gameDuration = 60f;
 
     public TMP_Text scoreText;
     public int scorePoints;

@@ -44,7 +44,7 @@ public class EnemySpawner : MonoBehaviour
                 isSpeedyObject = true;
             }
 
-            if ((waitTime <= 0 || currentNumEnemies == 0) && currentNumEnemies < numEnemies)
+            if ((waitTime <= 0 || currentNumEnemies == 0))
             {
                 if (!isSpeedyObject)
                 {
@@ -75,7 +75,7 @@ public class EnemySpawner : MonoBehaviour
     }
 
     void setSpawnTime(){
-        waitTime=Random.Range(0.5f,4.0f);
+        waitTime=Random.Range(0.5f,2.0f);
     }
 
     void resetSpawner() {
