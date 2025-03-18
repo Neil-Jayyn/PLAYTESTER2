@@ -188,16 +188,19 @@ public class GameManagerScript : MonoBehaviour
         if (minigamesPlayed >= 2) { coinCheck.transform.position = check2Location; } //display second check
         if (minigamesPlayed == 3) { duckCheck.transform.position = check3Location; } //display third check
 
-        //StartCoroutine(SlowDisplayGoodAndEvilBios());
     }
 
     //Called by pressing clock out button when all games have been played
     public void CompletedDay()
     {
+        //boot up animation
+        BootUpandDown(niceBios);
+
+
         day += 1;
         minigamesPlayed = 0;
 
-        //TODO: Hide all dashboard checkmarks
+        // Hide all dashboard checkmarks
         HideCheckmarks();
 
         //Update news articles
@@ -394,36 +397,44 @@ public class GameManagerScript : MonoBehaviour
     //Function called by the AppScript when the EMP happens.
     public void StartEMP()
     {
-        //TODO: Add in here the audio cutting out or other effects
-
-        EMPHappened = true;
+        //Start the "animation"
         UIController.GetComponent<ComputerUIScript>().GoToPosition(EMPLocation);
+        StartCoroutine(EMPCoroutine());
+
+        //Do our post emp set up
+        EMPHappened = true;  
         UpdateNews();
         DisplayCompanyMessage();
 
-        StartCoroutine(SlowDisplayGoodAndEvilBios());
+        
 
     }
 
     //Computer boot up sequence, slowly display the text to the screen
-    public void BootUpSequence(string bios)
+    public void BootUpandDown(string bios)
     {
-        
-        StartCoroutine(SlowDisplayText(bios));
-
-        //Go back to the main screen
-
+        StartCoroutine(BootUpandDownCo(bios));
     }
 
+
     //Used by the bios to incrementally display text (to EMP Text object)
-    IEnumerator SlowDisplayText(string bios)
+    IEnumerator BootUpandDownCo(string bios)
     {
+        //TOOD: ADD AUDIO
+
+        UIController.GetComponent<ComputerUIScript>().GoToPosition(new Vector3(0, -15, -10));
+
+        //SETUP
         float between = 0.005f; //time between characters appearing
-
-
         string toDisplay = "";
         int len = (int)bios.Length;
 
+        //TODO: add boot down animation
+        //for now just sit on a black screen for a second
+        biosText.SetText("");
+        yield return new WaitForSeconds(1f);
+
+        //boot up
         for (int i = 0; i < len;)
         {
 
@@ -440,30 +451,36 @@ public class GameManagerScript : MonoBehaviour
 
     }
 
-    IEnumerator SlowDisplayGoodAndEvilBios()
+    IEnumerator EMPCoroutine()
     {
+        //SETUP
         float between = 0.005f; //time between characters appearing
-
-        string bios = evilBios;
-
         string toDisplay = "";
-        int len = (int)bios.Length;
+        string bios;
 
+        //TODO: add audio
+        //black screen for 3 seconds
+        biosText.SetText("");
+        yield return new WaitForSeconds(3f);
+
+        //start displaying the evil bios
+        bios = evilBios;
+        int len = (int)bios.Length;
         for (int i = 0; i < len;)
         {
-
             //display next char
             toDisplay += bios[i];
             biosText.SetText(toDisplay);
             i++;
             yield return new WaitForSeconds(between);
-
-
         }
 
+        //transition between
+        //TOOD: add glitch effect here
         yield return new WaitForSeconds(1f);
         biosText.SetText("");
 
+        //start the normal nice bios boot up
         bios = niceBios;
 
         toDisplay = "";
@@ -481,6 +498,7 @@ public class GameManagerScript : MonoBehaviour
 
         }
 
+        //rest on the nice bios screen
         yield return new WaitForSeconds(1);
         UIController.GetComponent<ComputerUIScript>().GoToPosition(new Vector3(0, 0, -10));
 
