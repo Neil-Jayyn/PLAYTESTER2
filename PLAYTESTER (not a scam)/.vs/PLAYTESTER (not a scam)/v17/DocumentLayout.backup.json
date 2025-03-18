@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\User\\Documents\\GitHub\\PLAYTESTER2\\PLAYTESTER (not a scam)\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{548880D0-CE1B-082E-6B94-80A99DC88EB8}|Assembly-CSharp.csproj|C:\\Users\\User\\Documents\\GitHub\\PLAYTESTER2\\PLAYTESTER (not a scam)\\assets\\assets\\coin minigame\\scripts\\minigamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{548880D0-CE1B-082E-6B94-80A99DC88EB8}|Assembly-CSharp.csproj|solutionrelative:assets\\assets\\coin minigame\\scripts\\minigamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{548880D0-CE1B-082E-6B94-80A99DC88EB8}|Assembly-CSharp.csproj|C:\\Users\\User\\Documents\\GitHub\\PLAYTESTER2\\PLAYTESTER (not a scam)\\assets\\assets\\duck minigame\\scripts\\duckgamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{548880D0-CE1B-082E-6B94-80A99DC88EB8}|Assembly-CSharp.csproj|solutionrelative:assets\\assets\\duck minigame\\scripts\\duckgamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{548880D0-CE1B-082E-6B94-80A99DC88EB8}|Assembly-CSharp.csproj|c:\\users\\user\\documents\\github\\playtester2\\playtester (not a scam)\\assets\\assets\\duck minigame\\scripts\\duckgamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{548880D0-CE1B-082E-6B94-80A99DC88EB8}|Assembly-CSharp.csproj|solutionrelative:assets\\assets\\duck minigame\\scripts\\duckgamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{548880D0-CE1B-082E-6B94-80A99DC88EB8}|Assembly-CSharp.csproj|c:\\users\\user\\documents\\github\\playtester2\\playtester (not a scam)\\assets\\assets\\coin minigame\\scripts\\minigamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{548880D0-CE1B-082E-6B94-80A99DC88EB8}|Assembly-CSharp.csproj|solutionrelative:assets\\assets\\coin minigame\\scripts\\minigamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{548880D0-CE1B-082E-6B94-80A99DC88EB8}|Assembly-CSharp.csproj|C:\\Users\\User\\Documents\\GitHub\\PLAYTESTER2\\PLAYTESTER (not a scam)\\assets\\assets\\duck minigame\\scripts\\spawnmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -62,7 +62,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 315,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
@@ -74,8 +74,7 @@
               "RelativeToolTip": "Assets\\Assets\\Duck Minigame\\Scripts\\SpawnManagerFast.cs",
               "ViewState": "AgIAAAUAAAAAAAAAAAAAwBcAAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-18T02:28:12.024Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-18T02:28:12.024Z"
             },
             {
               "$type": "Document",
@@ -87,18 +86,17 @@
               "RelativeToolTip": "Assets\\Assets\\Duck Minigame\\Scripts\\SpawnManager.cs",
               "ViewState": "AgIAAA4AAAAAAAAAAAAAwBIAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-18T02:28:09.246Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-18T02:28:09.246Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "DuckGameManager.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\GitHub\\PLAYTESTER2\\PLAYTESTER (not a scam)\\Assets\\Assets\\Duck Minigame\\Scripts\\DuckGameManager.cs",
               "RelativeDocumentMoniker": "Assets\\Assets\\Duck Minigame\\Scripts\\DuckGameManager.cs",
               "ToolTip": "C:\\Users\\User\\Documents\\GitHub\\PLAYTESTER2\\PLAYTESTER (not a scam)\\Assets\\Assets\\Duck Minigame\\Scripts\\DuckGameManager.cs",
               "RelativeToolTip": "Assets\\Assets\\Duck Minigame\\Scripts\\DuckGameManager.cs",
-              "ViewState": "AgIAAEUAAAAAAAAAAAAYwFIAAAARAAAAAAAAAA==",
+              "ViewState": "AgIAABoAAAAAAAAAAAAAwH4AAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-18T02:06:27.594Z",
               "EditorCaption": ""
@@ -113,8 +111,7 @@
               "RelativeToolTip": "Assets\\Assets\\Coin Minigame\\Scripts\\player.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAACwAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-18T01:26:43.601Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-18T01:26:43.601Z"
             },
             {
               "$type": "Document",
@@ -126,18 +123,17 @@
               "RelativeToolTip": "Assets\\Assets\\Coin Minigame\\Scripts\\spawnMg.cs",
               "ViewState": "AgIAAD0AAAAAAAAAAAAkwDkAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-18T01:09:39.008Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-18T01:09:39.008Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "MinigameManager.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\GitHub\\PLAYTESTER2\\PLAYTESTER (not a scam)\\Assets\\Assets\\Coin Minigame\\Scripts\\MinigameManager.cs",
               "RelativeDocumentMoniker": "Assets\\Assets\\Coin Minigame\\Scripts\\MinigameManager.cs",
               "ToolTip": "C:\\Users\\User\\Documents\\GitHub\\PLAYTESTER2\\PLAYTESTER (not a scam)\\Assets\\Assets\\Coin Minigame\\Scripts\\MinigameManager.cs",
               "RelativeToolTip": "Assets\\Assets\\Coin Minigame\\Scripts\\MinigameManager.cs",
-              "ViewState": "AgIAALMAAAAAAAAAAAAcwLkAAAAgAAAAAAAAAA==",
+              "ViewState": "AgIAABEAAAAAAAAAAAAAwNYAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-18T00:21:34.462Z",
               "EditorCaption": ""
@@ -164,8 +160,7 @@
               "RelativeToolTip": "Assets\\Assets\\Cupcake Minigame\\Scripts\\speedyEnemyMovement.cs",
               "ViewState": "AgIAAAUAAAAAAAAAAAAAwAwAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-16T18:54:44.277Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-16T18:54:44.277Z"
             },
             {
               "$type": "Document",
@@ -189,8 +184,7 @@
               "RelativeToolTip": "Assets\\Assets\\Cupcake Minigame\\Scripts\\CupcakeGameManager.cs",
               "ViewState": "AgIAACcAAAAAAAAAAAAowAgBAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-11T08:34:00.522Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-11T08:34:00.522Z"
             },
             {
               "$type": "Document",
@@ -202,8 +196,7 @@
               "RelativeToolTip": "Assets\\Assets\\Cupcake Minigame\\Scripts\\EnemySpawner.cs",
               "ViewState": "AgIAABEAAAAAAAAAAAAAwHEAAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-25T02:44:13.749Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-25T02:44:13.749Z"
             },
             {
               "$type": "Document",
@@ -227,8 +220,7 @@
               "RelativeToolTip": "Assets\\Assets\\Cupcake Minigame\\Scripts\\enemyMovement.cs",
               "ViewState": "AgIAAGkAAAAAAAAAAAAowHEAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-24T03:00:14.237Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-24T03:00:14.237Z"
             }
           ]
         }

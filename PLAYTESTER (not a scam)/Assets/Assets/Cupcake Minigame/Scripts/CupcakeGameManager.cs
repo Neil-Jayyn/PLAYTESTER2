@@ -112,6 +112,7 @@ public class CupcakeGameManager : MonoBehaviour
             
         } else // day 3; need a variable to determine which route to take
         {
+            glitchFrequency=MainGameManager.GetComponent<GameManagerScript>().GlitchFreqFromEnding();
             tutorialPlaying=false;
             freezeOverlay.SetActive(false);
             spawner1.SetNumOfEnemies(27);

@@ -106,13 +106,14 @@ public class MinigameManager : MonoBehaviour
         {
             glitchFreq = 0.3f;
             isTutorialPlaying = false;
-            //InitializeCoinrunnerGame();
+            InitializeCoinrunnerGame();
             
         } else // day 3; need a variable to determine which route to take
         {
             isTutorialPlaying = false;
-            //InitializeCoinrunnerGame();
-            
+            InitializeCoinrunnerGame();
+            glitchFreq=MainGameManager.GetComponent<GameManagerScript>().GlitchFreqFromEnding();
+
 
         }
 
@@ -237,23 +238,18 @@ public class MinigameManager : MonoBehaviour
         //check if game initialised or in a tutorial
         if (!isGameOver&&!hasInitialized)
         {
-            if (popup.transform.position == popupHome) //if tutorial left screen
+            if (!isTutorialPlaying)
+            {
+                InitializeCoinrunnerGame();
+                hasInitialized = true;
+            }
+            else if (popup.transform.position == popupHome) //if tutorial left screen
             {
                 isTutorialPlaying = false;
                 hasInitialized = true;
                 InitializeCoinrunnerGame();
             }
-            else if (!isTutorialPlaying) {
-                InitializeCoinrunnerGame();
-                hasInitialized = true;
-            }
-            /*
-            else if (!isTutorialPlaying)
-            {
-                hasInitialized = true;
-                InitializeCoinrunnerGame();
-            }
-            */
+
         }
     }
 
@@ -270,7 +266,7 @@ public class MinigameManager : MonoBehaviour
 
     void DisableCoinRunnerGame() {
         //disable all game components
-        freezeOverlay.SetActive(true);
+        //freezeOverlay.SetActive(true);
         GameObject.Find("bg1").GetComponent<scrollBg>().startCoinMinigame = false;
         GameObject.Find("bg2").GetComponent<scrollBg>().startCoinMinigame = false;
         GameObject.Find("Player").GetComponent<Animator>().enabled = false;

@@ -6,10 +6,14 @@ public class complicitPlayer : MonoBehaviour
 {
     public SpriteRenderer crosshairSprite;
     public bool gamePlaying;
+
+    GameObject complicitManager;
     // Start is called before the first frame update
     void Start()
     {
         gamePlaying = false;
+        complicitManager = GameObject.Find("Complicit GameManager");
+      
     }
 
     // Update is called once per frame
