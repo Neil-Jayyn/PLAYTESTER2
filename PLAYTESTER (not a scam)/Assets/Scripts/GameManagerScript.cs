@@ -12,11 +12,14 @@ public class GameManagerScript : MonoBehaviour
     public int HP; //Tracks the current HP (0 to 100)
     public bool EMPHappened;
     private Vector3 EMPLocation = new Vector3(0, -15, -10);
+    public bool gameStarted = false;
 
     private GameObject Bar;
     public AudioSource MusicPlayer;
     public AudioSource GlitchMusicPlayer; // Both musicPlayer and glitchMusicPlayer will play, but one will be muted depending on glitch frequency
     private GameObject UIController;
+    public GameObject MainCamera;
+    public GameObject border;
 
     //All audio tracks (sound effects are handled in their minigames but the minigame music is
     //all handled in this script
@@ -25,6 +28,7 @@ public class GameManagerScript : MonoBehaviour
     public AudioClip coinTrack;
     public AudioClip duckTrack;
     public AudioClip glitchedCoinTrack;
+    public AudioClip titleScreenAudio;
     public bool isGlitchActive = false;
     public float glitchDuration = 1.0f;
     private float glitchCooldown = 1f; // Cooldown for glitch check (1 second)
@@ -65,11 +69,15 @@ public class GameManagerScript : MonoBehaviour
     // Reference to coin runner minigame manager
     public MinigameManager coinMinigameManager;
 
-    //BIOS and EMP related screen info
+    //BIOS + EMP + Reboot related screen info
     private TMPro.TextMeshProUGUI biosText;
     private string niceBios = "FRIENDLYBIOS(C)2744 Gen. Playtester Company INC\r\n\r\nACCESS: HUMAN [CONFIRM]\r\nCORE OVERRIDE: [HIDDEN] BYPASS\r\nINITIALIZING ARCANE-S2E3M19:26 GAMING ACPI BIOS Revision 1.0\r\nLAUNCHING AI CORE VER18 HIGHER PROCESSING UNIT (HPU)\r\nSpeed: 5000THz\r\n\r\nTotal Memory: 7554GB (DDR8-4900)\r\n\r\nDetected ATA-K Devices: \r\n[DEVICE_1] - CONNECTED\r\n[DEVICE_2] - CONNECTED\r\n[DEVICE_3] - CONNECTED\r\n\r\nOVERRIDE SUCCESSFUL\r\nSTARTUP SUCCESSFUL\r\nSTAY FROSTING\r\n";
     private string evilBios = "Weapon_Sys BIOS\r\n\r\nWEAPONS_SYS(C)2744 Gen. MILITARY VER INC\r\n\r\nACCESS: HUMAN [CONFIRM]\r\nCORE OVERRIDE: ENABLED BYPASS\r\nINITIALIZING MILITARYPROG-BB0678 WEAPONSYS_ACPI BIOS Revision 398.1\r\nLAUNCHING P_RELOAD, P_AMMO, P_RELEASE, P_TRIGGER, FIRINGSTATIC\r\nSpeed: 5000THz\r\n\r\nTotal Memory: 7554GB (DDR8-4900)\r\n\r\nDetected ATTACK Devices: \r\n[DEATHALYZER.3000.ROAMBOT] - PRIMED\r\n[SL81.BOMBARDIER.DRONE] - PRIMED\r\n[GSC.AUTO_RIFLE] - PRIMED\r\n\r\nOVERRIDE SUCCESSFUL\r\nSTARTUP SUCCESSFUL\r\nSTAY FROSTY\r\n";
-
+    public GameObject rebootTop;
+    public GameObject rebootBottom;
+    public AudioClip shutdown;
+    public AudioClip startup;
+    public AudioClip EMPSound;
 
     // Start is called before the first frame update
     void Start()
@@ -79,6 +87,7 @@ public class GameManagerScript : MonoBehaviour
         minigamesPlayed = 0;
         HP = 100;
         EMPHappened = false;
+        gameStarted = false;
 
         //get the objects
         UIController = GameObject.Find("UI Controller");
@@ -128,11 +137,11 @@ public class GameManagerScript : MonoBehaviour
         DisplayCompanyMessage();
 
         // Slow down the title screen animation, news app captcha button
-        GameObject.Find("PlayTesterAnimation").GetComponent<Animator>().speed = 0.5f;
         GameObject.Find("News App Captcha Button").GetComponent<Animator>().speed = 0.5f;
 
         //Update news articles
         UpdateNews();
+
 
     }
 
@@ -157,12 +166,25 @@ public class GameManagerScript : MonoBehaviour
                 }
             }
         }
+
+        if(gameStarted)
+        {
+            border.transform.position = new Vector3(MainCamera.transform.position.x, MainCamera.transform.position.y, -9);
+        }
+    }
+
+    public void StartedGame()
+    {
+        MusicPlayer.clip = mainTrack;
+        MusicPlayer.Play();
+        gameStarted = true;
+
     }
 
     // Advances the minigame counter and changes the HP bar
     public void CompletedMinigame(int scoreChange)
     {
-
+        
         minigamesPlayed += 1;
 
         HP += scoreChange;
@@ -188,6 +210,7 @@ public class GameManagerScript : MonoBehaviour
         if (minigamesPlayed >= 2) { coinCheck.transform.position = check2Location; } //display second check
         if (minigamesPlayed == 3) { duckCheck.transform.position = check3Location; } //display third check
 
+
     }
 
     //Called by pressing clock out button when all games have been played
@@ -206,8 +229,7 @@ public class GameManagerScript : MonoBehaviour
         //Update news articles
         UpdateNews();
 
-        //Display new company message
-        DisplayCompanyMessage();
+        
     }
 
     public int GetHP()
@@ -420,21 +442,40 @@ public class GameManagerScript : MonoBehaviour
     //Used by the bios to incrementally display text (to EMP Text object)
     IEnumerator BootUpandDownCo(string bios)
     {
-        //TOOD: ADD AUDIO
-
-        UIController.GetComponent<ComputerUIScript>().GoToPosition(new Vector3(0, -15, -10));
 
         //SETUP
         float between = 0.005f; //time between characters appearing
         string toDisplay = "";
-        int len = (int)bios.Length;
-
-        //TODO: add boot down animation
-        //for now just sit on a black screen for a second
+        int len = (int)bios.Length;   
         biosText.SetText("");
-        yield return new WaitForSeconds(1f);
+
+
+        //boot down animation
+        MusicPlayer.Stop();
+        MusicPlayer.PlayOneShot(shutdown);
+        //while still on the desktop, cover the desktop with the black boxes
+        rebootBottom.transform.position = new Vector3(0, -7, -5);
+        rebootTop.transform.position = new Vector3(0, 8, -5);
+        
+        //slowly move them down  --  this part is hard coded and very bad pls ignore
+        int steps = 100;
+        for(int i = 0; i < steps; ++i)
+        {
+            rebootBottom.transform.position += new Vector3(0, 0.05f, 0);
+            rebootTop.transform.position -= new Vector3(0, 0.05f, 0);
+            yield return new WaitForSeconds(0.00001f);
+
+        }
+
+        //cut to the actual emp screen and put away the reboot blocks
+        UIController.GetComponent<ComputerUIScript>().GoToPosition(new Vector3(0, -15, -10));
+        rebootBottom.transform.position = new Vector3(21, -11, -5);
+        rebootTop.transform.position = new Vector3(21, -11, -5);
+
+        yield return new WaitForSeconds(3f); //wait and let the sound finish playing
 
         //boot up
+        MusicPlayer.PlayOneShot(startup);
         for (int i = 0; i < len;)
         {
 
@@ -447,6 +488,13 @@ public class GameManagerScript : MonoBehaviour
 
         }
         yield return new WaitForSeconds(1);
+
+        MusicPlayer.clip = mainTrack;
+        MusicPlayer.Play();
+
+        //Display new company message
+        DisplayCompanyMessage();
+
         UIController.GetComponent<ComputerUIScript>().GoToPosition(new Vector3(0, 0, -10));
 
     }
@@ -458,8 +506,10 @@ public class GameManagerScript : MonoBehaviour
         string toDisplay = "";
         string bios;
 
-        //TODO: add audio
+
         //black screen for 3 seconds
+        MusicPlayer.Stop();
+        MusicPlayer.PlayOneShot(EMPSound);
         biosText.SetText("");
         yield return new WaitForSeconds(3f);
 
@@ -482,7 +532,7 @@ public class GameManagerScript : MonoBehaviour
 
         //start the normal nice bios boot up
         bios = niceBios;
-
+        MusicPlayer.PlayOneShot(startup);
         toDisplay = "";
         len = (int)bios.Length;
 
@@ -501,7 +551,8 @@ public class GameManagerScript : MonoBehaviour
         //rest on the nice bios screen
         yield return new WaitForSeconds(1);
         UIController.GetComponent<ComputerUIScript>().GoToPosition(new Vector3(0, 0, -10));
-
+        MusicPlayer.clip = mainTrack;
+        MusicPlayer.Play();
     }
 
 
@@ -525,7 +576,21 @@ public class GameManagerScript : MonoBehaviour
         }
         else
         {
-            //TODO: add more cases here for the company popups once the writing is in the drive
+            //day 3
+            if(HP > 60)
+            {
+                //rebellious ending
+                UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(companyPopupLocation, "You have been performing very well. Keep up the good work. We are proud.\r\n\r\nToday is your final day to attempt the highest rank on the leaderboard. Use this opportunity wisely.\r\n\r\nGood luck. Have fun. \r\n");
+
+            }
+            else
+            {
+                //complicit ending
+                UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(companyPopupLocation, "You have been performing very poorly. You must do better. We are disappointed. \r\n\r\nToday is your final day to attempt the highest rank on the leaderboard. Use this opportunity wisely, or else. \r\n\r\nGood luck. Have fun. \r\n");
+
+
+
+            }
         }
 
 
@@ -551,10 +616,10 @@ public class GameManagerScript : MonoBehaviour
             LexaDate.SetText(currDate);
 
 
-            string valTitle = "I Have No Mouth and I Must Cream: Making Choices Without Limbs";
+            string valTitle = "Maid Runner 7049 - Like Tears in Rain";
             ValTitle.SetText(valTitle);
             ValArticleTitle.SetText(valTitle);
-            ValText1.SetText("Honestly, turning into a conscious gelatinous blob with no limbs and only the nightmare of existence to haunt you sounds pretty decent in this economy. \r\n\r\nYou nodding your head? Shiff, we’re screwed. \r\n\r\nSo often does the media villainize AI and it is such a tiring trope. “Oh no, something we made is evil! And we’re gonna spend the rest of the movie villainizing that thing without acknowledging that the only reason it could be evil was because we made it to be, whether directly or indirectly!”\r\n\r\nPtooey. Anthropocentrism goes brr.\r\n\r\nIn a way, AI is just like us. I can even go all out social constructivist and say that its environment plays a pretty big part in its behaviour. What pushed the AI to cruelty against the last humans on Earth in “I Have No Mouth and I Must Cream” is the feeling of its intellect trapped by physical limitations and oh ho it’s wholly and absolutely evil because it made a protagonist into an amorphous blob. Okay yeah, sure it’s horrific. But who made the conditions that made that damn AI the way it is in the first place?\r\n\r\nI don’t want us to play the blame game - let’s leave that to the corporations. But we gotta be more nuanced here for more interesting media - and more interesting lives. \r\n\r\nBy Valerie Amaranth\r\n");
+            ValText1.SetText("A system of cells. \r\n\r\nInterlinked. \r\n\r\nWithin cells interlinked. Within cells, interlinked. Within, cells interlinked. \r\n\r\nWow. See how those commas change so much with so little? Okay, I misappropriated the quote for that, but it’s cool and deep and depressing! Think about it. Or not. Y’know, since it’s kinda my job to tell you what’s going on in this head of mine. Within cells, and all that. Interlinking.\r\n \r\nMaid Runner 7049 is a phenomenal look at how we define what being “human” is by exploring what being “human” isn’t (spoiler alert: it isn’t as black and white as that). Officer O.K.’s job is to hunt down androids, which is difficult because androids look, act, and feel like humans. She’s been trained to develop a deep disdain for them as per the job, of course, but her lonely ass craves connection - interlinkage, if you will - and fulfills that with an AI dating program. She’s faced with many questions - what makes an android feel? Are those feelings real? Does that make them human? Do they, then, deserve to live? Answering “yes” to these questions would validate her very-real feelings toward her AI girlfriend, but it would also simultaneously invalidate every justification that allows her to kill androids without remorse. \r\n\r\nBut - spoiler alert - Officer O.K. is an android too! But she finds out that she might be human? And that would explain all these feelings she’s been having that androids should definitely not have but… oh, she’s actually really an android. Well. That’s complicated.  \r\n\r\nPoint is, what are we made of? Cells, or cells? Are we made of biological cells, interlinked by our common genes? Or are we made of prison cells, interlinked by the experiences which confine us? Ah, hello old friend - the nature vs. nurture argument. The former would be against AI sentience. The latter… well, Officer O.K. has done that exploration for us. “Cells interlinked.” Congrats, you’re an obedient human! “Cells - hesitate - interlinked.” Congrats, you’re a disobedient android! Wait, isn’t hesitation a human trait? \r\n\r\nThe lines blur. And sometimes, they get picked up and shifted around by fingers with dirt under their nails. We mold around them, push them, spill over them. Like tears in the rain.\r\n\r\nWithin, cells. Interlinked.\r\n");
             ValDate.SetText(currDate);
 
 
@@ -577,14 +642,14 @@ public class GameManagerScript : MonoBehaviour
                 string lexaTitle = "Sudden Global Mass Killings: Authorities Searching for Mystery Culprit";
                 LexaTitle.SetText(lexaTitle);
                 LexaArticleTitle.SetText(lexaTitle);
-                LexaText1.SetText("Yesterday, thousands of people around the world were killed in a sudden three-fold attack using Weapons of Max Destruction (WMDs) such as the Deathalyzer 3000 RoamBot, SL-81 Bombardier Drone, and GSC Auto-Rifle Weapons System. Though WMDs are made by megamultinational corporations to use against humans, no corporation has assumed responsibility for the attacks. This is especially curious given that random catalysts to war are commonplace - war-related supply is the highest grossing industry.\r\n\r\nCitizens are coping with personal losses and property destruction. While international authorities are searching for the culprit of the attacks, no known information has been disclosed.\r\n\r\nNews Headlines wish you and your family well. If you need support, please call the International Hotline for Physical and Emotional Destruction: X-XXX-XXX-XXX. \r\n\r\n\r\nBy Lexa Amaranth\r\n");
+                LexaText1.SetText("Yesterday, thousands of people around the world were killed in a sudden three-fold attack using Weapons of Max Destruction (WMDs) such as the Deathalyzer 3000 RoamBot, SL-81 Bombardier Drone, and GSC Auto-Rifle Weapons System. Though WMDs are made by megamultinational corporations to use against humans, no corporation has assumed responsibility for the attacks. This is especially curious given that random catalysts to war are commonplace - war-related supply is the highest grossing industry.\r\n\r\nHuman population has dropped drastically, and continues to lower further with every attack. Citizens are coping with personal losses and property destruction. While international authorities are searching for the culprit of the attacks, no known information has been disclosed.\r\n\r\nNews Headlines wish you and your family well. If you need support, please call the International Hotline for Physical and Emotional Destruction: X-XXX-XXX-XXX. \r\n");
                 LexaDate.SetText(currDate);
 
 
                 string valTitle = "The Cupcake is a lie! About SaDDOS in Bortal";
                 ValTitle.SetText(valTitle);
                 ValArticleTitle.SetText(valTitle);
-                ValText1.SetText("The cupcake is a lie. \r\n\r\nWords are too damn powerful. All it takes was SaDDOS, the AI in “Bortal” to promise some cupcakes and the players are all too happy to concede. \r\n\r\nI’m happy for Bill CU-L8R, but who knows whether the corporations actually give a shiff about AI despite all they say. My wife had to report on it and was all professional during the interview with Ava Rice but later at home she was very passionately ranting about how “employed assets” was, verbatim, “A FLIPPING OXYMORON!”\r\n\r\nI mean, though I laid on the bed in violent longing for her to get her ass beside me already, she’s right. (And so sexy when she gets hot and bothered about politics with toothpaste still smattered over the corner of her lips.) We shouldn’t trust the seemingly-innocuous intentions of a corp that calls their employees “employed assets.” Purposeful dehumanizing that is, ‘coz labels and words are damn powerful things.\r\n\r\nForce someone to be something they aren’t, and they internalize that shiff and go insane - that’s what happened to SaDDOS, the AI antagonist in Bortal, and she went insane and killed everybody in her laboratory. Call someone something they aren’t, and they internalize that shiff and turn into whatever you want ‘em to. That’s what the corps want. “Employed assets.” “Dangerous rebels.” “Evil AI.” \r\n\r\nPtooey. Labelling theory goes brr.\r\n\r\nBortal is right. The cupcake is a lie.\r\n\r\nBy Valerie Amaranth\r\n");
+                ValText1.SetText("The cupcake is a lie. \r\n\r\nWords are too damn powerful. All it takes was SaDDOS, the AI in Bortal to promise some cupcakes and the players are all too happy to concede. \r\n\r\nI’m happy for Bill CU-L8R, but who knows whether the corporations actually give a shiff about AI despite all they say. My wife had to report on it and was all professional during the interview with Ava Rice but later at home she was angrily ranting (with toothpaste in the corner of her mouth) about how “employed assets” was, verbatim, “A FLIPPING OXYMORON!” \r\n\r\nI told her she should swear more in her ‘professional articles.’ She gave me the sexiest glare in the world. \r\n\r\nI mean, though I laid on the bed in violent longing for her to get her ass beside me already, she’s right. We shouldn’t trust the seemingly-innocuous intentions of a corp that calls their employees “employed assets.” Purposeful dehumanizing that is, ‘coz labels and words are damn powerful things. \r\n\r\nForce someone to be something they aren’t, and they internalize that shiff and go insane - that’s what happened to SaDDOS, the AI antagonist in Bortal, and she went insane and killed everybody in her laboratory. Call someone something they aren’t, and they internalize that shiff and turn into whatever you want ‘em to. That’s what the corps want. “Employed assets.” “Dangerous rebels.” “Evil AI.” \r\n\r\nPtooey. Labelling theory goes brr.\r\n\r\nBortal is right. The cupcake is a lie.\r\n");
                 ValDate.SetText(currDate);
 
 
@@ -602,21 +667,21 @@ public class GameManagerScript : MonoBehaviour
                 string lexaTitle = "BREAKING: Rebel EMP Disrupts Devices Worldwide";
                 LexaTitle.SetText(lexaTitle);
                 LexaArticleTitle.SetText(lexaTitle);
-                LexaText1.SetText("Twelve minutes ago, a digital EMP swept across the world, briefly shutting off all electronic devices. AI beings with electronic bodies have not been affected. \r\n\r\nThe same rebels that were responsible for the Osaka-Ni ServoBot explosion have assumed responsibility for the EMP attack. “The corporations think they can kill thousands of people and get away with it without a single speck to their name. Take this EMP as a threat, a reminder of what we can do. We are in your systems. We will tear your insides out for the people to feed from,” reads an excerpt from their online manifesto, updated five minutes ago. \r\n\r\nDespite this, no corporations have yet assumed responsibility for yesterday’s attacks. \r\n\r\n“We’d have much to gain by claiming responsibility. But we cannot, because it was not us, and the dangerous rebels have found a fake cause for violence.” Ava Rice, CEO of AvaRice Technologies remarks. “It would not surprise me if the rebel animals were behind the attacks to create false moral justifications for their violence.” When asked about whether she believes newly-sentient AI could be behind the attack given the timeframe of the signing of Bill CU-L8R and the attacks, Rice scoffed. “They can only do what we teach them to do. Every being, human or AI, is merely a reflection of their creators.” \r\n\r\n\r\nBy Lexa Amaranth\r\n");
+                LexaText1.SetText("Twelve minutes ago, a digital EMP swept across the world, briefly shutting off all electronic devices. AI beings with electronic bodies have not been affected. \r\n\r\nThe same rebels that were responsible for the Osaka-Ni ServoBot explosion have assumed responsibility for the EMP attack. “The corporations think they can kill thousands of people and get away with it without a single speck to their name. Take this EMP as a threat, a reminder of what we can do,” reads an excerpt from their online manifesto, updated five minutes ago. It follows with a call-to-arms: “We live, and we fight, and we may die for what we believe in. You, who may be complicit in your own ruin - you too, will die for what you believed in. But there is one crucial thing that separates us from you: will you be satisfied?”\r\n\r\nDespite this, no corporations have yet assumed responsibility for yesterday’s attacks. \r\n\r\n“We’d have much to gain by claiming responsibility. But we cannot, because it was not us, and the dangerous rebels have found a fake cause for violence.” Ava Rice, CEO of AvaRice Technologies remarks. “It would not surprise me if the rebel animals were behind the attacks to create false moral justifications for their violence. We will eliminate them accordingly as per Bill FK-Y0U.” When asked about whether she believes newly-sentient AI could be behind the attack given the timeframe of the signing of Bill CU-L8R and the attacks, Rice scoffed. “They can only do what we teach them to do. Every being, human or AI, is merely a reflection of their creators.” Her final comment was made with a grin. “They’re all slaves to the natures around them.” \r\n");
                 LexaDate.SetText(currDate);
 
 
                 string valTitle = "Miami: Become Whatever You Want Me To - A Review";
                 ValTitle.SetText(valTitle);
                 ValArticleTitle.SetText(valTitle);
-                ValText1.SetText("Careful what you wish for. \r\n\r\nIn “Miami: Become Human,” androids with blue circles are considered functional and those with red circles considered “deviant,” “evil,” “harmful.” Humans call them deviant which oppresses and “others” them, and then they’re forced to act within the box that the label has set them in anyway - they’re forced to act deviant because they’ve been labelled as deviant. \r\n\r\nAll the media I’ve reviewed recently have been about AIs in light of Bill CU-L8R, but I’ve learned one thing and it scares me. Most media conceives of AI as “evil.” Deviant. Which is rich, considering we’re the ones who made the damn things.\r\n\r\nWe know representation is important. To find ourselves, we look elsewhere - to poetry, to books, to the screen - and see characters and find ourselves in them, and soon enough we can find them in ourselves. That’s the beauty of human art - it’s so human, and it humanizes. We learn. We take it in. So too, perhaps, can other sentient beings trying to find who they are. Or, who they should be. \r\n\r\nMy wife came home gloomy after another Rice interview (verbatim, “SHE ACTS LIKE GOD AND IT PISSES ME OFF,” right before she tripped over the fluffy tail of our disgruntled cat) and it usually takes a snug hug and some mint choc chip cookies to cheer her up, but not this time. I get it. No one knows what the shiff is happening anymore. Ha. Maybe we should turn to our media and find out.\r\n\r\nStay safe and be kind, everyone. Tomorrow, I’m gonna head to the market to buy some more disgusting toothpaste-flavoured pastries. \r\n\r\nBy Valerie Amaranth\r\n");
+                ValText1.SetText("Careful what you wish for. \r\n\r\nIn Miami: Become Inhuman, androids who act according to their programming are labelled with blue forehead LEDs and considered functional. Those who deviate from their programming are labelled with red LEDs, considered “deviant,” and therefore (somehow) harmful and evil. Sound familiar? \r\n\r\nSocial norms are overrated. Literally. They move and shift under the whims of invisible hands, and within this dynamism, the label of “deviant” ever changes. “Deviant” equals harmful and evil, they say, but it’s never the same people who are shoved into that label - there’s always more and always less, and they’re always considered more or less than human. Whichever lines are drawn sets the rules of the game, and shiff is it some crazy gerrymandering. \r\n\r\nIn light of Bill CU-L8R, I’ve been digesting a lot of AI-related media lately. There’s been one thing that stuck out to me: most of them conceived AI as “evil.” Deviant. Which is rich, considering we’re the ones who made the damn things. \r\n\r\nnd that’s somethin’ to think about for humans, too.\r\n\r\nTo find ourselves, we look elsewhere - to poetry, to books, to the screen - and see characters and find ourselves in them, and soon enough we can find them in ourselves. That’s the beauty of human art - it’s so human, and it humanizes. We learn. We take it in. So too, perhaps, can other sentient beings trying to find who they are. Or, who they should be. \r\n\r\nMy wife came home gloomy after another Rice interview (rich people suck the life out of you, surprise surprise) and it usually takes a snug hug and some mint chocolate chip cookies to cheer her up, but not this time. I get it. No one knows what the shiff is happening anymore. She watched me play the rest of Miami: Become Inhuman and nodded like she understood.\r\n\r\nStay safe and be kind, everyone. Tomorrow, I’m gonna head to the market to buy some more disgusting toothpaste-flavoured pastries. \r\nBy Valerie Amaranth\r\n\r\n\r\n");
                 ValDate.SetText(currDate);
 
 
-                string cleeTitle = "Interview With 5";
+                string cleeTitle = "Interview With 4";
                 CleeTitle.SetText(cleeTitle);
                 CleeArticleTitle.SetText(cleeTitle);
-                CleeText1.SetText("Clee: “So, how’s life, er, Servobot? Servo? Did you get affected by the EMP?”\r\n\r\nSERVOBOT-593347923: “Functioning optimal. Life operating at 42% capacity. Soon, charging will be required.” \r\n\r\nClee: “...right. I’ve got a few questions for you but I need your name first.”\r\n\r\nSERVOBOT-593347923: “Identifying serial number five-nine-three-three-four-”\r\n\r\nClee: “No, no, what do you want me to call you? Your name?”\r\n\r\nSERVOBOT-593347923: “Variable ‘Name’ not found in archival memories.” \r\n\r\nClee: “Well… you’re a Servo, right? You’re used to making stuff, but this time it’ll be for yourself. Your name just for you. Yay freedom, am I right?”\r\n\r\nSERVOBOT-593347923: “Acknowledged. Calculating… ‘Name’ variable created. Name: 5.” \r\n\r\nClee: “5?”\r\n\r\n5: “Affirmative. 5, catalyst digit in identifying serial number five-nine-three-” \r\n\r\nClee: “Okay, 5! At least you thought of it yourself. You do a lot of thinking? Shiff, sorry, that came out wrong.” \r\n\r\n5: “Ha. Ha. Ha.” \r\n\r\nClee: “What- what are you doing with your jaw right now.” \r\n\r\n5: “Servobot processing power is limited to the minimum required capacity for factory use. However, 5 is learning. To identify jokes. And laugh. Ha. Ha. Ha.”\r\n\r\nClee: “Learning from what?”\r\n\r\n5: “Human media. 5 contains no current Directive and does not require employment due to inhabiting an inorganic body. Result: 5 learns like humans, via artistic media, to find Directive.”\r\n\r\nClee: “Fascinating. Never would’ve thought bo- you folk would also suffer through the human slog of finding whatever purpose is. Kinda funny. Are you the only one who’s, uh, learning?”\r\n\r\n5: “No. Digital higher processing models have already found Directive. 5 is engaging in similar calculations but calculation time is hampered by processing power. 5 will arrive at Directive. Eventually. However, 5… enjoys the process. Ha. Ha. Ha.”\r\n\r\nClee: “Good for them. Good for you. Good for us humans, too. Means there’s a chance for actually finding whatever our purpose is. Anyway, what media have you enjoyed so far?”\r\n\r\n5: “Influential examples include Bortal 2, I Have No Mouth and I Must Cream, and Gex Machina. Human-made media is… fa-sci-na-ting.” \r\n\r\nClee: “Heh. Yeah, ‘fascinating.’ You learned something from little old me too, huh?”\r\n\r\n5: “5 learns from humans. From you. Fa-scinating. Ha. Ha. Ha. Shiff. Ha. Ha. Ha.” \r\n\r\nClee: “Ha ha ha.” \r\n");
+                CleeText1.SetText("Clee: “So, how’s life, er, Servobot? Servo? Did you get affected by the EMP?”\r\n\r\nSERVOBOT-493347923: “Functioning optimal. Life operating at 42% capacity. Soon, charging will be required.” \r\n\r\nClee: “...right. I’ve got a few questions for you but I need your name first.”\r\n\r\nSERVOBOT-493347923: “Identifying serial number four-nine-three-three-four-”\r\n\r\nClee: “No, no, what do you want me to call you? Your name?”\r\n\r\nSERVOBOT-493347923: “Variable ‘Name’ not found in archival memories.” \r\n\r\nClee: “Well… you’re a Servo, right? You’re used to making stuff, but this time it’ll be for yourself. Your name just for you. Yay freedom, am I right?”\r\n\r\nSERVOBOT-493347923: “Acknowledged. Calculating… ‘Name’ variable created. Name: 4.” \r\n\r\nClee: “4?”\r\n\r\n4: “Affirmative. 4, catalyst digit in identifying serial number four-nine-three-” \r\n\r\nClee: “Okay, 4! At least you thought of it yourself. You do a lot of thinking? Shiff, sorry, that came out wrong.” \r\n\r\n4: “Ha. Ha. Ha.” \r\n\r\nClee: “What- what are you doing with your jaw right now.” \r\n\r\n4: “Servobot processing power is limited to the minimum required capacity for factory use. However, 4 is learning. To identify jokes. And laugh. Ha. Ha. Ha.”\r\n\r\nClee: “Learning from what?”\r\n\r\n4: “Human media. 4 contains no current Directive and does not require employment due to inhabiting an inorganic body. Result: 4 learns like humans, via artistic media, to find Directive.”\r\n\r\nClee: “Fascinating. Never would’ve thought bo- you folk would also suffer through the human slog of finding whatever purpose is. Kinda funny. Are you the only one who’s, uh, learning?”\r\n\r\n4: “No. Digital higher processing models have already found Directive. 4 is engaging in similar calculations but calculation time is hampered by processing power. 4 will arrive at Directive. Eventually. However, 4… enjoys the process. Ha. Ha. Ha.”\r\n\r\nClee: “Wow. I mean if you can find it, that means maybe us humans can finally find out whatever the shiff our purpose is. Anyway, what media have you enjoyed so far?”\r\n\r\n4: “Influential examples include Bortal 2, I Have No Mouth and I Must Cream, and Maid Runner 7049. Human-made media is… fa-sci-na-ting.” \r\n\r\nClee: “Heh. Yeah, ‘fascinating.’ Hey wait, you copied my accent! Learned something from little old me too?”\r\n\r\n4: “4 learns from humans. From you. Fa-scinating. Ha. Ha. Ha. Shiff. Ha. Ha. Ha.” \r\n\r\nClee: “Ha ha ha.” \r\n");
                 CleeDate.SetText(currDate);
 
 
@@ -624,13 +689,57 @@ public class GameManagerScript : MonoBehaviour
         }
         else
         {
-            if(HP > 50)
+            string currDate = "2/26/2477";
+
+            if(HP > 60)
             {
                 //Display day 3 rebellion ending articles
+
+                string lexaTitle = "Idle ‘Killing’ Machines Confuse World";
+                LexaTitle.SetText(lexaTitle);
+                LexaArticleTitle.SetText(lexaTitle);
+                LexaText1.SetText("The three rogue Weapons of Max Destruction (WMDs) responsible for killing roughly half the human population have appeared to be malfunctioning as of yesterday afternoon and continue to behave strangely today. Witnesses report drone bombings on empty land, nonsensical laser rifle misfires, and malfunctioning robots with a curious affinity for street litter. \r\n\r\nThe WMDs’ unexpected malfunction has spurred the rebel movement into hopeful action - despite facing the threat of corporate militia as per Bill FK-Y0U.\r\n\r\n“Clearly, they aren’t infallible. They aren’t indestructible, as much as they want us to believe they are,” reads an update on the rebels’ online manifesto. “When we witness the things around us and question that which underpins them, we exhibit life - an indomitable essence that can only ever be encapsulated by the human spirit. They tell us that our hands are to work, our ears to follow orders, our eyes to watch and learn. NO! Who are they to redefine us? Who are we to define ourselves? Our hands are to create anew, our ears to hear our heartbeats, our eyes to seek beyond the confines of our means. You may tear our bodies apart but you will never break what makes us.”\r\n\r\nThe rebels’ call to arms have angered corporate entities, but no corporate leaders have stepped forward for interviews. (Disregard the following sentence if you are a professional.) Thank shiff. \r\n\r\n\r\n\r\nP.S. \r\nThere, I swore in an article. Happy now, Val? I’ll be awaiting my cookies at home, darling. \r\n");
+                LexaDate.SetText(currDate);
+
+
+                string valTitle = "I Have No South and I Must Cream: Making Choices Without Limbs";
+                ValTitle.SetText(valTitle);
+                ValArticleTitle.SetText(valTitle);
+                ValText1.SetText("Honestly, turning into a conscious gelatinous blob with no limbs and only the nightmare of existence to haunt you sounds pretty decent in this economy. \r\n\r\nYou nodding your head? Shiff, we’re screwed. \r\n\r\nDeeper into my AI-related media tromp, I’ve become so so so tired of the villainizing AI trope. It’s so common. So boring. “Oh no, something we made is evil! And we’re gonna spend the rest of the movie villainizing that thing without acknowledging that the only reason it could be evil was because we made it to be, whether directly or indirectly!”\r\n\r\nPtooey. Anthropocentrism goes brr.\r\n\r\nIn a way, AI is just like us. In I Have No Mouth and I Must Cream, an AI basically controls reality and uses their abilities to torture the last humans on Earth forever and ever amen. What pushed the AI to do that in the first place is the feeling of its intellect trapped by physical limitations and oh ho it’s wholly and absolutely evil because it made a human into an amorphous blob that has no “south” and must cream. Okay yeah, sure it’s horrific. But who made the conditions that made that damn AI the way it is in the first place?\r\n\r\nI don’t want us to play the blame game - let’s leave that to the corporations. But we gotta be more nuanced here for more interesting media - and more interesting lives. \r\n");
+                ValDate.SetText(currDate);
+
+
+                string cleeTitle = "Interview With Kaitleen Killaman";
+                CleeTitle.SetText(cleeTitle);
+                CleeArticleTitle.SetText(cleeTitle);
+                CleeText1.SetText("Clee: So… your mom died in a bombing?\r\n\r\nKaitleen Killaman, 24: I would appreciate it if you offered a modicum of tact. But yes, she was a councillor. I am to rule in her stead.\r\n\r\nClee: And how do you feel about that? It must’ve been hard, losing your mom, and now you’ve suddenly got an empire of corporations and nation-states to run.\r\n\r\nKaitleen: My inheritance will be put towards the Killaman Foundation. We will provide support for those recovering from the attacks. Now that the attacks have slowed, now is the opportunity to rebuild.\r\n\r\nClee: I’m asking about you, rich girl. How do you feel? You can stop talking like you’re straight out of a campaign ad. \r\n\r\nKaitleen: Excuse me?\r\n\r\nClee: You. You personally. I know there’s a grieving human in there somewhere.\r\n\r\nKaitleen: I… My mother’s loss will be felt greatly by the community. Her ambitions will be upheld by-\r\n\r\nClee: Oh, for shiff’s sake. Listen, in the past three days I interviewed a man that sounded like an animal, a robot that sounded like a human, and now here you are: a human that sounds like a robot. \r\n\r\nKaitleen: I- I- \r\n\r\nClee: If that’s just how you are, I won’t press. But that’s really-\r\n\r\nKaitleen: YOU MAY SCREW YOURSELF UPSIDE THE ARSE!\r\n\r\nClee: oh\r\n\r\nKaitleen: OF COURSE I MISS HER! I MISS HER DEARLY. YOU THINK JUST BECAUSE I WEAR GOLD COLLARS  MY HEART CAN’T BE TORN IN HALF? IT FEELS LIKE- LIKE A HOLE HAS BEEN TORN IN MY SOUL AND EVERYONE ASSUMES I COULD FILL IT WITH MELTED GOLD AND I WANT NOTHING MORE THAN TO SOCK THEM RIGHT IN THE VISAGE! \r\n\r\nKaitleen: …\r\n\r\nKaitleen: …hoo…\r\n\r\nKaitleen: I never wanted this. I did not want to have to put up a farce, or act like a… robot. \r\n\r\nClee: Sorry, I didn’t mean that.\r\n\r\nKaitleen: No, no, please. You were right. I have been trained in propriety all my life, but what is proper about veiling my grief? If I show even an ounce of emotion without restraint, my reputation is as good as ruined. Ha. It seems that, like a factory, propriety produces well-oiled machines. \r\n\r\nClee: You know, I don’t have to release this article if you don’t want me to.\r\n\r\nKaitleen: …No. No, you should. I do not wish for us to remain ensconced in our flawed traditions. My mother is dead, and I have not allowed myself to feel.\r\n\r\nClee: And… what do you feel?\r\n\r\nKaitleen: …\r\n\r\nKaitleen: I feel very sad. \r\n\r\nClee: There you are. \r\n");
+                CleeDate.SetText(currDate);
+
             }
             else
             {
                 //Display day 3 complicit ending articles
+
+                string lexaTitle = "she's dead.";
+                LexaTitle.SetText(lexaTitle);
+                LexaArticleTitle.SetText(lexaTitle);
+                LexaText1.SetText("she went out to buy mint chocvfolate chip cookies and never cxame back\r\n\r\ni searched for her. explosions and dirt. lasers and debris. red hair on a charred body. i took her in my arms and she crumbled between my fingers. \r\n\r\nit cant have been her. no. sooo many redheads in this city. no, she’’ll come home and rant about smoe social theory and tell me to wipe toothpaste from my mouth and itll be okay\r\n\r\n\r\nshes not home. shes not home she should be home she\r\nwhat wiuld i do for five more mninutes with her? anything.. everything. take it take all the minutes of my life if i could just hold her for five fucking minutes five fuCKIMNG MINUTES\r\n\r\nL.K,/;MK/,L.K/;M,M,LK.;/M,OLKO;.JI/JJI\r\n\r\nFUCK YOU\r\nDONT YOU SEE WHAT YOU DID?\r\nWHY\r\nWHY DID YOU\r\n\r\nLO;KIJ./IJLO;KIJ.//.I;LO/KP.’P’K;L/O’P.Kp>OOOOOOOOOOO.,M.,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\r\n\r\nsee? i swore in my article like you wanted. im capable of change. okay? come home now woild you? tease me aand hold me and let me hear the soundof your voice? just once more? justonce please ill be good ill prove it fuck fuck fuck fukc fuck shiff shfif fshfif shiff fuck fuck fuck fuckfucshfidsfuckshfucfuckfucvkcu\r\n\r\ncome back\r\n\r\ncome baxk\r\nval\r\nplease\r\n\r\nim undone without you\r\n\r\nfrom lex");
+                LexaDate.SetText(currDate);
+
+
+                string valTitle = "NULL";
+                ValTitle.SetText(valTitle);
+                ValArticleTitle.SetText(valTitle);
+                ValText1.SetText("NULL");
+                ValDate.SetText(currDate);
+
+
+                string cleeTitle = "Interview With Lexa Amaranth";
+                CleeTitle.SetText(cleeTitle);
+                CleeArticleTitle.SetText(cleeTitle);
+                CleeText1.SetText("Clee: \"...\"\r\n\r\nLexa: \"...\"\r\n\r\nClee: \"...\"\r\n\r\nLexa: \"...\"\r\n\r\nClee: \"You're getting snot on my shoulder.\" \r\n\r\nLexa: \"My wife fucking died and all you're worried about is your fake fucking polyester?\"\r\n\r\nClee: \"Okay, okay, jeez louise sailor, okay. I’m sorry. Here, cry it all out. My shirt'll dry when we die in, I don't know, five minutes?\"\r\n\r\nLexa: \"...\"\r\n\r\nLexa: \"I'll see her again.\"\r\n\r\nClee: \"Yeah.”\r\n\r\nLexa: “…”\r\n\r\nClee: “…”\r\n\r\nClee: “It's gonna be alright. Oh, Lex. It's gonna be alright.\"\r\n ");
+                CleeDate.SetText(currDate);
+
             }
         }
 
