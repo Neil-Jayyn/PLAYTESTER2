@@ -580,13 +580,13 @@ public class GameManagerScript : MonoBehaviour
             if(HP > 60)
             {
                 //rebellious ending
-                UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(companyPopupLocation, "You have been performing very well. Keep up the good work. We are proud.\r\n\r\nToday is your final day to attempt the highest rank on the leaderboard. Use this opportunity wisely.\r\n\r\nGood luck. Have fun. \r\n");
+                UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(companyPopupLocation, "You have been performing very poorly. You must do better. We are disappointed. \r\n\r\nToday is your final day to attempt the highest rank on the leaderboard. Use this opportunity wisely, or else. \r\n\r\nGood luck. Have fun. \r\n");
 
             }
             else
             {
                 //complicit ending
-                UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(companyPopupLocation, "You have been performing very poorly. You must do better. We are disappointed. \r\n\r\nToday is your final day to attempt the highest rank on the leaderboard. Use this opportunity wisely, or else. \r\n\r\nGood luck. Have fun. \r\n");
+                UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(companyPopupLocation, "You have been performing very well. Keep up the good work. We are proud.\r\n\r\nToday is your final day to attempt the highest rank on the leaderboard. Use this opportunity wisely.\r\n\r\nGood luck. Have fun. \r\n");
 
 
 
