@@ -446,8 +446,9 @@ public class GameManagerScript : MonoBehaviour
         EMPHappened = true;  
         UpdateNews();
         DisplayCompanyMessage();
+        UpdateNotifications();
 
-        
+
 
     }
 
