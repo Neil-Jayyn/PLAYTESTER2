@@ -21,6 +21,8 @@ public class AppScript : MonoBehaviour
     public bool isCaptchaButton = false; //special case for captcha button
     public bool isStartButton = false; //special case for the start button
     public bool isCompanyMessageButton = false; //special case for the company message button
+    public bool isNewsAppButton = false;
+    public bool isPhotoAppButton = false;
     private Vector3 cupcakeGameLocation = new Vector3(50, 50, -10);
     private Vector3 coinGameLocation = new Vector3(50, 35, -10);
     private Vector3 duckGameLocation = new Vector3(50, 20, -10);
@@ -29,6 +31,9 @@ public class AppScript : MonoBehaviour
     private Vector3 confusionEndingLocation = new Vector3(120, 35, -10);
     private Vector3 rebellionEndingLocation = new Vector3(120, 20, -10);
     private Vector3 tempEndingLocation = new Vector3(150, 50, -10);
+
+    private GameObject photoNotif;
+    private GameObject newsNotif;
 
     //temp ending stuff
     private TMPro.TextMeshProUGUI tempText;
@@ -52,6 +57,8 @@ public class AppScript : MonoBehaviour
         DuckGameManager = GameObject.Find("DuckGameManager");
         NewsAppCaptchaButton = GameObject.Find("News App Captcha Button");
         StartButton = GameObject.Find("Start Button");
+        photoNotif = GameObject.Find("Photo App Notif");
+        newsNotif = GameObject.Find("News App Notif"); 
         tempText = GameObject.Find("Temp Text").GetComponent<TMPro.TextMeshProUGUI>();
         audio = GetComponent<AudioSource>();
         canBeClicked = true; //true by default
@@ -186,6 +193,22 @@ public class AppScript : MonoBehaviour
                 audio.PlayOneShot(jobAccept);
                 GameManager.GetComponent<GameManagerScript>().StartedGame();
                 UIController.GetComponent<ComputerUIScript>().GoToPosition(myScreenLocation);
+            }
+            else if(isNewsAppButton)
+            {
+                audio.PlayOneShot(clickSFX);
+                UIController.GetComponent<ComputerUIScript>().GoToPosition(myScreenLocation);
+
+                //clear notification once clicked on
+                newsNotif.transform.position = new Vector3(0, 8, -1);
+            }
+            else if(isPhotoAppButton)
+            {
+                audio.PlayOneShot(clickSFX);
+                UIController.GetComponent<ComputerUIScript>().GoToPosition(myScreenLocation);
+
+                //clear notification once clicked on
+                photoNotif.transform.position = new Vector3(0, 9, -1);
             }
             else
             {

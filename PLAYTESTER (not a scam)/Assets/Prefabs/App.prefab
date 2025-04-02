@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 3089632284252778133}
   - component: {fileID: 2213119004800428331}
   - component: {fileID: 1084423907431235151}
-  - component: {fileID: -7108527170063185198}
   m_Layer: 0
   m_Name: App
   m_TagString: Untagged
@@ -54,6 +53,8 @@ MonoBehaviour:
   isCaptchaButton: 0
   isStartButton: 0
   isCompanyMessageButton: 0
+  photoNotif: {fileID: 0}
+  newsNotif: {fileID: 0}
   captchaSFX: {fileID: 8300000, guid: 13fa199cae01f9d4fb10bd96d7cea51c, type: 3}
   clickSFX: {fileID: 8300000, guid: 2584cc24118fd4047942285da4c1a74d, type: 3}
   jobAccept: {fileID: 8300000, guid: e9401d9ae4819d74498c0bad995458e4, type: 3}
@@ -229,17 +230,3 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &-7108527170063185198
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3089632284252778130}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b0ddb6dad7079c41ba46334fc65abe7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hoverable: 0
-  myHoverText: 

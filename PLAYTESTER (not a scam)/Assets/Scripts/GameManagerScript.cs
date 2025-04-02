@@ -39,9 +39,9 @@ public class GameManagerScript : MonoBehaviour
     private GameObject coinCheck;
     private GameObject duckCheck;
     private Vector3 checkHome = new Vector3(0, 10, 0);
-    private Vector3 check1Location = new Vector3(1.55f, 2.3f, 0);
-    private Vector3 check2Location = new Vector3(1.55f, 1.73f, 0);
-    private Vector3 check3Location = new Vector3(1.55f, 1.16f, 0);
+    private Vector3 check1Location = new Vector3(1.55f, 2.3f, -1);
+    private Vector3 check2Location = new Vector3(1.55f, 1.73f, -1);
+    private Vector3 check3Location = new Vector3(1.55f, 1.16f, -1);
     public TMPro.TextMeshProUGUI CupcakeLBText;
     public TMPro.TextMeshProUGUI CoinLBText;
     public TMPro.TextMeshProUGUI DuckLBText;
@@ -49,6 +49,11 @@ public class GameManagerScript : MonoBehaviour
     //Company popup location
     private Vector3 companyPopupLocation = new Vector3(-1, 1.7f, -2);
 
+    //App notification vars
+    private GameObject photoNotif;
+    private GameObject newsNotif;
+    private Vector3 photoNotifLocation = new Vector3(-6f, 1.8f, -1);
+    private Vector3 newsNotifLocation = new Vector3(-6f, 3.2f, -1);
 
     //All news text slots
     private TMPro.TextMeshProUGUI ValText1;
@@ -96,6 +101,8 @@ public class GameManagerScript : MonoBehaviour
         cupcakeCheck = GameObject.Find("Cupcake Check");
         coinCheck = GameObject.Find("Coin Check");
         duckCheck = GameObject.Find("Duck Check");
+        photoNotif = GameObject.Find("Photo App Notif");
+        newsNotif = GameObject.Find("News App Notif");
         biosText = GameObject.Find("EMP Text").GetComponent<TMPro.TextMeshProUGUI>();
 
         //Hide the checkmarks
@@ -141,6 +148,8 @@ public class GameManagerScript : MonoBehaviour
 
         //Update news articles
         UpdateNews();
+
+        UpdateNotifications();
 
 
     }
@@ -229,7 +238,7 @@ public class GameManagerScript : MonoBehaviour
         //Update news articles
         UpdateNews();
 
-        
+        UpdateNotifications();
     }
 
     public int GetHP()
@@ -245,6 +254,16 @@ public class GameManagerScript : MonoBehaviour
     public int GetDay()
     {
         return day;
+    }
+
+    private void UpdateNotifications()
+    {
+        newsNotif.transform.position = newsNotifLocation;
+
+        if(day == 1) 
+        {
+            photoNotif.transform.position = photoNotifLocation;
+        }
     }
 
     public void StartedMinigame()
@@ -322,7 +341,7 @@ public class GameManagerScript : MonoBehaviour
                 {
                     //print player score then print all remaining names
                     printedPlayer = true;
-                    stringToPush += "Playtester " + score + "\n";
+                    stringToPush += "<b>Playtester " + score + "</b>\n";
                     while(i < 4)
                     {
                         stringToPush += cupcakeNames[i] + " " + cupcakeScores[i] + "\n";
@@ -333,7 +352,7 @@ public class GameManagerScript : MonoBehaviour
             if(!printedPlayer)
             {
                 //haven't printed player yet, player was last, add it now
-                stringToPush += "Playtester " + score + "\n";
+                stringToPush += "<b>Playtester " + score + "</b>\n";
 
             }
 
@@ -357,7 +376,7 @@ public class GameManagerScript : MonoBehaviour
                 {
                     //print player score then print all remaining names
                     printedPlayer = true;
-                    stringToPush += "Playtester " + score + "\n";
+                    stringToPush += "<b>Playtester " + score + "</b>\n";
                     while (i < 4)
                     {
                         stringToPush += coinNames[i] + " " + coinScores[i] + "\n";
@@ -368,7 +387,7 @@ public class GameManagerScript : MonoBehaviour
             if (!printedPlayer)
             {
                 //haven't printed player yet, player was last, add it now
-                stringToPush += "Playtester " + score + "\n";
+                stringToPush += "<b>Playtester " + score + "</b>\n";
 
             }
 
@@ -391,7 +410,7 @@ public class GameManagerScript : MonoBehaviour
                 {
                     //print player score then print all remaining names
                     printedPlayer = true;
-                    stringToPush += "Playtester " + score + "\n";
+                    stringToPush += "<b>Playtester " + score + "</b>\n";
                     while (i < 4)
                     {
                         stringToPush += duckNames[i] + " " + duckScores[i] + "\n";
@@ -402,7 +421,7 @@ public class GameManagerScript : MonoBehaviour
             if (!printedPlayer)
             {
                 //haven't printed player yet, player was last, add it now
-                stringToPush += "Playtester " + score + "\n";
+                stringToPush += "<b>Playtester " + score + "</b>\n";
 
             }
 
