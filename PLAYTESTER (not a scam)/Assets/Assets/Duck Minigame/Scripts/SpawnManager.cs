@@ -17,6 +17,11 @@ public class SpawnManager : MonoBehaviour
     void Start()
     {
         duckGameManager = GameObject.Find("DuckGameManager").GetComponent<DuckGameManager>();
+        //StartCoroutine(SpawnItems());
+    }
+
+    public void SpawnStart()
+    {
         StartCoroutine(SpawnItems());
     }
 

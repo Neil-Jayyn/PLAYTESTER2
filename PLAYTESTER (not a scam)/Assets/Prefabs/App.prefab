@@ -52,8 +52,12 @@ MonoBehaviour:
   isClockOutButton: 0
   isCaptchaButton: 0
   isStartButton: 0
+  isCompanyMessageButton: 0
+  photoNotif: {fileID: 0}
+  newsNotif: {fileID: 0}
   captchaSFX: {fileID: 8300000, guid: 13fa199cae01f9d4fb10bd96d7cea51c, type: 3}
   clickSFX: {fileID: 8300000, guid: 2584cc24118fd4047942285da4c1a74d, type: 3}
+  jobAccept: {fileID: 8300000, guid: e9401d9ae4819d74498c0bad995458e4, type: 3}
 --- !u!61 &3089632284252778133
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -2,6 +2,7 @@ ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
     - AppScript
+    - ComplicitEndingManager
     - ComputerUIScript
     - CupcakeGameManager
     - CupcakeMovement
@@ -10,6 +11,7 @@ ScriptsOnlyBuild:
     - EnemySpawner
     - GameManagerScript
     - HealthBar
+    - HoverScript
     - Kino.AnalogGlitch
     - Kino.DigitalGlitch
     - MinigameManager
@@ -18,12 +20,14 @@ ScriptsOnlyBuild:
     - SpawnManager
     - SpawnManagerFast
     - SpriteChanger
+    - complicitPlayer
     - enemyMovement
     - player
     - playerMovement
     - scrollBg
     - spawnMg
     - spawnable
+    - speedyEnemyMovement
     Unity.2D.Animation.Editor.dll:
     - UnityEditor.U2D.Animation.BoneGizmo
     Unity.2D.Tilemap.Editor.dll:
@@ -40,6 +44,12 @@ ScriptsOnlyBuild:
     - TMPro.TMP_SpriteAsset
     - TMPro.TMP_StyleSheet
     - TMPro.TextMeshProUGUI
+    UnityEditor.Graphs.dll:
+    - UnityEditor.Graphs.AnimationBlendTree.Graph
+    - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.Graph
+    - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
     - UnityEditor.TestTools.TestRunner.TestListCacheData
@@ -48,9 +58,12 @@ ScriptsOnlyBuild:
     - UnityEngine.EventSystems.EventSystem
     - UnityEngine.EventSystems.StandaloneInputModule
     - UnityEngine.UI.CanvasScaler
+    - UnityEngine.UI.ContentSizeFitter
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
+    - UnityEngine.UI.ScrollRect
     - UnityEngine.UI.Slider
+    - UnityEngine.UI.VerticalLayoutGroup
   sceneClasses:
     Assets/Scenes/SampleScene.unity:
     - Class: 1
@@ -98,67 +111,81 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11720}
     - Class: 114
-      Script: {instanceID: 12144}
+      Script: {instanceID: 11894}
     - Class: 114
-      Script: {instanceID: 12198}
+      Script: {instanceID: 11912}
     - Class: 114
-      Script: {instanceID: 12290}
+      Script: {instanceID: 12146}
     - Class: 114
-      Script: {instanceID: 12322}
+      Script: {instanceID: 12200}
     - Class: 114
-      Script: {instanceID: 12396}
+      Script: {instanceID: 12292}
     - Class: 114
-      Script: {instanceID: 12448}
+      Script: {instanceID: 12324}
     - Class: 114
-      Script: {instanceID: 12478}
+      Script: {instanceID: 12398}
     - Class: 114
-      Script: {instanceID: 12510}
+      Script: {instanceID: 12450}
     - Class: 114
-      Script: {instanceID: 12920}
+      Script: {instanceID: 12480}
     - Class: 114
-      Script: {instanceID: 13030}
+      Script: {instanceID: 12512}
     - Class: 114
-      Script: {instanceID: 13074}
+      Script: {instanceID: 12744}
     - Class: 114
-      Script: {instanceID: 13158}
+      Script: {instanceID: 12754}
     - Class: 114
-      Script: {instanceID: 13188}
+      Script: {instanceID: 12924}
     - Class: 114
-      Script: {instanceID: 13214}
+      Script: {instanceID: 13016}
     - Class: 114
-      Script: {instanceID: 13464}
+      Script: {instanceID: 13036}
     - Class: 114
-      Script: {instanceID: 13482}
+      Script: {instanceID: 13080}
     - Class: 114
-      Script: {instanceID: 13704}
+      Script: {instanceID: 13164}
     - Class: 114
-      Script: {instanceID: 13782}
+      Script: {instanceID: 13194}
     - Class: 114
-      Script: {instanceID: 13874}
+      Script: {instanceID: 13220}
     - Class: 114
-      Script: {instanceID: 13886}
+      Script: {instanceID: 13268}
     - Class: 114
-      Script: {instanceID: 13912}
+      Script: {instanceID: 13470}
     - Class: 114
-      Script: {instanceID: 14008}
+      Script: {instanceID: 13488}
     - Class: 114
-      Script: {instanceID: 14062}
+      Script: {instanceID: 13710}
     - Class: 114
-      Script: {instanceID: 14072}
+      Script: {instanceID: 13788}
     - Class: 114
-      Script: {instanceID: 14172}
+      Script: {instanceID: 13880}
     - Class: 114
-      Script: {instanceID: 14178}
+      Script: {instanceID: 13892}
     - Class: 114
-      Script: {instanceID: 14490}
+      Script: {instanceID: 13918}
     - Class: 114
-      Script: {instanceID: 14512}
+      Script: {instanceID: 14014}
     - Class: 114
-      Script: {instanceID: 14540}
+      Script: {instanceID: 14068}
     - Class: 114
-      Script: {instanceID: 14554}
+      Script: {instanceID: 14078}
     - Class: 114
-      Script: {instanceID: 14558}
+      Script: {instanceID: 14114}
+    - Class: 114
+      Script: {instanceID: 14180}
+    - Class: 114
+      Script: {instanceID: 14186}
+    - Class: 114
+      Script: {instanceID: 14498}
+    - Class: 114
+      Script: {instanceID: 14520}
+    - Class: 114
+      Script: {instanceID: 14548}
+    - Class: 114
+      Script: {instanceID: 14562}
+    - Class: 114
+      Script: {instanceID: 14566}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -176,6 +203,10 @@ ScriptsOnlyBuild:
     - Class: 223
       Script: {instanceID: 0}
     - Class: 224
+      Script: {instanceID: 0}
+    - Class: 328
+      Script: {instanceID: 0}
+    - Class: 329
       Script: {instanceID: 0}
   scriptHashData:
   - hash:
@@ -306,6 +337,12 @@ ScriptsOnlyBuild:
     className: SignalAsset
   - hash:
       serializedVersion: 2
+      Hash: ac9aec0ba03213d4db647d1e192493d5
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: speedyEnemyMovement
+  - hash:
+      serializedVersion: 2
       Hash: 0dbc3be398b4869a5c8d0d8481ee402c
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -396,7 +433,7 @@ ScriptsOnlyBuild:
     className: HealthBar
   - hash:
       serializedVersion: 2
-      Hash: 67ba0cf71ab2bbef560c4c815c3463a6
+      Hash: aea9b85708a1ca7aa8934a170ce4d623
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameManagerScript
@@ -444,7 +481,7 @@ ScriptsOnlyBuild:
     className: ControlTrack
   - hash:
       serializedVersion: 2
-      Hash: 3f96f3a5934b440ff912ea943696589c
+      Hash: df7e3336224004fdcadf7649510cb294
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CupcakeGameManager
@@ -456,10 +493,16 @@ ScriptsOnlyBuild:
     className: Selectable
   - hash:
       serializedVersion: 2
-      Hash: 6d625404ab20ce2a32283ae107d67a50
+      Hash: 2fdc2f27e2ebccb119a416054f2db7d8
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: AppScript
+  - hash:
+      serializedVersion: 2
+      Hash: 4e0909eae0dcc15a3d81b6f74779caef
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: complicitPlayer
   - hash:
       serializedVersion: 2
       Hash: d4020bafcd3ccbb5601a6e6c8ac78be0
@@ -486,7 +529,7 @@ ScriptsOnlyBuild:
     className: TMP_SpriteAnimator
   - hash:
       serializedVersion: 2
-      Hash: c0ca89ab4cc8318b24a53b76396a3cba
+      Hash: 812fe2af7053aef5961e9c2cc86132a7
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: enemyMovement
@@ -496,6 +539,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestTools.TestRunner.Callbacks
     className: RemoteTestResultSender
+  - hash:
+      serializedVersion: 2
+      Hash: 984e16612a4f82819271ea34c5660070
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ComplicitEndingManager
   - hash:
       serializedVersion: 2
       Hash: 9be8a57825ddbdf9fb465953f28998dd
@@ -534,7 +583,7 @@ ScriptsOnlyBuild:
     className: PopupCloseScript
   - hash:
       serializedVersion: 2
-      Hash: c29dd1369d4b0d293275e767ea161395
+      Hash: feef85912e9ec81b5bfa0335c9434cc3
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: playerMovement
@@ -612,7 +661,7 @@ ScriptsOnlyBuild:
     className: TimelineAsset
   - hash:
       serializedVersion: 2
-      Hash: 63091bc5caed8be9e0e7a1146207c3fc
+      Hash: dbe2bfb707b1b084c46a6032521918fb
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MinigameManager
@@ -630,7 +679,7 @@ ScriptsOnlyBuild:
     className: AudioTrack
   - hash:
       serializedVersion: 2
-      Hash: c84dfa1c625b0429346b5d82523485e8
+      Hash: 9c13873a8c2442e686432969bf36e585
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: DuckGameManager
@@ -666,10 +715,16 @@ ScriptsOnlyBuild:
     className: SpawnManagerFast
   - hash:
       serializedVersion: 2
-      Hash: bb3cfd9291d8484bcc5fc759d90df88b
+      Hash: ae1c26157552a20c34875d6b3e2777d7
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: scrollBg
+  - hash:
+      serializedVersion: 2
+      Hash: 6233c162e81ae5a4779ac3947412be6f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: HoverScript
   - hash:
       serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
@@ -750,7 +805,7 @@ ScriptsOnlyBuild:
     className: Dropdown
   - hash:
       serializedVersion: 2
-      Hash: f03c1389ecbaec411f10e2e3d3167407
+      Hash: 3fbfce7e18c76482315582c1e61e2c35
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: EnemySpawner

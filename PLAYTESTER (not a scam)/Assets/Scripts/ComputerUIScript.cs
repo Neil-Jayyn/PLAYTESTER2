@@ -9,6 +9,8 @@ public class ComputerUIScript : MonoBehaviour
     private static GameObject popup;
     private static GameObject bigPopup;
 
+    private static Vector3 titleScreen = new Vector3(-20, 15, -10);
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,8 +20,9 @@ public class ComputerUIScript : MonoBehaviour
         bigPopup = GameObject.Find("Company Popup");
 
         //SET VARIABLES
-        //initialize camera to the first position in the game (title screen)
-        camera.GetComponent<Transform>().position = new Vector3(-20,15,-10);
+        //initialize camera to empty position in the game to play the video
+        camera.GetComponent<Transform>().position = new Vector3(-20, 50,-10);
+        StartCoroutine(WaitForVideo());
     }
 
 
@@ -27,6 +30,14 @@ public class ComputerUIScript : MonoBehaviour
     void Update()
     {
         
+    }
+
+    IEnumerator WaitForVideo()
+    {
+        //yield return new WaitForSeconds(14); //VIDEO SHOULD BE 14 SECONDS
+
+        yield return new WaitForSeconds(0.5f);
+        GoToPosition(titleScreen);
     }
 
     // This method can be called to change the position of the camera. By default the camera should be set to z=-10

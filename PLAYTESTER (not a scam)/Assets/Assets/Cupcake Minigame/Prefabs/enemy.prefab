@@ -124,8 +124,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  maxSpeed: 3
-  minSpeed: 5
+  maxSpeed: 2.5
+  minSpeed: 3.5
   color1: {r: 0.8392157, g: 1, b: 1, a: 1}
   color2: {r: 0.8773585, g: 0.5297259, b: 0.774441, a: 1}
   color3: {r: 1, g: 0.972549, b: 0.827451, a: 1}

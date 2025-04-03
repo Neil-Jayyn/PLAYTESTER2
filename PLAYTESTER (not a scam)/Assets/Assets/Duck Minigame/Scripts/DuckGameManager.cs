@@ -6,7 +6,8 @@ using Kino;
 
 public class DuckGameManager : MonoBehaviour
 {
-    public TMP_Text scoreText;  // Reference to TextMeshPro to show the score
+    public TMP_Text scoreText;// Reference to TextMeshPro to show the score
+    
     private int score = 0;
     public bool gameOver;
     private int timesPlayed;
@@ -15,11 +16,17 @@ public class DuckGameManager : MonoBehaviour
 
     float timeRemaining;
     public float gameDuration = 30;
+    public TMP_Text timerText; //TMP to show timer
 
     // Glitch variables
     private float glitchFreq;
     private float glitchWaitTime = 1f;
     public bool isGlitch = false;
+
+    //bg glitch
+    public GameObject bg;
+    public Sprite bgNormal;
+    public Sprite bgGlitched;
 
     // kino effect
     public DigitalGlitch GlitchEffect;
@@ -32,6 +39,14 @@ public class DuckGameManager : MonoBehaviour
 
     //leaderboard text
     public TMP_Text LeaderboardText;
+
+    //Tutorial freeze management (Neila note: The code for it is bad but it works)
+    private bool isTutorialPlaying; //checks if there is a tutorial on screen
+    public GameObject popup;
+    Vector3 popupHome;
+    private bool hasInitialized; //checks if the game started game elements yet 
+    GameObject freezeOverlay;
+    GameObject player;
 
 
     void Start()
@@ -48,21 +63,51 @@ public class DuckGameManager : MonoBehaviour
         audioSources[0].clip = normalSFX;
 //      failureSFX = GetComponent<AudioSource>();
  //     failureSFX.clip = failureClipSFX;
+
+        //freeze variables initialized
+        hasInitialized = false;
+        popup = GameObject.Find("Popup");
+        popupHome = new Vector3(0, 10, 0);
+        freezeOverlay = GameObject.Find("FreezeOverlay (2)");
+        GameObject.Find("DuckPlayer").GetComponent<SpriteRenderer>().enabled = false;
+        
+
     }
 
     void Update()
     {
-        if (!gameOver)
+        Debug.Log("DuckGame " + gameOver);
+        if (!gameOver) //camera moved over to duck game
         {
-            timeRemaining -= Time.deltaTime;
+            
 
-            if (timeRemaining <= 0)
-            {
-                GameOver();
+            if (!hasInitialized) //if game didnt start yet
+             {
+                if (popup.transform.position == popupHome)
+                { //if popup closed
+                    isTutorialPlaying = false;
+                    hasInitialized = true;
+                    InitializeDuckGame();
+                }
+                else if (!isTutorialPlaying) { 
+                    InitializeDuckGame(); 
+                    hasInitialized=true; 
+                }
             }
 
+            if (!isTutorialPlaying) //start game when tutorial is closed or when no tutorial
+            {
+                timeRemaining -= Time.deltaTime;
+                timerText.text = "Time Left: " + Mathf.RoundToInt(timeRemaining);
+
+                if (timeRemaining <= 0)
+                {
+                    GameOver();
+                }
+            }
         }
     }
+
 
     //This function is called by the AppScript and should handle setting up everything for the duck minigame
     public void StartDuckMinigame()
@@ -71,20 +116,41 @@ public class DuckGameManager : MonoBehaviour
         score = 0;
         ++timesPlayed;
         timeRemaining = gameDuration;
+        timerText.text = "Time Left: " + gameDuration.ToString();
 
-        StartCoroutine(GlitchCheckRoutine());
+
+        //StartCoroutine(GlitchCheckRoutine());
 
         if (timesPlayed == 1)
         {
+           
+            isTutorialPlaying = true;
+            Debug.Log("first time playing");
             glitchFreq = 0;
-            UIController.TriggerPopup(new Vector3(48f, 22.5f, -5), "Use the mouse to aim and left click to shoot.Take down all the ducks!");
+            UIController.TriggerPopup(new Vector3(48f, 22.5f, -9.1f), "Use the mouse to aim and left click to shoot.Take down all the ducks!");
         } else if (timesPlayed == 2)
         {
+            isTutorialPlaying = false;
             glitchFreq = 0.3f;
+            //InitializeDuckGame();
+            
         } else // day 3; need a variable to determine which route to take
         {
+            isTutorialPlaying = false;
+            glitchFreq=MainGameManager.GetComponent<GameManagerScript>().GlitchFreqFromEnding();
+            //GlitchFreqFromEnding();
+            //InitializeDuckGame();
 
         }
+    }
+
+    private void InitializeDuckGame() {
+        //initialize game objects for game
+        freezeOverlay.SetActive(false);
+        GameObject.Find("SpawnManager").GetComponent<SpawnManager>().SpawnStart();
+        GameObject.Find("SpawnManagerFast").GetComponent<SpawnManagerFast>().SpawnStart();
+        GameObject.Find("DuckPlayer").GetComponent<SpriteRenderer>().enabled = true;
+        StartCoroutine(GlitchCheckRoutine());
     }
 
     IEnumerator GlitchCheckRoutine()
@@ -108,6 +174,8 @@ public class DuckGameManager : MonoBehaviour
         GlitchEffect.intensity = Random.Range(0f, 0.3f); // can adjust
         AnalogGlitchEffect.colorDrift = Random.Range(0f, 0.3f);
         audioSources[0].clip = glitchedSFX;
+        SpriteRenderer spriteRenderer = bg.GetComponent<SpriteRenderer>(); // initialize to change background
+        spriteRenderer.sprite = bgGlitched;
 
         yield return new WaitForSeconds(1f); // Glitch lasts 1 second
 
@@ -118,6 +186,7 @@ public class DuckGameManager : MonoBehaviour
             audioSources[0].clip = normalSFX;
             GlitchEffect.intensity = 0;
             AnalogGlitchEffect.colorDrift = 0;
+            spriteRenderer.sprite = bgNormal;
         }
 
     }
@@ -125,18 +194,26 @@ public class DuckGameManager : MonoBehaviour
     {
         gameOver = true;
 
-        int scoreChange = CalculateScore(score); 
+        int scoreChange = CalculateScore(score);
+        timerText.text = "Time's up!";
+        timerText.text = "Time's up!";
 
         //Tell the game manager that the game is over
         MainGameManager.GetComponent<GameManagerScript>().CompletedMinigame(scoreChange);
         MainGameManager.GetComponent<GameManagerScript>().RefreshLeaderboard(3, score);
 
+        //disable crosshair
+        GameObject.Find("DuckPlayer").GetComponent<SpriteRenderer>().enabled = false;
 
         //Update leaderboard text
         LeaderboardText.SetText(score + " Points!");
 
         //Go to the leaderboard
         UIController.GetComponent<ComputerUIScript>().GoToPosition(new Vector3(90, 20, -10)); //go to the leaderboard
+
+        freezeOverlay.SetActive(true);
+        hasInitialized = false;
+
 
         score = 0;
         UpdateScoreText();
@@ -170,4 +247,5 @@ public class DuckGameManager : MonoBehaviour
         scoreText.text = "Points: " + score;
 
     }
+
 }
