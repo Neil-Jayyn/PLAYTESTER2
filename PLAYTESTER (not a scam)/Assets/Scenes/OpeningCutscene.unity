@@ -212,7 +212,7 @@ GameObject:
   m_Component:
   - component: {fileID: 73537633}
   m_Layer: 5
-  m_Name: Text
+  m_Name: BodyText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1785,6 +1785,7 @@ GameObject:
   - component: {fileID: 1347822852}
   - component: {fileID: 1347822851}
   - component: {fileID: 1347822850}
+  - component: {fileID: 1347822854}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1875,6 +1876,25 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!95 &1347822854
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1347822849}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: af48ef524371d422c9336f2461896ae7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1464405479
 GameObject:
   m_ObjectHideFlags: 0
