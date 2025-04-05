@@ -31,6 +31,7 @@ public class playerMovement : MonoBehaviour
         //anim= GetComponent<Animator>();
         anim.SetBool("isReady", false);
 
+
     }
 
     void Awake() { 
