@@ -72,4 +72,11 @@ public class ComputerUIScript : MonoBehaviour
         bigPopup.transform.GetChild(1).transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().SetText(text);
 
     }
+
+    public void ResetGame() {
+        //SET VARIABLES
+        //initialize camera to empty position in the game to play the video
+        camera.GetComponent<Transform>().position = new Vector3(-20, 50, -10);
+        //StartCoroutine(WaitForVideo());
+    }
 }
