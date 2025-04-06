@@ -74,6 +74,7 @@
      <Compile Include="Assets\Assets\Duck Minigame\Scripts\SpawnManagerFast.cs" />
      <Compile Include="Assets\Assets\Endings\ComplicitEndingManager.cs" />
      <Compile Include="Assets\Assets\Endings\complicitPlayer.cs" />
+     <Compile Include="Assets\ChangeScenes.cs" />
      <Compile Include="Assets\Kino\Glitch\AnalogGlitch.cs" />
      <Compile Include="Assets\Kino\Glitch\DigitalGlitch.cs" />
      <Compile Include="Assets\Scripts\AppScript.cs" />
