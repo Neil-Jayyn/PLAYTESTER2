@@ -8,6 +8,9 @@ public class ComplicitEndingManager : MonoBehaviour
 {
 
     public bool gameOver;
+    GameObject crosshair;
+    GameObject player;
+
 
     public TMP_Text timerText;
 
@@ -15,18 +18,26 @@ public class ComplicitEndingManager : MonoBehaviour
     void Start()
     {
         gameOver = true;
+
+        //set objects
+        crosshair = GameObject.Find("complicit player");
+        player = GameObject.Find("complayer Target");
+
+        crosshair.SetActive(false);
+        player.SetActive(false);
         
     }
 
     public void StartComplicitMinigame() { 
         gameOver=false;
+        crosshair.SetActive(true);
+        player.SetActive(true);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!gameOver) { 
-
-        }
+        
     }
+
 }

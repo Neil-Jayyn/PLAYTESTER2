@@ -44,6 +44,7 @@ public class AppScript : MonoBehaviour
     private TMPro.TextMeshProUGUI confusionText;
     private TMPro.TextMeshProUGUI rebellionText;
     private TMPro.TextMeshProUGUI complicitText;
+    GameObject complicitMgManager;
 
     // Audio
     public AudioClip captchaSFX; // sfx for captcha confirmation
@@ -74,12 +75,13 @@ public class AppScript : MonoBehaviour
         canBeClicked = true; //true by default
 
      
-        GameManager.GetComponent<GameManagerScript>().TestEndings(90);
-        popup = GameObject.Find("Close Popup");
+        //GameManager.GetComponent<GameManagerScript>().TestEndings(1);
         popupHome = new Vector3(0, 10, 0);
         confusionText= GameObject.Find("Confusion Text").GetComponent<TMPro.TextMeshProUGUI>();
         rebellionText = GameObject.Find("Rebellion Text").GetComponent<TMPro.TextMeshProUGUI>();
         complicitText= GameObject.Find("Complicit Text").GetComponent<TMPro.TextMeshProUGUI>();
+        complicitMgManager = GameObject.Find("Complicit GameManager");
+
 
     }
 
@@ -165,7 +167,7 @@ public class AppScript : MonoBehaviour
                 {
                     //player has finished day 3
                     //TODO: trigger an ending here
-                    GameManager.GetComponent<GameManagerScript>().TestEndings(100);
+                    //GameManager.GetComponent<GameManagerScript>().TestEndings(1);
                     //Checks from HP what ending they have (RN PLACEHOLDER NUMBERS)
                     ending=GameManager.GetComponent<GameManagerScript>().CheckPlayerEnding();
 
@@ -191,7 +193,10 @@ public class AppScript : MonoBehaviour
                             Debug.Log("complicit ending");
                             //UIController.GetComponent<ComputerUIScript>().GoToPosition(complicitEndingLocation);
                             UIController.GetComponent<ComputerUIScript>().GoToPosition(complicitEndingLocation);
-                            StartCoroutine(ComplicitEnding());
+                            complicitMgManager.GetComponent<ComplicitEndingManager>().StartComplicitMinigame();
+                            
+
+                            //StartCoroutine(ComplicitEnding());
 
                             break;
                     }
@@ -374,7 +379,7 @@ public class AppScript : MonoBehaviour
 
         //trigger popup
         float popupTime = 5;
-        popup.SetActive(false);
+        //popup.SetActive(false);
         UIController.GetComponent<ComputerUIScript>().TriggerPopup(new Vector3(0, 0, -2), "COMPLICIT");
         yield return new WaitForSeconds(popupTime);
         UIController.GetComponent<ComputerUIScript>().TriggerPopup(popupHome, "COMPLICIT");

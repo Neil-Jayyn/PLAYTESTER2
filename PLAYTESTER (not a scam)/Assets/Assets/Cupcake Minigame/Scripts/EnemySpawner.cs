@@ -5,6 +5,9 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     public GameObject person;
+    public GameObject person1;
+    public GameObject person3;
+    public GameObject person2;
     public GameObject speedyPerson;
 
     //num of enemies handling
@@ -54,6 +57,7 @@ public class EnemySpawner : MonoBehaviour
                 //Debug.Log("IsSpeedy"+isSpeedyObject);
                 if (!isSpeedyObject)
                 {
+                    GameObject person = PersonChoice();
                     //Debug.Log(isLeftEnemySpawner + " should spawn");
                     EnemiesSpeedHandling(timeRemaining);
                     person.GetComponent<enemyMovement>().isLeftSpawner = isLeftEnemySpawner;
@@ -134,5 +138,21 @@ public class EnemySpawner : MonoBehaviour
         }
         //Debug.Log(time);
         person.GetComponent<enemyMovement>().SetSpeedRange(min, max);
+    }
+
+    public GameObject PersonChoice() {
+        int choice=Random.Range(0, 3);
+        switch (choice) { 
+            case 0:
+                return person1;
+            case 1:
+                return person2;
+            case 2: 
+                return person3;
+            default: 
+                return person1;
+
+        }
+
     }
 }
