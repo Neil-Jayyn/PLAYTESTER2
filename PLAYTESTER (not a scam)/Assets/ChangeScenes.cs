@@ -7,7 +7,6 @@ public class ChangeScenes : MonoBehaviour
 {
     public float changeTime;
     public string mainScene;
-    public string sceneName2;
 
 
     // Update is called once per frame
@@ -16,12 +15,8 @@ public class ChangeScenes : MonoBehaviour
         //hardcoded to time duration of second clip, since this script will only be used for the cutscene
 
         changeTime -= Time.deltaTime;
-        if (changeTime <= 2.85 && changeTime > 0)
-        {
-            SceneManager.LoadScene(sceneName2);
-        }
-
-        else if (changeTime <= 0)
+    
+        if (changeTime <= 0)
         {
             SceneManager.LoadScene(mainScene);
         }
