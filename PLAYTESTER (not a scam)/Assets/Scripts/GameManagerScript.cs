@@ -28,6 +28,7 @@ public class GameManagerScript : MonoBehaviour
     public AudioClip coinTrack;
     public AudioClip duckTrack;
     public AudioClip glitchedCoinTrack;
+    public AudioClip glitchedCupcakeTrack;
     public AudioClip titleScreenAudio;
     public bool isGlitchActive = false;
     public float glitchDuration = 1.0f;
@@ -73,6 +74,9 @@ public class GameManagerScript : MonoBehaviour
 
     // Reference to coin runner minigame manager
     public MinigameManager coinMinigameManager;
+
+    //Ref to cupcake mg manager
+    public CupcakeGameManager cupcakeGameManager;
 
     //BIOS + EMP + Reboot related screen info
     private TMPro.TextMeshProUGUI biosText;
@@ -158,7 +162,7 @@ public class GameManagerScript : MonoBehaviour
     void Update()
     {
         // coin runner audio control specifically for now
-        if (minigamesPlayed == 1 && !coinMinigameManager.IsGameOver() && coinMinigameManager.isGlitch) 
+        if (minigamesPlayed == 1 && !coinMinigameManager.IsGameOver() && coinMinigameManager.isGlitch)
         {
             glitchCooldownTimer -= Time.deltaTime;
 
@@ -168,17 +172,26 @@ public class GameManagerScript : MonoBehaviour
                 // Reset the cooldown timer
                 glitchCooldownTimer = glitchCooldown;
 
-                if (!isGlitchActive && Random.value < coinMinigameManager.glitchFreq) 
+                if (!isGlitchActive && Random.value < coinMinigameManager.glitchFreq)
                 {
                     Debug.Log("Starting coin glitch");
                     StartCoroutine(HandleCoinMinigameAudio());
                 }
             }
-        }
 
-        if(gameStarted)
-        {
-            border.transform.position = new Vector3(MainCamera.transform.position.x, MainCamera.transform.position.y, -9);
+            // cupcake game for now 
+            if (minigamesPlayed == 0 && day == 2) {
+                MusicPlayer.clip = glitchedCupcakeTrack;
+            }
+
+            if (minigamesPlayed == 0 && !cupcakeGameManager.gamePlaying && cupcakeGameManager.isGlitch) {
+                MusicPlayer.clip = glitchedCupcakeTrack;
+            }
+
+                if (gameStarted)
+            {
+                border.transform.position = new Vector3(MainCamera.transform.position.x, MainCamera.transform.position.y, -9);
+            }
         }
     }
 
@@ -275,6 +288,8 @@ public class GameManagerScript : MonoBehaviour
         {
             //playing cupcake
             MusicPlayer.clip = cupcakeTrack;
+            GlitchMusicPlayer.clip = glitchedCupcakeTrack;
+            GlitchMusicPlayer.mute = true;
            
         }
         else if (minigamesPlayed == 1)
@@ -311,6 +326,24 @@ public class GameManagerScript : MonoBehaviour
         isGlitchActive = false;
 
     }
+
+    private IEnumerator HandleCupcakeMinigameAudio()
+    {
+        isGlitchActive = true;
+
+        MusicPlayer.mute = true;
+        GlitchMusicPlayer.mute = false;
+
+        glitchDuration = cupcakeGameManager.glitchLength;
+        yield return new WaitForSeconds(glitchDuration); // glitch lasts this long (ie 1 second)
+
+        MusicPlayer.mute = false;
+        GlitchMusicPlayer.mute = true;
+
+        isGlitchActive = false;
+
+    }
+
 
     //Refresh the text for the minigame (first param, 1, 2 or 3) using the player's score
     public void RefreshLeaderboard(int gameNum, int score)

@@ -51,6 +51,10 @@ public class CupcakeGameManager : MonoBehaviour
     public AudioClip sfxNormalYay;
     public AudioClip sfxGlitchedYay;
 
+    //public AudioSource track;
+    //public AudioClip trackNormal;
+    //public AudioClip trackGlitched;
+
     //tutorial freeze
     public GameObject popup;
     Vector3 popupHome;
@@ -99,11 +103,13 @@ public class CupcakeGameManager : MonoBehaviour
         //set the timer for the game
         timeRemaining = gameDuration;
 
+        //track.mute = false;
+
         // If it is the first time playing, tutorial popup
         if (timesPlayed == 1)
         {
             tutorialPlaying = true;
-            glitchFrequency = 0;
+            glitchFrequency = 0.6f;
             UIController.TriggerPopup(new Vector3(50, 50, -9.1f), "Use the left and right arrow keys to move and spacebar to drop.\r\nGive cupcakes to everyone!\r\n");
             freezeOverlay.SetActive(true);
  
@@ -122,11 +128,13 @@ public class CupcakeGameManager : MonoBehaviour
             freezeOverlay.SetActive(false);
             spawner1.SetNumOfEnemies(27);
             spawner2.SetNumOfEnemies(18);
+            glitchLength = 3.0f;
 
         }
 
         // Start glitch checking
-        StartCoroutine(GlitchCheckRoutine());
+
+       
     }
 
     // Update is called once per frame
@@ -167,6 +175,7 @@ public class CupcakeGameManager : MonoBehaviour
         GameObject.Find("EnemySpawner (1)").GetComponent<EnemySpawner>().playCupcakeMinigame = true;
         GameObject.Find("cupcakeHolder").GetComponent<playerMovement>().playCupcakeMinigame = true;
         GameObject.Find("cupcakeHolder").GetComponent<Animator>().enabled = true;
+        StartCoroutine(GlitchCheckRoutine());
     }
 
     IEnumerator GlitchCheckRoutine()
@@ -179,6 +188,8 @@ public class CupcakeGameManager : MonoBehaviour
             {
                 StartCoroutine(ActivateGlitch());
             }
+
+            
         }
     }
 
@@ -190,11 +201,11 @@ public class CupcakeGameManager : MonoBehaviour
         SpriteRenderer spriteRenderer = bg.GetComponent<SpriteRenderer>(); // initialize to change background
         spriteRenderer.sprite = bgGlitched;
 
-        SpriteRenderer ovenSpriteR=oven.GetComponent<SpriteRenderer>(); // init to change oven
-        ovenSpriteR.sprite = ovenGlitched;
-
         yield return new WaitForSeconds(glitchLength); // Glitch lasts 1 second
-        
+
+        //track.clip = trackGlitched;
+
+
         // turn off glitches unless glitches are supposed to happen 100% 
         if (glitchFrequency != 1)
         {
@@ -202,7 +213,7 @@ public class CupcakeGameManager : MonoBehaviour
             GlitchEffect.intensity = 0;
             AnalogGlitchEffect.colorDrift = 0;
             spriteRenderer.sprite = bgNormal;
-            ovenSpriteR.sprite = ovenNormal;
+            //track.clip = trackNormal;
         } 
     }
 
