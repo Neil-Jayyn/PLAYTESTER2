@@ -41,6 +41,11 @@ public class CupcakeGameManager : MonoBehaviour
     public Sprite bgNormal;
     public Sprite bgGlitched;
 
+    // Oven variables
+    public GameObject oven;
+    public Sprite ovenNormal;
+    public Sprite ovenGlitched;
+
     //sound effect
     public AudioSource sfx;
     public AudioClip sfxNormalYay;
@@ -185,6 +190,9 @@ public class CupcakeGameManager : MonoBehaviour
         SpriteRenderer spriteRenderer = bg.GetComponent<SpriteRenderer>(); // initialize to change background
         spriteRenderer.sprite = bgGlitched;
 
+        SpriteRenderer ovenSpriteR=oven.GetComponent<SpriteRenderer>(); // init to change oven
+        ovenSpriteR.sprite = ovenGlitched;
+
         yield return new WaitForSeconds(glitchLength); // Glitch lasts 1 second
         
         // turn off glitches unless glitches are supposed to happen 100% 
@@ -194,6 +202,7 @@ public class CupcakeGameManager : MonoBehaviour
             GlitchEffect.intensity = 0;
             AnalogGlitchEffect.colorDrift = 0;
             spriteRenderer.sprite = bgNormal;
+            ovenSpriteR.sprite = ovenNormal;
         } 
     }
 
