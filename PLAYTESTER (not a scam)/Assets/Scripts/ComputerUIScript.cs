@@ -19,10 +19,13 @@ public class ComputerUIScript : MonoBehaviour
         popup = GameObject.Find("Popup");
         bigPopup = GameObject.Find("Company Popup");
 
-        //SET VARIABLES
+        GoToPosition(titleScreen);
+
+        /* OLD VIDEO SCRIPT
         //initialize camera to empty position in the game to play the video
         camera.GetComponent<Transform>().position = new Vector3(-20, 50,-10);
         StartCoroutine(WaitForVideo());
+        */
     }
 
 
@@ -32,6 +35,7 @@ public class ComputerUIScript : MonoBehaviour
         
     }
 
+    /* OLD CUSTSCENE SCRIPT
     IEnumerator WaitForVideo()
     {
         //yield return new WaitForSeconds(14); //VIDEO SHOULD BE 14 SECONDS
@@ -39,6 +43,7 @@ public class ComputerUIScript : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         GoToPosition(titleScreen);
     }
+    */
 
     // This method can be called to change the position of the camera. By default the camera should be set to z=-10
     public void GoToPosition(Vector3 pos)

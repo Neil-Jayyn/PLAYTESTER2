@@ -19,7 +19,6 @@ public class GameManagerScript : MonoBehaviour
     public AudioSource GlitchMusicPlayer; // Both musicPlayer and glitchMusicPlayer will play, but one will be muted depending on glitch frequency
     private GameObject UIController;
     public GameObject MainCamera;
-    public GameObject border;
 
     //All audio tracks (sound effects are handled in their minigames but the minigame music is
     //all handled in this script
@@ -53,8 +52,11 @@ public class GameManagerScript : MonoBehaviour
     //App notification vars
     private GameObject photoNotif;
     private GameObject newsNotif;
+    private GameObject gameNotif;
     private Vector3 photoNotifLocation = new Vector3(-6f, 1.8f, -1);
     private Vector3 newsNotifLocation = new Vector3(-6f, 3.2f, -1);
+    private Vector3 gameNotifLocation = new Vector3(-6f, 0.5f, -1);
+    private Vector3 notifHome = new Vector3(0, 8.5f, -1);
 
     //All news text slots
     private TMPro.TextMeshProUGUI ValText1;
@@ -107,6 +109,7 @@ public class GameManagerScript : MonoBehaviour
         duckCheck = GameObject.Find("Duck Check");
         photoNotif = GameObject.Find("Photo App Notif");
         newsNotif = GameObject.Find("News App Notif");
+        gameNotif = GameObject.Find("Game App Notif");
         biosText = GameObject.Find("EMP Text").GetComponent<TMPro.TextMeshProUGUI>();
 
         //Hide the checkmarks
@@ -144,16 +147,16 @@ public class GameManagerScript : MonoBehaviour
         CleeDate = GameObject.Find("Clee Date").GetComponent<TMPro.TextMeshProUGUI>();
 
 
-        // TO START: make a popup appear
+        // Make a popup appear
         DisplayCompanyMessage();
 
-        // Slow down the title screen animation, news app captcha button
+        // Slow down the news app captcha button
         GameObject.Find("News App Captcha Button").GetComponent<Animator>().speed = 0.5f;
 
-        //Update news articles
+        //Update articles and notification dots
         UpdateNews();
-
         UpdateNotifications();
+        ShowMinigameNotif();
 
 
     }
@@ -187,11 +190,6 @@ public class GameManagerScript : MonoBehaviour
             if (minigamesPlayed == 0 && !cupcakeGameManager.gamePlaying && cupcakeGameManager.isGlitch) {
                 MusicPlayer.clip = glitchedCupcakeTrack;
             }
-
-                if (gameStarted)
-            {
-                border.transform.position = new Vector3(MainCamera.transform.position.x, MainCamera.transform.position.y, -9);
-            }
         }
     }
 
@@ -221,6 +219,15 @@ public class GameManagerScript : MonoBehaviour
             HP = 1;
         }
 
+        if (minigamesPlayed == 3)
+        {
+            HideMinigameNotif();
+        }
+        else
+        {
+            ShowMinigameNotif();
+        }
+
         //Update the HP bar
         Bar.GetComponent<HealthBar>().SetHealth(HP);
 
@@ -248,10 +255,11 @@ public class GameManagerScript : MonoBehaviour
         // Hide all dashboard checkmarks
         HideCheckmarks();
 
-        //Update news articles
+        //Update things
         UpdateNews();
-
+        ShowMinigameNotif();
         UpdateNotifications();
+        ResetLeaderboard();
     }
 
     public int GetHP()
@@ -277,6 +285,16 @@ public class GameManagerScript : MonoBehaviour
         {
             photoNotif.transform.position = photoNotifLocation;
         }
+    }
+
+    private void ShowMinigameNotif()
+    {
+        gameNotif.transform.position = gameNotifLocation;
+    }
+
+    private void HideMinigameNotif()
+    {
+        gameNotif.transform.position = notifHome;
     }
 
     public void StartedMinigame()
@@ -344,6 +362,12 @@ public class GameManagerScript : MonoBehaviour
 
     }
 
+    private void ResetLeaderboard()
+    {
+        CupcakeLBText.SetText("");
+        CoinLBText.SetText("");
+        DuckLBText.SetText("");
+    }
 
     //Refresh the text for the minigame (first param, 1, 2 or 3) using the player's score
     public void RefreshLeaderboard(int gameNum, int score)
@@ -781,6 +805,8 @@ public class GameManagerScript : MonoBehaviour
 
 
                 string valTitle = "NULL";
+                //Special little thing for Val complicit ending
+                GameObject.Find("Val Author Name").GetComponent<TMPro.TextMeshProUGUI>().SetText("NULL");
                 ValTitle.SetText(valTitle);
                 ValArticleTitle.SetText(valTitle);
                 ValText1.SetText("NULL");

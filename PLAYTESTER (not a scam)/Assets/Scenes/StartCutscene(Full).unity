@@ -733,7 +733,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 209032256}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!4 &209032259
 Transform:
   m_ObjectHideFlags: 0
@@ -1083,7 +1083,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   changeTime: 16.1
   mainScene: SampleScene
-  sceneName2: AcceptJobCutscene
 --- !u!4 &451997185
 Transform:
   m_ObjectHideFlags: 0

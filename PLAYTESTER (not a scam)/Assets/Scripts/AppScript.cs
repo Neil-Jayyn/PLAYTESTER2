@@ -177,7 +177,7 @@ public class AppScript : MonoBehaviour
                             Debug.Log("rebellion ending");
                             //UIController.GetComponent<ComputerUIScript>().GoToPosition(rebellionEndingLocation);
                             //UIController.GetComponent<ComputerUIScript>().GoToPosition(rebellionEndingLocation);
-                            StartCoroutine(RebllionEnding());
+                            StartCoroutine(RebellionEnding());
                             break;
                         case 1:
                             
@@ -300,7 +300,7 @@ public class AppScript : MonoBehaviour
         }
     }
 
-    IEnumerator RebllionEnding()
+    IEnumerator RebellionEnding()
     {
         //SETUP
         float between = 0.005f; //time between characters appearing
