@@ -2,6 +2,7 @@ ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
     - AppScript
+    - ChangeScenes
     - ComplicitEndingManager
     - ComputerUIScript
     - CupcakeGameManager
@@ -11,7 +12,6 @@ ScriptsOnlyBuild:
     - EnemySpawner
     - GameManagerScript
     - HealthBar
-    - HoverScript
     - Kino.AnalogGlitch
     - Kino.DigitalGlitch
     - MinigameManager
@@ -44,11 +44,25 @@ ScriptsOnlyBuild:
     - TMPro.TMP_SpriteAsset
     - TMPro.TMP_StyleSheet
     - TMPro.TextMeshProUGUI
+    Unity.Timeline.Editor.dll:
+    - UnityEditor.Timeline.EditorClip
+    - UnityEditor.Timeline.SequenceHierarchy
+    - UnityEditor.Timeline.TimelineAssetViewModel
+    - UnityEditor.Timeline.TimelineWindow
+    Unity.Timeline.dll:
+    - UnityEngine.Timeline.ActivationPlayableAsset
+    - UnityEngine.Timeline.ActivationTrack
+    - UnityEngine.Timeline.AnimationPlayableAsset
+    - UnityEngine.Timeline.AnimationTrack
+    - UnityEngine.Timeline.MarkerTrack
+    - UnityEngine.Timeline.TimelineAsset
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -63,6 +77,7 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.Image
     - UnityEngine.UI.ScrollRect
     - UnityEngine.UI.Slider
+    - UnityEngine.UI.Text
     - UnityEngine.UI.VerticalLayoutGroup
   sceneClasses:
     Assets/Scenes/SampleScene.unity:
@@ -79,8 +94,6 @@ ScriptsOnlyBuild:
     - Class: 28
       Script: {instanceID: 0}
     - Class: 48
-      Script: {instanceID: 0}
-    - Class: 49
       Script: {instanceID: 0}
     - Class: 50
       Script: {instanceID: 0}
@@ -125,8 +138,6 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 12398}
     - Class: 114
-      Script: {instanceID: 12450}
-    - Class: 114
       Script: {instanceID: 12480}
     - Class: 114
       Script: {instanceID: 12512}
@@ -153,8 +164,6 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 13470}
     - Class: 114
-      Script: {instanceID: 13488}
-    - Class: 114
       Script: {instanceID: 13710}
     - Class: 114
       Script: {instanceID: 13788}
@@ -171,24 +180,18 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 14078}
     - Class: 114
-      Script: {instanceID: 14114}
+      Script: {instanceID: 14184}
     - Class: 114
-      Script: {instanceID: 14180}
+      Script: {instanceID: 14496}
     - Class: 114
-      Script: {instanceID: 14186}
+      Script: {instanceID: 14518}
     - Class: 114
-      Script: {instanceID: 14498}
+      Script: {instanceID: 14546}
     - Class: 114
-      Script: {instanceID: 14520}
+      Script: {instanceID: 14560}
     - Class: 114
-      Script: {instanceID: 14548}
-    - Class: 114
-      Script: {instanceID: 14562}
-    - Class: 114
-      Script: {instanceID: 14566}
+      Script: {instanceID: 14564}
     - Class: 115
-      Script: {instanceID: 0}
-    - Class: 128
       Script: {instanceID: 0}
     - Class: 157
       Script: {instanceID: 0}
@@ -207,6 +210,79 @@ ScriptsOnlyBuild:
     - Class: 328
       Script: {instanceID: 0}
     - Class: 329
+      Script: {instanceID: 0}
+    Assets/Scenes/StartCutscene(Full).unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 49
+      Script: {instanceID: 0}
+    - Class: 74
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 91
+      Script: {instanceID: 0}
+    - Class: 95
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 11374}
+    - Class: 114
+      Script: {instanceID: 11636}
+    - Class: 114
+      Script: {instanceID: 11664}
+    - Class: 114
+      Script: {instanceID: 11720}
+    - Class: 114
+      Script: {instanceID: 11998}
+    - Class: 114
+      Script: {instanceID: 12140}
+    - Class: 114
+      Script: {instanceID: 12450}
+    - Class: 114
+      Script: {instanceID: 13470}
+    - Class: 114
+      Script: {instanceID: 13488}
+    - Class: 114
+      Script: {instanceID: 13490}
+    - Class: 114
+      Script: {instanceID: 13584}
+    - Class: 114
+      Script: {instanceID: 13892}
+    - Class: 114
+      Script: {instanceID: 14136}
+    - Class: 114
+      Script: {instanceID: 14178}
+    - Class: 114
+      Script: {instanceID: 18422}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 196
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
+    - Class: 320
       Script: {instanceID: 0}
   scriptHashData:
   - hash:
@@ -493,7 +569,7 @@ ScriptsOnlyBuild:
     className: Selectable
   - hash:
       serializedVersion: 2
-      Hash: 2fdc2f27e2ebccb119a416054f2db7d8
+      Hash: 549a57d90470cd5d2da2214351fea089
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: AppScript
@@ -721,12 +797,6 @@ ScriptsOnlyBuild:
     className: scrollBg
   - hash:
       serializedVersion: 2
-      Hash: 6233c162e81ae5a4779ac3947412be6f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: HoverScript
-  - hash:
-      serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -857,7 +927,14 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 4d0f74c7905e271c2fb51d2c12d0e5ac
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ChangeScenes
   platform: 20
   scenePathNames:
+  - Assets/Scenes/StartCutscene(Full).unity
   - Assets/Scenes/SampleScene.unity
-  playerPath: C:/Users/lilyd/OneDrive/Desktop
+  playerPath: /Users/motime/Documents/GitHub/playtesterTestBuild/BuildWCutscenes
