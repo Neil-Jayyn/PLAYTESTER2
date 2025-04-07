@@ -28,6 +28,7 @@ public class GameManagerScript : MonoBehaviour
     public AudioClip coinTrack;
     public AudioClip duckTrack;
     public AudioClip glitchedCoinTrack;
+    public AudioClip glitchedCupcakeTrack;
     public AudioClip titleScreenAudio;
     public bool isGlitchActive = false;
     public float glitchDuration = 1.0f;
@@ -73,6 +74,9 @@ public class GameManagerScript : MonoBehaviour
 
     // Reference to coin runner minigame manager
     public MinigameManager coinMinigameManager;
+
+    //Ref to cupcake mg manager
+    public CupcakeGameManager cupcakeGameManager;
 
     //BIOS + EMP + Reboot related screen info
     private TMPro.TextMeshProUGUI biosText;
@@ -158,7 +162,7 @@ public class GameManagerScript : MonoBehaviour
     void Update()
     {
         // coin runner audio control specifically for now
-        if (minigamesPlayed == 1 && !coinMinigameManager.IsGameOver() && coinMinigameManager.isGlitch) 
+        if (minigamesPlayed == 1 && !coinMinigameManager.IsGameOver() && coinMinigameManager.isGlitch)
         {
             glitchCooldownTimer -= Time.deltaTime;
 
@@ -168,17 +172,26 @@ public class GameManagerScript : MonoBehaviour
                 // Reset the cooldown timer
                 glitchCooldownTimer = glitchCooldown;
 
-                if (!isGlitchActive && Random.value < coinMinigameManager.glitchFreq) 
+                if (!isGlitchActive && Random.value < coinMinigameManager.glitchFreq)
                 {
                     Debug.Log("Starting coin glitch");
                     StartCoroutine(HandleCoinMinigameAudio());
                 }
             }
-        }
 
-        if(gameStarted)
-        {
-            border.transform.position = new Vector3(MainCamera.transform.position.x, MainCamera.transform.position.y, -9);
+            // cupcake game for now 
+            if (minigamesPlayed == 0 && day == 2) {
+                MusicPlayer.clip = glitchedCupcakeTrack;
+            }
+
+            if (minigamesPlayed == 0 && !cupcakeGameManager.gamePlaying && cupcakeGameManager.isGlitch) {
+                MusicPlayer.clip = glitchedCupcakeTrack;
+            }
+
+                if (gameStarted)
+            {
+                border.transform.position = new Vector3(MainCamera.transform.position.x, MainCamera.transform.position.y, -9);
+            }
         }
     }
 
@@ -275,6 +288,8 @@ public class GameManagerScript : MonoBehaviour
         {
             //playing cupcake
             MusicPlayer.clip = cupcakeTrack;
+            GlitchMusicPlayer.clip = glitchedCupcakeTrack;
+            GlitchMusicPlayer.mute = true;
            
         }
         else if (minigamesPlayed == 1)
@@ -311,6 +326,24 @@ public class GameManagerScript : MonoBehaviour
         isGlitchActive = false;
 
     }
+
+    private IEnumerator HandleCupcakeMinigameAudio()
+    {
+        isGlitchActive = true;
+
+        MusicPlayer.mute = true;
+        GlitchMusicPlayer.mute = false;
+
+        glitchDuration = cupcakeGameManager.glitchLength;
+        yield return new WaitForSeconds(glitchDuration); // glitch lasts this long (ie 1 second)
+
+        MusicPlayer.mute = false;
+        GlitchMusicPlayer.mute = true;
+
+        isGlitchActive = false;
+
+    }
+
 
     //Refresh the text for the minigame (first param, 1, 2 or 3) using the player's score
     public void RefreshLeaderboard(int gameNum, int score)
@@ -773,11 +806,11 @@ public class GameManagerScript : MonoBehaviour
         int ending;
         int finalHP = GetHP();
         Debug.Log("HP:"+finalHP);
-        if (finalHP > 80)
+        if (finalHP >= 80  && finalHP<=100)
         {
             ending = 0; //rebellion
         }
-        else if (finalHP > 40)
+        else if (finalHP > 40 && finalHP<80)
         {
             ending = 1; //confusion
         }
@@ -789,17 +822,18 @@ public class GameManagerScript : MonoBehaviour
 
     public float GlitchFreqFromEnding()
     {
-        float glitchFreq=0;
+        //Final day has 100% glitches
+        float glitchFreq=0.95f;
         int ending =CheckPlayerEnding();
-        switch (ending)
+        /*switch (ending)
         {
             case 0://rebellion
                 glitchFreq = 0.8f; break;
             case 1://confusion
                 glitchFreq = 0.3f; break;
             case 2://complicit
-                glitchFreq = 0.1f; break;
-        }
+                glitchFreq = 0.0f; break;
+        }*/
         return glitchFreq;
     }
 
@@ -811,5 +845,61 @@ public class GameManagerScript : MonoBehaviour
         duckCheck.transform.position = checkHome;
 
         return;
+    }
+
+    public void TestEndings(int testHP) {
+        day = 3;
+        HP = testHP;
+        minigamesPlayed = 3;
+    }
+
+    public void ResetGame() {
+        day = 1;
+        minigamesPlayed = 0;
+        HP = 100;
+        EMPHappened = false;
+        gameStarted = false;
+
+        //Hide the checkmarks
+        HideCheckmarks();
+
+        //Set the audio stuff
+        MusicPlayer.clip = mainTrack;
+        MusicPlayer.loop = true;
+        MusicPlayer.Play();
+
+        //Get the news article text stuff
+        ValText1 = GameObject.Find("Val Text 1").GetComponent<TMPro.TextMeshProUGUI>();
+        ValArticleTitle = GameObject.Find("Val Article Name").GetComponent<TMPro.TextMeshProUGUI>();
+        ValTitle = GameObject.Find("Val Title Text").GetComponent<TMPro.TextMeshProUGUI>();
+        ValDate = GameObject.Find("Val Date").GetComponent<TMPro.TextMeshProUGUI>();
+
+
+        LexaText1 = GameObject.Find("Lexa Text 1").GetComponent<TMPro.TextMeshProUGUI>();
+        LexaArticleTitle = GameObject.Find("Lexa Article Name").GetComponent<TMPro.TextMeshProUGUI>();
+        LexaTitle = GameObject.Find("Lexa Title Text").GetComponent<TMPro.TextMeshProUGUI>();
+        LexaDate = GameObject.Find("Lexa Date").GetComponent<TMPro.TextMeshProUGUI>();
+
+
+        CleeText1 = GameObject.Find("Clee Text 1").GetComponent<TMPro.TextMeshProUGUI>();
+        CleeArticleTitle = GameObject.Find("Clee Article Name").GetComponent<TMPro.TextMeshProUGUI>();
+        CleeTitle = GameObject.Find("Clee Title Text").GetComponent<TMPro.TextMeshProUGUI>();
+        CleeDate = GameObject.Find("Clee Date").GetComponent<TMPro.TextMeshProUGUI>();
+
+
+        // TO START: make a popup appear
+        DisplayCompanyMessage();
+
+        // Slow down the title screen animation, news app captcha button
+        GameObject.Find("News App Captcha Button").GetComponent<Animator>().speed = 0.5f;
+
+        //Update news articles
+        UpdateNews();
+
+        UpdateNotifications();
+
+        //UIController.GetComponent<ComputerUIScript>().ResetGame();
+
+
     }
 }

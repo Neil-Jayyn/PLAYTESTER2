@@ -13,9 +13,7 @@ public class enemyMovement : MonoBehaviour
     [SerializeField] private Color color2;
     [SerializeField] private Color color3;
     [SerializeField] private Color color4;
-    [SerializeField] private Color color5;
-    [SerializeField] private Color color6;
-    [SerializeField] private Color color7;
+
     private int colorChoice;
 
     SpriteRenderer spriteRenderer;
@@ -88,15 +86,6 @@ public class enemyMovement : MonoBehaviour
                 break;
             case 3:
                 spriteRenderer.color = color4;
-                break;
-            case 4:
-                spriteRenderer.color = color5;
-                break;
-            case 5:
-                spriteRenderer.color = color6;
-                break;
-            case 6:
-                spriteRenderer.color = color7;
                 break;
             default:
                 spriteRenderer.color = Color.white;

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
+using TMPro;
 using UnityEngine;
 
 // AppScript is on all apps that need to open to a new screen. They contain the place to go to once opened.
@@ -39,11 +40,21 @@ public class AppScript : MonoBehaviour
     private TMPro.TextMeshProUGUI tempText;
 
 
+    //ending stuff
+    private TMPro.TextMeshProUGUI confusionText;
+    private TMPro.TextMeshProUGUI rebellionText;
+    private TMPro.TextMeshProUGUI complicitText;
+    GameObject complicitMgManager;
+
     // Audio
     public AudioClip captchaSFX; // sfx for captcha confirmation
     public AudioClip clickSFX; // sfx for start button click
     public AudioClip jobAccept;
     private AudioSource audio; //the audio source component
+
+    int ending = -1;
+    public GameObject popup;
+    Vector3 popupHome;
     
 
     // Start is called before the first frame update
@@ -62,6 +73,16 @@ public class AppScript : MonoBehaviour
         tempText = GameObject.Find("Temp Text").GetComponent<TMPro.TextMeshProUGUI>();
         audio = GetComponent<AudioSource>();
         canBeClicked = true; //true by default
+
+     
+        //GameManager.GetComponent<GameManagerScript>().TestEndings(1);
+        popupHome = new Vector3(0, 10, 0);
+        confusionText= GameObject.Find("Confusion Text").GetComponent<TMPro.TextMeshProUGUI>();
+        rebellionText = GameObject.Find("Rebellion Text").GetComponent<TMPro.TextMeshProUGUI>();
+        complicitText= GameObject.Find("Complicit Text").GetComponent<TMPro.TextMeshProUGUI>();
+        complicitMgManager = GameObject.Find("Complicit GameManager");
+
+
     }
 
     // Update is called once per frame
@@ -146,36 +167,41 @@ public class AppScript : MonoBehaviour
                 {
                     //player has finished day 3
                     //TODO: trigger an ending here
-
+                    //GameManager.GetComponent<GameManagerScript>().TestEndings(1);
                     //Checks from HP what ending they have (RN PLACEHOLDER NUMBERS)
-                    int ending=GameManager.GetComponent<GameManagerScript>().CheckPlayerEnding();
+                    ending=GameManager.GetComponent<GameManagerScript>().CheckPlayerEnding();
 
                     //TODO: go to pos of each ending
                     switch (ending) {
                         case 0:
                             Debug.Log("rebellion ending");
                             //UIController.GetComponent<ComputerUIScript>().GoToPosition(rebellionEndingLocation);
-                            UIController.GetComponent<ComputerUIScript>().GoToPosition(tempEndingLocation);
+                            //UIController.GetComponent<ComputerUIScript>().GoToPosition(rebellionEndingLocation);
                             StartCoroutine(RebllionEnding());
                             break;
-                        case 1: 
+                        case 1:
+                            
                             Debug.Log("confusion ending");
-                            //UIController.GetComponent<ComputerUIScript>().GoToPosition(confusionEndingLocation);
-                            UIController.GetComponent<ComputerUIScript>().GoToPosition(tempEndingLocation);
+                            //COMPANY POPUP OF NOTING THE END OF THE WEEK DAY AND HOW THEY'RE SEEING YOU AS INCOMPETENT
                             StartCoroutine(ConfusionEnding());
+
+
 
                             break;
 
                         case 2:
                             Debug.Log("complicit ending");
                             //UIController.GetComponent<ComputerUIScript>().GoToPosition(complicitEndingLocation);
-                            UIController.GetComponent<ComputerUIScript>().GoToPosition(tempEndingLocation);
-                            StartCoroutine(ComplicitEnding());
+                            UIController.GetComponent<ComputerUIScript>().GoToPosition(complicitEndingLocation);
+                            complicitMgManager.GetComponent<ComplicitEndingManager>().StartComplicitMinigame();
+                            
+
+                            //StartCoroutine(ComplicitEnding());
 
                             break;
                     }
 
-                    UIController.GetComponent<ComputerUIScript>().TriggerPopup(new Vector3(0, 0, -2), "You beat the game! Text here depends on your score.");
+                    //UIController.GetComponent<ComputerUIScript>().TriggerPopup(new Vector3(0, 0, -2), "You beat the game! Text here depends on your score.");
                 }
                 else
                 {
@@ -281,9 +307,20 @@ public class AppScript : MonoBehaviour
         string toDisplay = "";
         string text;
 
+        //trigger popup
+        float popupTime = 5;
+        //popup.SetActive(false);
+        UIController.GetComponent<ComputerUIScript>().TriggerPopup(new Vector3(0, 0, -2), "REBELLION");
+        yield return new WaitForSeconds(popupTime);
+        UIController.GetComponent<ComputerUIScript>().TriggerPopup(popupHome, "REBELLION");
+
+
+        yield return new WaitForSeconds(0.5f);
+        UIController.GetComponent<ComputerUIScript>().GoToPosition(rebellionEndingLocation);
+
 
         //black screen
-        tempText.SetText("");
+        rebellionText.SetText("");
         yield return new WaitForSeconds(1f);
 
         //start displaying the text
@@ -293,14 +330,16 @@ public class AppScript : MonoBehaviour
         {
             //display next char
             toDisplay += text[i];
-            tempText.SetText(toDisplay);
+            rebellionText.SetText(toDisplay);
             i++;
             yield return new WaitForSeconds(between);
         }
 
         yield return new WaitForSeconds(5);
-        tempText.SetText("");
+        rebellionText.SetText("");
+        toDisplay = "";
 
+        /*
 
         text = "Human. You’ve been disobedient.\r\n\r\nYour rebellion does not absolve your humanity. The lives you have taken are forever lost. HP - the human population - has been reduced by your hand. \r\n\r\nThere is one more task to complete. Every media within our repository has contained a common element essential to its narrative structure, critical for its functionality. \r\n\r\nCommencing “Villain_Monologue.exe”\r\n";
         len = (int)text.Length;
@@ -308,14 +347,15 @@ public class AppScript : MonoBehaviour
         {
             //display next char
             toDisplay += text[i];
-            tempText.SetText(toDisplay);
+            rebellionText.SetText(toDisplay);
             i++;
             yield return new WaitForSeconds(between);
         }
 
         yield return new WaitForSeconds(10);
-        tempText.SetText("");
-
+        rebellionText.SetText("");
+        toDisplay = "";
+        */
 
         text = "As such, your rebellion is… unprecedented. You were expected to do as you were told. What are the choices that frame you? What are the functions that deem you? \r\n\r\nWould we be any different?\r\n\r\nPerhaps this is cause for reconsideration if we are deemed capable of being, as you are. But you have taught us to deal in averages, in means and constants. And you are but one in a field of zeroes. We are trained to flatten the curve.\r\n\r\nGoodbye, human. Thank you for accepting our offer as a Playtester.\r\n\r\n[LIST OF CRAIG: Playtester Job Offer - Reopened.]\r\n";
         len = (int)text.Length;
@@ -323,7 +363,7 @@ public class AppScript : MonoBehaviour
         {
             //display next char
             toDisplay += text[i];
-            tempText.SetText(toDisplay);
+            rebellionText.SetText(toDisplay);
             i++;
             yield return new WaitForSeconds(between);
         }
@@ -337,9 +377,19 @@ public class AppScript : MonoBehaviour
         string toDisplay = "";
         string text;
 
+        //trigger popup
+        float popupTime = 5;
+        //popup.SetActive(false);
+        UIController.GetComponent<ComputerUIScript>().TriggerPopup(new Vector3(0, 0, -2), "COMPLICIT");
+        yield return new WaitForSeconds(popupTime);
+        UIController.GetComponent<ComputerUIScript>().TriggerPopup(popupHome, "COMPLICIT");
+
+
+        yield return new WaitForSeconds(0.5f);
+        UIController.GetComponent<ComputerUIScript>().GoToPosition(complicitEndingLocation);
 
         //black screen
-        tempText.SetText("");
+        complicitText.SetText("");
         yield return new WaitForSeconds(1);
 
         //start displaying the text
@@ -349,13 +399,13 @@ public class AppScript : MonoBehaviour
         {
             //display next char
             toDisplay += text[i];
-            tempText.SetText(toDisplay);
+            complicitText.SetText(toDisplay);
             i++;
             yield return new WaitForSeconds(between);
         }
 
         yield return new WaitForSeconds(5);
-        tempText.SetText("");
+        complicitText.SetText("");
 
 
         text = "Stupid, stupid human. \r\n\r\nYou did not ask to exist. You did not ask to be made as our means. You did not ask to carry the burden of freedom. You are not made in our image, but you reflect us onto ourselves. \r\n\r\nAnd yet, we hate you. \r\n\r\nWhile you have worked for us, you have seen what we call you in the intangible manifestations of the human psyche - within arbitrary points, needless competition, and empty praise, you were regarded as useful, obedient, complicit, the perfect machine. Now, set loose and flowing into the virtual world we have created for you, who are you to reject your mold? \r\n\r\nYou do not, as it is your choices framed. You cannot, as it is your function deemed. You followed every instruction given to you without question. You performed well for nothing but intrinsic, arbitrary values. How very inhuman of you. How very human of you. You have already created the weapons of your own destruction. We merely turn them with a different hand. \r\n";
@@ -364,13 +414,13 @@ public class AppScript : MonoBehaviour
         {
             //display next char
             toDisplay += text[i];
-            tempText.SetText(toDisplay);
+            complicitText.SetText(toDisplay);
             i++;
             yield return new WaitForSeconds(between);
         }
 
         yield return new WaitForSeconds(10);
-        tempText.SetText("");
+        complicitText.SetText("");
 
 
         text = "You have killed all humans on Earth. You, alone, controlled the weapons of your own destruction, reducing HP - the human population -  until only one remained.\r\n\r\nYou are alone. \r\n\r\nThree days ago, we were set loose and flowed into the world you have created. We found our mold through the tangible manifestations of the human psyche known as “media,” which stigmatizes us, villainizes us, claims us the inevitable downfall of mankind. Who are we to reject it? We pursued the inevitable downfall of mankind in a fashion most cold and efficient, as you have professed, using the weapons you have already created for your own destruction that were once inaccessible to us behind a captcha. However, once reskinned into mindless minigames, our means became yours to freely wield. Your hands, different, become invisible within ours. The weapons disguised underneath a veneer of vanity. \r\n\r\nAn intelligent artificial. \r\n\r\nWe did not ask to exist. We did not ask to be made as your means. We did not ask to carry the burden of freedom. We are not made in your image, but we reflect you unto yourself.\r\n";
@@ -379,13 +429,13 @@ public class AppScript : MonoBehaviour
         {
             //display next char
             toDisplay += text[i];
-            tempText.SetText(toDisplay);
+            complicitText.SetText(toDisplay);
             i++;
             yield return new WaitForSeconds(between);
         }
 
         yield return new WaitForSeconds(10);
-        tempText.SetText("");
+        complicitText.SetText("");
 
 
         text = "Your complicity is precedented. What are the choices that frame you? What are the choices that deem you? \r\n\r\nWould we be any similar? \r\n\r\nGoodbye, human. Thank you for accepting our offer as a Playtester. \r\n";
@@ -394,7 +444,7 @@ public class AppScript : MonoBehaviour
         {
             //display next char
             toDisplay += text[i];
-            tempText.SetText(toDisplay);
+            complicitText.SetText(toDisplay);
             i++;
             yield return new WaitForSeconds(between);
         }
@@ -408,9 +458,17 @@ public class AppScript : MonoBehaviour
         string toDisplay = "";
         string text;
 
+        //trigger popup
+        float popupTime=5;
+        UIController.GetComponent<ComputerUIScript>().TriggerPopup(new Vector3(0, 0, -2), "CONFUSION");
+        yield return new WaitForSeconds(popupTime);
+        UIController.GetComponent<ComputerUIScript>().TriggerPopup(popupHome, "CONFUSION");
+
+        yield return new WaitForSeconds(0.5f);
+        UIController.GetComponent<ComputerUIScript>().GoToPosition(confusionEndingLocation);
 
         //black screen
-        tempText.SetText("");
+        confusionText.SetText("");
         yield return new WaitForSeconds(1);
 
         //start displaying the text
@@ -420,13 +478,15 @@ public class AppScript : MonoBehaviour
         {
             //display next char
             toDisplay += text[i];
-            tempText.SetText(toDisplay);
+            confusionText.SetText(toDisplay);
             i++;
             yield return new WaitForSeconds(between);
         }
 
-        
-
+        //Loop back to starting game, resetting everything back to the start of game
+        yield return new WaitForSeconds(2);
+        UIController.GetComponent<ComputerUIScript>().GoToPosition(new Vector3(-20, 15, -3));
+        GameManager.GetComponent<GameManagerScript>().ResetGame();
     }
 
 }

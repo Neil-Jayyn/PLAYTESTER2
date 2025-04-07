@@ -24,12 +24,23 @@ public class playerMovement : MonoBehaviour
     public bool isReloading=true;
     public bool isReady=false;
 
+    public bool isGlitch;
+    CupcakeGameManager gameManager;
+
+    SpriteRenderer spriteRenderer;
+    public Sprite normal;
+    public Sprite glitched;
+
     // Start is called before the first frame update
     void Start()
     {
         playCupcakeMinigame = false;
         //anim= GetComponent<Animator>();
         anim.SetBool("isReady", false);
+        anim.SetBool("isGlitch", false);
+        isGlitch = false;
+        gameManager=GameObject.Find("CupcakeGameManager").GetComponent<CupcakeGameManager>();
+        spriteRenderer=GetComponent<SpriteRenderer>();
 
     }
 
@@ -40,73 +51,109 @@ public class playerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        AnimationCheck(); //handles animation
+
         if (playCupcakeMinigame)
         {
-            anim.SetBool("isReloading", true);
-            anim.speed = reloadRate;
-            //reload time
-            waitTime -= Time.deltaTime;
-
             //player input
-            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-            {
-                transform.position += Vector3.left * Time.deltaTime * speed;
-            }
-            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-            {
-                transform.position += Vector3.right * Time.deltaTime * speed;
-            }
+            PlayerInput();
+                       
+                //reload time
+                waitTime -= Time.deltaTime;
 
-            //reload time and overtime handling
-            if (waitTime <= 0.0f)//if cupcake is ready to drop
-            {
-                anim.speed = 1;
-                isReady = true;
-                if (isReady==true && readyTime >= 0.0F) //ding 
+                //reload time and overtime handling
+                if (waitTime <= 0.0f)//if cupcake is ready to drop
                 {
-                 
-                    anim.SetBool("isReady", true);
-                    //have isReady state true
-                    readyTime -= Time.deltaTime;
-                    //TODO: SFX FOR DING
-                    
-                }
-                else
-                {
+                    isReady = true;
+                    if (isReady == true && readyTime >= 0.0F) //ding 
+                    {
+                        //have isReady state true
+                        readyTime -= Time.deltaTime;
+                        //TODO: SFX FOR DING
+                    }
+                    else
+                    {  // overtime starts
+                        if (overtime <= 0.0f)  //waittime <0 and isReady ==false 0r readyTime<0
+                        {
+                            //TODO: SFX OVERTIME
+                            sfxDrop.Play();
+                            Instantiate(cupcake, transform.position, Quaternion.identity);
+                            waitTime = 1.5f;
+                            overtime = 3.0f;
+                            isReloading = true;
 
-                    anim.SetBool("isReady", false);
+                            readyTime = 1.0f;
+                        }
+                        overtime -= Time.deltaTime;
+                    }
+
                     if (Input.GetKeyDown(KeyCode.Space)) //player drops cupcake
                     {
                         sfxDrop.Play();
                         Instantiate(cupcake, transform.position, Quaternion.identity);
                         waitTime = 1.5f;
                         isReloading = true;
-                        anim.SetBool("isReloading", true);
-                        readyTime = 1.0f;
+                        isReady = false;
 
+
+                        readyTime = 1.0f;
+                    }
+                }
+
+            }
+    }
+
+    void AnimationCheck() {
+        anim.speed = reloadRate;
+        if (!gameManager.isGlitch)
+        {
+            anim.SetBool("isGlitch", false);
+            if (playCupcakeMinigame)
+            { //anim starts after mg starts
+                anim.SetBool("isReloading", true);
+                if (waitTime <= 0.0f)
+                { //oven finished reloading
+                    anim.SetBool("isReloading", false);
+                    if (readyTime >= 0.0f && isReady)
+                    { //ding and ready animation starts
+                        anim.SetBool("isReady", true);
                     }
                     else
-                    { //else overtime starts
-                        //TODO: SFX FOR OVERTIME
-                        anim.SetBool("isReloading", false);
+                    { //overtime animation starts
+                        anim.SetBool("isReady", false);
                         if (overtime <= 0.0f)
-                        {
-                            sfxDrop.Play();
-                            Instantiate(cupcake, transform.position, Quaternion.identity);
-                            waitTime = 1.5f;
-                            overtime = 3.0f;
-                            isReloading = true;
+                        { //if overtime runs out, restart animation
                             anim.SetBool("isReloading", true);
-                            anim.SetBool("isReady",false);
-                            readyTime = 1.0f;
+                            anim.SetBool("isReady", false);
                         }
-                        overtime -= Time.deltaTime;
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    { //if dropped down restart animation
+                        anim.SetBool("isReloading", true);
+                        anim.SetBool("isReady", false);
                     }
                 }
             }
         }
-
+        else {
+            anim.SetBool("isGlitch", true);
+        }
     }
 
+    void PlayerInput() {
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        {
+            transform.position += Vector3.left * Time.deltaTime * speed;
+        }
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        {
+            transform.position += Vector3.right * Time.deltaTime * speed;
+        }
+    }
+
+    public void UpdateReloadRate(float multiplier) { 
+        reloadRate= reloadRate * multiplier;
+    }
 
 }
