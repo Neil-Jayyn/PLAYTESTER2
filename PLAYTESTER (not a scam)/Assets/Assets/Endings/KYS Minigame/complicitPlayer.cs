@@ -7,11 +7,14 @@ public class complicitPlayer : MonoBehaviour
     public SpriteRenderer crosshairSprite;
     public LayerMask interactableLayer;
 
+    bool hasShot;
+
     ComplicitEndingManager complicitManager;
     // Start is called before the first frame update
     void Start()
     {
         complicitManager = GameObject.Find("Complicit GameManager").GetComponent<ComplicitEndingManager>();
+        hasShot = false;
       
     }
 
@@ -25,11 +28,17 @@ public class complicitPlayer : MonoBehaviour
 
             if (Input.GetMouseButtonDown(0)) // Left click
             {
-                Debug.Log("KYS");
+                if (hasShot) {
+                    Debug.Log("Successful shot");
+                    complicitManager.PlayerShotThemself();
+                    hasShot = false;
+                }
+
+                hasShot = false;
                 //sfx.clip = shootSFX;
                 //sfx.Play();
                 //duckGameManager.audioSources[2].Play();
-                complicitManager.PlayerShotThemself();
+                
                 
             }
 
@@ -61,6 +70,7 @@ public class complicitPlayer : MonoBehaviour
         if (collision.gameObject.tag == "Duck")
         {
             Debug.Log("Kill YS");
+            hasShot = true;
             
         }
     }

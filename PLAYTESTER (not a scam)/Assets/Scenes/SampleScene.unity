@@ -5902,6 +5902,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2213119004800428331, guid: 47003a35ff8a5a34cb996f822ed28f12,
         type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ccf43b80b4bc4414f92d76d25fd9e290,
+        type: 3}
+    - target: {fileID: 2213119004800428331, guid: 47003a35ff8a5a34cb996f822ed28f12,
+        type: 3}
       propertyPath: m_Color.b
       value: 0
       objectReference: {fileID: 0}
@@ -5915,6 +5921,16 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2213119004800428331, guid: 47003a35ff8a5a34cb996f822ed28f12,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3089632284252778129, guid: 47003a35ff8a5a34cb996f822ed28f12,
+        type: 3}
+      propertyPath: isComplicitMgButton
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3089632284252778130, guid: 47003a35ff8a5a34cb996f822ed28f12,
         type: 3}
       propertyPath: m_Name
@@ -5923,7 +5939,37 @@ PrefabInstance:
     - target: {fileID: 3089632284252778130, guid: 47003a35ff8a5a34cb996f822ed28f12,
         type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3089632284252778133, guid: 47003a35ff8a5a34cb996f822ed28f12,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.border.w
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3089632284252778133, guid: 47003a35ff8a5a34cb996f822ed28f12,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.border.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3089632284252778133, guid: 47003a35ff8a5a34cb996f822ed28f12,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.border.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3089632284252778133, guid: 47003a35ff8a5a34cb996f822ed28f12,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.border.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3089632284252778133, guid: 47003a35ff8a5a34cb996f822ed28f12,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 0.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 3089632284252778133, guid: 47003a35ff8a5a34cb996f822ed28f12,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 0.32
       objectReference: {fileID: 0}
     - target: {fileID: 3089632284252778134, guid: 47003a35ff8a5a34cb996f822ed28f12,
         type: 3}
@@ -5932,13 +5978,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3089632284252778134, guid: 47003a35ff8a5a34cb996f822ed28f12,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3.93
+      objectReference: {fileID: 0}
+    - target: {fileID: 3089632284252778134, guid: 47003a35ff8a5a34cb996f822ed28f12,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3.899365
+      objectReference: {fileID: 0}
+    - target: {fileID: 3089632284252778134, guid: 47003a35ff8a5a34cb996f822ed28f12,
+        type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.65
+      value: -4.56
       objectReference: {fileID: 0}
     - target: {fileID: 3089632284252778134, guid: 47003a35ff8a5a34cb996f822ed28f12,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.93
+      value: 3.06
       objectReference: {fileID: 0}
     - target: {fileID: 3089632284252778134, guid: 47003a35ff8a5a34cb996f822ed28f12,
         type: 3}
@@ -8463,7 +8519,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 847122041}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 7ff6da6a853cd26469a12a134e60a126, type: 2}
   m_CullingMode: 0
@@ -22327,6 +22383,7 @@ MonoBehaviour:
   hoverable: 0
   setToMainTrackOnClick: 0
   hoverObj: {fileID: 0}
+  isComplicitMgButton: 0
   captchaSFX: {fileID: 0}
   clickSFX: {fileID: 0}
   jobAccept: {fileID: 0}
@@ -23137,7 +23194,9 @@ MonoBehaviour:
   player: {fileID: 1125858653}
   hasShotThemselves: 0
   timerText: {fileID: 2035654859}
-  gunshot: {fileID: 0}
+  timerLength: 10
+  gunshot: {fileID: 8300000, guid: 3b8ad8c805fcefd42a5c76d6d2237e2d, type: 3}
+  popup: {fileID: 0}
 --- !u!82 &1976904051
 AudioSource:
   m_ObjectHideFlags: 0
@@ -23149,7 +23208,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
