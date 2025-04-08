@@ -12,7 +12,6 @@ public class GameManagerScript : MonoBehaviour
     public int HP; //Tracks the current HP (0 to 100)
     public bool EMPHappened;
     private Vector3 EMPLocation = new Vector3(0, -15, -10);
-    public bool gameStarted = false;
 
     private GameObject Bar;
     public AudioSource MusicPlayer;
@@ -29,6 +28,7 @@ public class GameManagerScript : MonoBehaviour
     public AudioClip glitchedCoinTrack;
     public AudioClip glitchedCupcakeTrack;
     public AudioClip titleScreenAudio;
+    public AudioClip newsTrack;
     public bool isGlitchActive = false;
     public float glitchDuration = 1.0f;
     private float glitchCooldown = 1f; // Cooldown for glitch check (1 second)
@@ -98,7 +98,6 @@ public class GameManagerScript : MonoBehaviour
         minigamesPlayed = 0;
         HP = 100;
         EMPHappened = false;
-        gameStarted = false;
 
         //get the objects
         UIController = GameObject.Find("UI Controller");
@@ -114,11 +113,6 @@ public class GameManagerScript : MonoBehaviour
 
         //Hide the checkmarks
         HideCheckmarks();
-
-        //Set the audio stuff
-        MusicPlayer.clip = mainTrack;
-        MusicPlayer.loop = true;
-        MusicPlayer.Play();
 
         // Set up glitched music player
         if (GlitchMusicPlayer == null)
@@ -158,7 +152,10 @@ public class GameManagerScript : MonoBehaviour
         UpdateNotifications();
         ShowMinigameNotif();
 
-
+        //Set audio stuff
+        MusicPlayer.clip = titleScreenAudio;
+        MusicPlayer.loop = true;
+        MusicPlayer.Play(); //Play music until job accept button is pressed
     }
 
     // Update is called once per frame
@@ -198,11 +195,32 @@ public class GameManagerScript : MonoBehaviour
         }
     }
 
+    //Called by pressong the job start button
     public void StartedGame()
+    {
+        StartCoroutine(StartGameAudio());
+
+    }
+
+    private IEnumerator StartGameAudio()
+    {
+        MusicPlayer.Stop();
+        //Pressing the button plays the job accept song. wait for that to finish before starting the music 
+        yield return new WaitForSeconds(4);
+        MusicPlayer.clip = mainTrack;
+        MusicPlayer.Play();
+    }
+
+    public void PlayMainTheme()
     {
         MusicPlayer.clip = mainTrack;
         MusicPlayer.Play();
-        gameStarted = true;
+    }
+
+    public void PlayNewsTheme()
+    {
+        MusicPlayer.clip = newsTrack;
+        MusicPlayer.Play();
 
     }
 
@@ -262,8 +280,6 @@ public class GameManagerScript : MonoBehaviour
 
         //Update things
         UpdateNews();
-        ShowMinigameNotif();
-        UpdateNotifications();
         ResetLeaderboard();
     }
 
@@ -576,8 +592,10 @@ public class GameManagerScript : MonoBehaviour
         MusicPlayer.clip = mainTrack;
         MusicPlayer.Play();
 
-        //Display new company message
+        //Display new company message and update notifs
         DisplayCompanyMessage();
+        UpdateNotifications();
+        ShowMinigameNotif();
 
         UIController.GetComponent<ComputerUIScript>().GoToPosition(new Vector3(0, 0, -10));
 
@@ -891,7 +909,6 @@ public class GameManagerScript : MonoBehaviour
         minigamesPlayed = 0;
         HP = 100;
         EMPHappened = false;
-        gameStarted = false;
 
         //Hide the checkmarks
         HideCheckmarks();

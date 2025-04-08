@@ -24,6 +24,9 @@ public class AppScript : MonoBehaviour
     public bool isCompanyMessageButton = false; //special case for the company message button
     public bool isNewsAppButton = false;
     public bool isPhotoAppButton = false;
+    public bool hoverable = false; //does this app have hover text?
+    public bool setToMainTrackOnClick = false; //will trigger a function that plays the main theme on click
+    public GameObject hoverObj; //set in Unity with the AppScript component for relevant apps
     private Vector3 cupcakeGameLocation = new Vector3(50, 50, -10);
     private Vector3 coinGameLocation = new Vector3(50, 35, -10);
     private Vector3 duckGameLocation = new Vector3(50, 20, -10);
@@ -82,7 +85,7 @@ public class AppScript : MonoBehaviour
         complicitText= GameObject.Find("Complicit Text").GetComponent<TMPro.TextMeshProUGUI>();
         complicitMgManager = GameObject.Find("Complicit GameManager");
 
-
+        
     }
 
     // Update is called once per frame
@@ -90,6 +93,28 @@ public class AppScript : MonoBehaviour
     {
         
     }
+
+    void OnMouseOver()
+    {
+        if (hoverable)
+        {
+            //follow the cursor
+            Vector3 mousePos = Input.mousePosition;
+            mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+
+            hoverObj.transform.position = new Vector3(mousePos.x + 1.25f, mousePos.y + 0.1f, -6);
+        }
+    }
+
+    void OnMouseExit()
+    {
+        if (hoverable)
+        {
+            //go home/leave screen
+            hoverObj.transform.position = new Vector3(0, 10, -6);
+        }
+    }
+
 
     // This function is triggered when the app is clicked
     void OnMouseUp()
@@ -225,6 +250,9 @@ public class AppScript : MonoBehaviour
                 audio.PlayOneShot(clickSFX);
                 UIController.GetComponent<ComputerUIScript>().GoToPosition(myScreenLocation);
 
+                //Play the news theme
+                GameManager.GetComponent<GameManagerScript>().PlayNewsTheme();
+
                 //clear notification once clicked on
                 newsNotif.transform.position = new Vector3(0, 8, -1);
             }
@@ -266,6 +294,11 @@ public class AppScript : MonoBehaviour
             {
                 UIController.GetComponent<ComputerUIScript>().TriggerPopup(new Vector3(0, 0, -2), "Great work, employee! You can clock out now, you've finished all the minigames today!");
             }
+        }
+
+        if(setToMainTrackOnClick)
+        {
+            GameManager.GetComponent<GameManagerScript>().PlayMainTheme();
         }
     }
 
