@@ -59,7 +59,12 @@ public class MinigameManager : MonoBehaviour
     //leaderboard text
     public TMP_Text LeaderboardText;
 
-    
+    // Speed variables
+    public float scrollSpeed = 2f;
+    public float speedIncreaseRate = 0.1f; // +0.1 speed per second
+    public float maxSpeed = 6f;
+    public float minSpeed = 1f;
+    public float slowDownAmount = 1f;
 
     void Start()
     {
@@ -127,6 +132,11 @@ public class MinigameManager : MonoBehaviour
         if (!isGameOver) {
    
             CheckIfTutorialClosed();
+            // Increase speed over time
+            if (hasInitialized) { 
+            scrollSpeed += speedIncreaseRate * Time.deltaTime;
+            scrollSpeed = Mathf.Clamp(scrollSpeed, minSpeed, maxSpeed); // make sure speed is between set bounds
+            }
         }
     }
 
@@ -209,7 +219,7 @@ public class MinigameManager : MonoBehaviour
     private int CalculateScore(int pointsEarned)
     {
         float score = pointsEarned * -11;
-        //Let 16 be a reasonably good score to achieve -> update this once speed is added
+        //Let 16 be a reasonably good score to achieve -> update this once speed is added !!
         score = score / 16;
 
         if (score < -12) //dont let the score go beyond -12, since this is the max
@@ -260,9 +270,10 @@ public class MinigameManager : MonoBehaviour
     void InitializeCoinrunnerGame() {
         //start all game components to start game
         freezeOverlay.SetActive(false);
-        SpawnMg.GetComponent<spawnMg>().SpawnMgStart();
+        // SpawnMg.GetComponent<spawnMg>().SpawnMgStart();
         StartCoroutine(GlitchCheckRoutine());
         StartCoroutine(StartMinigameTimer());
+        GameObject.Find("SpawnMg").GetComponent<spawnMg>().startCoinMinigame = true;
         GameObject.Find("bg1").GetComponent<scrollBg>().startCoinMinigame = true;
         GameObject.Find("bg2").GetComponent<scrollBg>().startCoinMinigame = true;
         GameObject.Find("Player").GetComponent<Animator>().enabled = true;
@@ -271,6 +282,7 @@ public class MinigameManager : MonoBehaviour
     void DisableCoinRunnerGame() {
         //disable all game components
         //freezeOverlay.SetActive(true);
+        GameObject.Find("SpawnMg").GetComponent<spawnMg>().startCoinMinigame = false;
         GameObject.Find("bg1").GetComponent<scrollBg>().startCoinMinigame = false;
         GameObject.Find("bg2").GetComponent<scrollBg>().startCoinMinigame = false;
         GameObject.Find("Player").GetComponent<Animator>().enabled = false;

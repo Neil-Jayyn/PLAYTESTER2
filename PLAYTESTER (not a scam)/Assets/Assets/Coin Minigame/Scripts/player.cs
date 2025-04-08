@@ -17,6 +17,7 @@ public class player : MonoBehaviour
 
     MinigameManager CoinGameManager;
 
+
     void Start()
     {
         // sfx = GetComponent<AudioSource>();
@@ -25,12 +26,12 @@ public class player : MonoBehaviour
 
     void Update()
     {
-        // Detect up and down arrow keyboard input 
-        if (Input.GetKeyDown(KeyCode.UpArrow)) 
+        // Detect up and down arrow keyboard input; also compatible with wasd type controls
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) 
         {
             MoveUp();
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
             MoveDown();
         }
@@ -68,6 +69,10 @@ public class player : MonoBehaviour
             {
                 CoinGameManager.AddPoints(-1);
                 Debug.Log("-1 point");
+
+                // Decrease speed
+                CoinGameManager.scrollSpeed -= CoinGameManager.slowDownAmount;
+                CoinGameManager.scrollSpeed = Mathf.Clamp(CoinGameManager.scrollSpeed, CoinGameManager.minSpeed, CoinGameManager.maxSpeed); // make sure speed is between set bounds
             }
                 
             // Play the assigned sound effect from MinigameManager

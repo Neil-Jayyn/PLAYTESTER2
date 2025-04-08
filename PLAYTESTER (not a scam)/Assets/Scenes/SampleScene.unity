@@ -4302,7 +4302,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e46cd3d04d2ce742a4bd531e365cc25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
   xThreshold: 66.99
   xResetTo: 30.35
   startCoinMinigame: 0
@@ -6855,7 +6854,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e46cd3d04d2ce742a4bd531e365cc25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
   xThreshold: 66.99
   xResetTo: 30.35
   startCoinMinigame: 0
@@ -18106,8 +18104,8 @@ MonoBehaviour:
   - {fileID: 1665026447}
   - {fileID: 346577288}
   - {fileID: 127126313}
-  spawnInterval: 1.5
-  speed: 2
+  spawnDistance: 4
+  startCoinMinigame: 0
 --- !u!4 &1734990871
 Transform:
   m_ObjectHideFlags: 0
@@ -18413,7 +18411,7 @@ MonoBehaviour:
   UIController: {fileID: 0}
   glitchFreq: 0.3
   glitchWaitTime: 1
-  gameDur: 2
+  gameDur: 40
   isGlitch: 0
   GlitchEffect: {fileID: 519420030}
   AnalogGlitchEffect: {fileID: 519420033}
@@ -18428,6 +18426,11 @@ MonoBehaviour:
   playerRenderer: {fileID: 1455379864}
   glitchPlayerColor: {r: 0, g: 0, b: 0, a: 1}
   LeaderboardText: {fileID: 1444463759}
+  scrollSpeed: 2
+  speedIncreaseRate: 0.1
+  maxSpeed: 6
+  minSpeed: 1
+  slowDownAmount: 1
 --- !u!224 &1745545158
 RectTransform:
   m_ObjectHideFlags: 0

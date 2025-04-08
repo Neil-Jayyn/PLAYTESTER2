@@ -8,42 +8,63 @@ public class spawnMg : MonoBehaviour
     public Sprite coin;
     public Sprite evilCoin;
     public Transform[] spawnPos;
-    public float spawnInterval = 1.5f;
-    public float speed = 2f;
+    // public float spawnInterval = 1.5f;
+    // public float speed = 2f;
     // Color colorOne = new Color(1f, 1f, 0f, 1f); // Yellow
     // Color colorTwo = new Color(0.5f, 0f, 0.5f, 1f); // Purple
 
-
+    //Spawn variables 
+    public float spawnDistance = 3f;
+    private float distanceSinceLastSpawn = 0f;
+    // private bool startSpawnMg = false;
+ 
     private MinigameManager gameManager;
+
+    public bool startCoinMinigame;
 
     void Start()
     {
+        startCoinMinigame = false;
         gameManager = GameObject.Find("MinigameManager").GetComponent<MinigameManager>();
     }
 
-    public void SpawnMgStart()
+    //public void SpawnMgStart()
+    //{
+    //    StartCoroutine(SpawnObjects());
+    //}
+
+    void Update()
     {
-        StartCoroutine(SpawnObjects());
+        if (startCoinMinigame)
+        {
+
+            // Make spawnables after x amount of distance
+            distanceSinceLastSpawn += gameManager.scrollSpeed * Time.deltaTime;
+
+            if (distanceSinceLastSpawn >= spawnDistance)
+            {
+                SpawnObjects();
+                distanceSinceLastSpawn = 0f;
+            }
+
+          
+        }
     }
 
-    IEnumerator SpawnObjects()
+    void SpawnObjects()
     {
         Debug.Log("entered the spawn objects call at all");
-        while (!gameManager.IsGameOver())
+        
+        int slotOne = Random.Range(0, spawnPos.Length);
+        int slotTwo;
+        do
         {
-            Debug.Log("entered while loop");
-            yield return new WaitForSeconds(spawnInterval); // Make spawnables every x seconds
+            slotTwo = Random.Range(0, spawnPos.Length);
+        } while (slotTwo == slotOne); // Ensure the slots are different
 
-            int slotOne = Random.Range(0, spawnPos.Length);
-            int slotTwo;
-            do
-            {
-                slotTwo = Random.Range(0, spawnPos.Length);
-            } while (slotTwo == slotOne); // Ensure the slots are different
-
-            Spawn(spawnPos[slotOne], coin, null); // This will be the good coin
-            Spawn(spawnPos[slotTwo], null, evilCoin); // This will be the bad coin
-        }
+        Spawn(spawnPos[slotOne], coin, null); // This will be the good coin
+        Spawn(spawnPos[slotTwo], null, evilCoin); // This will be the bad coin
+        
     }
 
     void Spawn(Transform spawnPos, Sprite coinSprite, Sprite evilCoinSprite)
