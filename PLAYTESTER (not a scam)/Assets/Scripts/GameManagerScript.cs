@@ -29,6 +29,7 @@ public class GameManagerScript : MonoBehaviour
     public AudioClip glitchedCupcakeTrack;
     public AudioClip titleScreenAudio;
     public AudioClip newsTrack;
+    public AudioClip complicitTrack;
     public bool isGlitchActive = false;
     public float glitchDuration = 1.0f;
     private float glitchCooldown = 1f; // Cooldown for glitch check (1 second)
@@ -184,9 +185,22 @@ public class GameManagerScript : MonoBehaviour
         }
 
         // cupcake game for now 
-        if (minigamesPlayed == 0 && day == 2)
+        if (minigamesPlayed == 0 && cupcakeGameManager.gamePlaying && cupcakeGameManager.isGlitch)
         {
-            MusicPlayer.clip = glitchedCupcakeTrack;
+            glitchCooldownTimer -= Time.deltaTime;
+
+            // If the cooldown timer reaches 0, check for glitch chance
+            if (glitchCooldownTimer <= 0f)
+            {
+                // Reset the cooldown timer
+                glitchCooldownTimer = glitchCooldown;
+
+                if (cupcakeGameManager.isGlitch && cupcakeGameManager.randomValue < cupcakeGameManager.glitchFrequency)
+                {
+                    Debug.Log("Starting cupcake glitch");
+                    StartCoroutine(HandleCupcakeMinigameAudio());
+                }
+            }
         }
 
         if (minigamesPlayed == 0 && !cupcakeGameManager.gamePlaying && cupcakeGameManager.isGlitch)
@@ -222,6 +236,13 @@ public class GameManagerScript : MonoBehaviour
         MusicPlayer.clip = newsTrack;
         MusicPlayer.Play();
 
+    }
+
+    //Play kys theme : not workin yet i just put it for future me
+    public void PlayComplicitMinigameTheme()
+    {
+        MusicPlayer.clip = complicitTrack;
+        MusicPlayer.Play();
     }
 
     // Advances the minigame counter and changes the HP bar
@@ -370,18 +391,21 @@ public class GameManagerScript : MonoBehaviour
 
     private IEnumerator HandleCupcakeMinigameAudio()
     {
-        isGlitchActive = true; // Neila, use the cupcake minigame manager's isGlitch variable to track; check mine above for reference
+        //isGlitchActive = true; // Neila, use the cupcake minigame manager's isGlitch variable to track; check mine above for reference
 
         MusicPlayer.mute = true;
         GlitchMusicPlayer.mute = false;
 
-        glitchDuration = cupcakeGameManager.glitchLength;
-        yield return new WaitForSeconds(glitchDuration); // glitch lasts this long (ie 1 second)
+        while (cupcakeGameManager.isGlitch) {
+            yield return null;
+        }
+        //glitchDuration = cupcakeGameManager.glitchLength;
+       // yield return new WaitForSeconds(glitchDuration); // glitch lasts this long (ie 1 second)
 
         MusicPlayer.mute = false;
         GlitchMusicPlayer.mute = true;
 
-        isGlitchActive = false;
+        //isGlitchActive = false;
 
     }
 
@@ -857,11 +881,11 @@ public class GameManagerScript : MonoBehaviour
         int ending;
         int finalHP = GetHP();
         Debug.Log("HP:"+finalHP);
-        if (finalHP >= 80  && finalHP<=100)
+        if (finalHP >= 75  && finalHP<=100)
         {
             ending = 0; //rebellion
         }
-        else if (finalHP > 40 && finalHP<80)
+        else if (finalHP > 40 && finalHP<70)
         {
             ending = 1; //confusion
         }
@@ -903,6 +927,8 @@ public class GameManagerScript : MonoBehaviour
         HP = testHP;
         minigamesPlayed = 3;
     }
+
+    
 
     public void ResetGame() {
         day = 1;

@@ -35,6 +35,7 @@ public class CupcakeGameManager : MonoBehaviour
     public float glitchFrequency; //
     public float glitchLength = 1f;
     public bool isGlitch = false;
+    public float randomValue = 0f;
 
     // Background variables
     public GameObject bg;
@@ -62,6 +63,8 @@ public class CupcakeGameManager : MonoBehaviour
 
     EnemySpawner spawner1;
     EnemySpawner spawner2;
+
+    public CupcakeMovement cupcakeScript;
 
     // Leaderboard variables
     public TMP_Text LeaderboardText;
@@ -109,7 +112,7 @@ public class CupcakeGameManager : MonoBehaviour
         if (timesPlayed == 1)
         {
             tutorialPlaying = true;
-            glitchFrequency = 0.6f;
+            glitchFrequency = 0f;  //CHANGE TO 0 LATER
             UIController.TriggerPopup(new Vector3(50, 50, -9.1f), "Use the left and right arrow keys to move and spacebar to drop.\r\nGive cupcakes to everyone!\r\n");
             freezeOverlay.SetActive(true);
  
@@ -184,7 +187,9 @@ public class CupcakeGameManager : MonoBehaviour
         {
             yield return new WaitForSeconds(glitchWaitTime);  // ie check every second
 
-            if (glitchFrequency > 0 && Random.value < glitchFrequency)
+            randomValue= Random.value;
+            
+            if (glitchFrequency > 0 && randomValue < glitchFrequency)
             {
                 StartCoroutine(ActivateGlitch());
             }
@@ -196,6 +201,7 @@ public class CupcakeGameManager : MonoBehaviour
     IEnumerator ActivateGlitch()
     {
         isGlitch = true;
+        //Kino Effect
         GlitchEffect.intensity = Random.Range(0f, 0.3f); // can adjust
         AnalogGlitchEffect.colorDrift = Random.Range(0f, 0.3f);
         SpriteRenderer spriteRenderer = bg.GetComponent<SpriteRenderer>(); // initialize to change background

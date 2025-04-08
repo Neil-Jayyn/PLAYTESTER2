@@ -76,7 +76,7 @@ public class DuckGameManager : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("DuckGame " + gameOver);
+        //Debug.Log("DuckGame " + gameOver);
         if (!gameOver) //camera moved over to duck game
         {
             
