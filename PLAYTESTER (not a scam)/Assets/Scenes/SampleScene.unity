@@ -9938,7 +9938,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc40184528b778c48a66479db104e644, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameDuration: 2
+  gameDuration: 40
   scoreText: {fileID: 320443653}
   scorePoints: 0
   timerText: {fileID: 1894740861}
@@ -16134,7 +16134,7 @@ MonoBehaviour:
   scoreText: {fileID: 137213159}
   gameOver: 0
   UIController: {fileID: 0}
-  gameDuration: 2
+  gameDuration: 40
   timerText: {fileID: 1029863823}
   isGlitch: 0
   bg: {fileID: 618066161}
@@ -20254,6 +20254,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: dbaf22d82b8b396488d79983a214ebcf, type: 3}
   - {fileID: 8300000, guid: 69d8fea8ef47bb748bb721a604d97730, type: 3}
   - {fileID: 8300000, guid: 9b76a24c9f61d484f822359560acc963, type: 3}
+  pirateYarrSFX: {fileID: 1745545159}
+  pirateNarrSFX: {fileID: 1745545159}
+  pirateYarrClip: []
+  pirateNarrClip: []
+  robotSuccessClip: []
+  robotFailureClip: []
   playerRenderer: {fileID: 1455379864}
   playerAnimator: {fileID: 1455379869}
   pirateAnimation: {fileID: 7400000, guid: b918a3bcb02fab8429a614fc1fde5ae1, type: 2}
