@@ -47,7 +47,7 @@ public class AppScript : MonoBehaviour
     private TMPro.TextMeshProUGUI confusionText;
     private TMPro.TextMeshProUGUI rebellionText;
     private TMPro.TextMeshProUGUI complicitText;
-    GameObject complicitMgManager;
+    ComplicitEndingManager complicitMgManager;
 
     // Audio
     public AudioClip captchaSFX; // sfx for captcha confirmation
@@ -78,12 +78,12 @@ public class AppScript : MonoBehaviour
         canBeClicked = true; //true by default
 
      
-        //GameManager.GetComponent<GameManagerScript>().TestEndings(1);
+        GameManager.GetComponent<GameManagerScript>().TestEndings(1);
         popupHome = new Vector3(0, 10, 0);
         confusionText= GameObject.Find("Confusion Text").GetComponent<TMPro.TextMeshProUGUI>();
         rebellionText = GameObject.Find("Rebellion Text").GetComponent<TMPro.TextMeshProUGUI>();
-        complicitText= GameObject.Find("Complicit Text").GetComponent<TMPro.TextMeshProUGUI>();
-        complicitMgManager = GameObject.Find("Complicit GameManager");
+        //complicitText= GameObject.Find("Complicit Text").GetComponent<TMPro.TextMeshProUGUI>();
+        complicitMgManager = GameObject.Find("Complicit GameManager").GetComponent<ComplicitEndingManager>();
 
         
     }
@@ -192,7 +192,7 @@ public class AppScript : MonoBehaviour
                 {
                     //player has finished day 3
                     //TODO: trigger an ending here
-                    //GameManager.GetComponent<GameManagerScript>().TestEndings(1);
+                    GameManager.GetComponent<GameManagerScript>().TestEndings(1);
                     //Checks from HP what ending they have (RN PLACEHOLDER NUMBERS)
                     ending=GameManager.GetComponent<GameManagerScript>().CheckPlayerEnding();
 
@@ -216,10 +216,10 @@ public class AppScript : MonoBehaviour
 
                         case 2:
                             Debug.Log("complicit ending");
-                            //UIController.GetComponent<ComputerUIScript>().GoToPosition(complicitEndingLocation);
                             UIController.GetComponent<ComputerUIScript>().GoToPosition(complicitEndingLocation);
-                            complicitMgManager.GetComponent<ComplicitEndingManager>().StartComplicitMinigame();
-                            
+                            GameManager.GetComponent<GameManagerScript>().PlayComplicitMinigameTheme();
+                            complicitMgManager.StartComplicitMinigame();
+
 
                             //StartCoroutine(ComplicitEnding());
 

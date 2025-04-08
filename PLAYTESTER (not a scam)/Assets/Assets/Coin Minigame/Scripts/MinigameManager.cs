@@ -162,7 +162,7 @@ public class MinigameManager : MonoBehaviour
     }
 
     void Update() {
-        Debug.Log("CoiNRunner " + isGameOver);
+        //Debug.Log("CoiNRunner " + isGameOver);
         if (!isGameOver) {
    
             CheckIfTutorialClosed();
