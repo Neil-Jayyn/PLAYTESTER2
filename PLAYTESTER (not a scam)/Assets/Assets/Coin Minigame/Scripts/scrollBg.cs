@@ -10,6 +10,11 @@ public class scrollBg : MonoBehaviour
 
     public bool startCoinMinigame;
 
+    // to change to glitched bg
+    public SpriteRenderer backgroundRenderer;
+    public Sprite glitchedCoinBackground;
+    public Sprite normalCoinBackground;
+
     MinigameManager CoinGameManager;
 
     void Start() { 
@@ -20,6 +25,14 @@ public class scrollBg : MonoBehaviour
     void Update()
     {
         if (startCoinMinigame) { 
+
+            if (CoinGameManager.isGlitch)
+            {
+                backgroundRenderer.sprite = glitchedCoinBackground;
+            } else
+            {
+                backgroundRenderer.sprite = normalCoinBackground;
+            }
         transform.position += Vector3.right * CoinGameManager.scrollSpeed * Time.deltaTime; // Move background to the right
 
         if (transform.position.x > xThreshold) // Check out of bounds

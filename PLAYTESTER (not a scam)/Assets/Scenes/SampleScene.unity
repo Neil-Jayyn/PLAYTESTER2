@@ -4305,6 +4305,11 @@ MonoBehaviour:
   xThreshold: 66.99
   xResetTo: 30.35
   startCoinMinigame: 0
+  backgroundRenderer: {fileID: 490320972}
+  glitchedCoinBackground: {fileID: 21300000, guid: 119fb2a6a3f05c84c9b8e72fb46cc305,
+    type: 3}
+  normalCoinBackground: {fileID: 21300000, guid: aa7075931e81a7148aa19f3d8b42ae91,
+    type: 3}
 --- !u!212 &490320972
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6857,6 +6862,11 @@ MonoBehaviour:
   xThreshold: 66.99
   xResetTo: 30.35
   startCoinMinigame: 0
+  backgroundRenderer: {fileID: 781392084}
+  glitchedCoinBackground: {fileID: 21300000, guid: 119fb2a6a3f05c84c9b8e72fb46cc305,
+    type: 3}
+  normalCoinBackground: {fileID: 21300000, guid: aa7075931e81a7148aa19f3d8b42ae91,
+    type: 3}
 --- !u!212 &781392084
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10903,7 +10913,7 @@ MonoBehaviour:
   MainCamera: {fileID: 519420028}
   mainTrack: {fileID: 8300000, guid: 197458c8439ec484a9d4a41e458b45db, type: 3}
   cupcakeTrack: {fileID: 8300000, guid: 1120c3ba697cdc84e98255338e1b75cb, type: 3}
-  coinTrack: {fileID: 8300000, guid: 78059e5161f154843a884413d2ca1d62, type: 3}
+  coinTrack: {fileID: 8300000, guid: 6ebe56e11b0083140b5ad3d783b4604b, type: 3}
   duckTrack: {fileID: 8300000, guid: bee2aea7255402741b8a3f0810281bbc, type: 3}
   glitchedCoinTrack: {fileID: 8300000, guid: c91ac2125c6dc37449e78a092ca5f9f4, type: 3}
   glitchedCupcakeTrack: {fileID: 8300000, guid: d587a113f5014de4e8b34704ba4aa399,
@@ -18409,10 +18419,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UIController: {fileID: 0}
-  glitchFreq: 0.3
+  glitchFreq: 0
   glitchWaitTime: 1
   gameDur: 40
   isGlitch: 0
+  randomValue: 0
   GlitchEffect: {fileID: 519420030}
   AnalogGlitchEffect: {fileID: 519420033}
   timerText: {fileID: 1396497652}
@@ -18424,7 +18435,9 @@ MonoBehaviour:
   normalSFX: {fileID: 8300000, guid: 034ccb825918e354badceb60b4cd5f02, type: 3}
   glitchedSFX: {fileID: 8300000, guid: 76d3be4b7c97dc8468a84962da56d030, type: 3}
   playerRenderer: {fileID: 1455379864}
-  glitchPlayerColor: {r: 0, g: 0, b: 0, a: 1}
+  playerAnimator: {fileID: 1455379869}
+  pirateAnimation: {fileID: 7400000, guid: b918a3bcb02fab8429a614fc1fde5ae1, type: 2}
+  robotAnimation: {fileID: 7400000, guid: 3f1357d4434bd1448beec6b60eda6902, type: 2}
   LeaderboardText: {fileID: 1444463759}
   scrollSpeed: 2
   speedIncreaseRate: 0.1

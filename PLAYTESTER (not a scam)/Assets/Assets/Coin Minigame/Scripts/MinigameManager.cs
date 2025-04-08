@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using Kino;
+using JetBrains.Annotations;
 
 public class MinigameManager : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class MinigameManager : MonoBehaviour
     public float glitchWaitTime = 1f;
     public float gameDur = 5f;
     public bool isGlitch;
+    public float randomValue = 0f; // saves this variable so it can be also accessed for audio glitches in GameManagerScript
 
     // kino effect
     public DigitalGlitch GlitchEffect;
@@ -53,8 +55,15 @@ public class MinigameManager : MonoBehaviour
   
     // player color can change
     public SpriteRenderer playerRenderer;
-    public Color glitchPlayerColor = new Color(0f, 0f, 0f, 1f); // Black
-    private Color normalPlayerColor;
+    //public Color glitchPlayerColor = new Color(0f, 0f, 0f, 1f); // Black
+    //private Color normalPlayerColor;
+    public Animator playerAnimator;
+
+    // player sprite can change
+    //public Sprite pirateSprite;
+    //public Sprite robotSprite;
+    public AnimationClip pirateAnimation;
+    public AnimationClip robotAnimation;
 
     //leaderboard text
     public TMP_Text LeaderboardText;
@@ -73,12 +82,14 @@ public class MinigameManager : MonoBehaviour
         SpawnMg = GameObject.Find("SpawnMg");
 
         GameObject.Find("Player").GetComponent<Animator>().enabled = false;
+        
 
         // SFX
         sfx = GetComponent<AudioSource>();
         sfx.clip = normalSFX;
 
-        normalPlayerColor = playerRenderer.color; // Set starting color as player's uncorrupted color
+    //  playerRenderer.sprite = pirateSprite; // Set starting sprite as pirate
+        // normalPlayerColor = playerRenderer.color; // Set starting color as player's uncorrupted color
 
         isGameOver = true;
         points = 0;
@@ -105,7 +116,7 @@ public class MinigameManager : MonoBehaviour
         if (timesPlayed == 1)
         {
             Debug.Log("First Time Playing CoinRunner");
-            glitchFreq = 0f;
+            glitchFreq = 0.5f; // NEED TO CHANGE TO ZERO LATER!!
             UIController.TriggerPopup(new Vector3(50, 36, -8), "Use the up and down arrows to move lanes. Grab all the gold coins!");
             isTutorialPlaying = true;
             freezeOverlay.SetActive(true);
@@ -146,7 +157,9 @@ public class MinigameManager : MonoBehaviour
         {
             yield return new WaitForSeconds(glitchWaitTime); // Check every second
 
-            if (glitchFreq > 0 && Random.value < glitchFreq) // If we get a random value less than the glitch frequency, the glitches will occur
+            randomValue = Random.value;
+
+            if (glitchFreq > 0 && randomValue < glitchFreq) // If we get a random value less than the glitch frequency, the glitches will occur
             {
                 StartCoroutine(ActivateGlitch()); 
             }
@@ -161,7 +174,10 @@ public class MinigameManager : MonoBehaviour
         GlitchEffect.intensity = Random.Range(0f, 0.3f); // can adjust
         AnalogGlitchEffect.colorDrift = Random.Range(0f, 0.3f);
 
-        playerRenderer.color = glitchPlayerColor;
+        Debug.Log("Robot");
+        // playerRenderer.sprite = robotSprite;
+        //playerRenderer.color = glitchPlayerColor;
+        playerAnimator.Play("RobotAnimation");
         sfx.clip = glitchedSFX;
 
         yield return new WaitForSeconds(1f); // Glitch lasts 1 second
@@ -170,8 +186,9 @@ public class MinigameManager : MonoBehaviour
         if (glitchFreq != 1)
         {
            isGlitch = false;
-           playerRenderer.color = normalPlayerColor;
-           sfx.clip = normalSFX;
+            //     playerRenderer.sprite = pirateSprite;
+            playerAnimator.Play("PirateAnimation");
+            sfx.clip = normalSFX;
            GlitchEffect.intensity = 0;
            AnalogGlitchEffect.colorDrift = 0;
 

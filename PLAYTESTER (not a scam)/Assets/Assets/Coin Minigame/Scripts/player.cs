@@ -26,6 +26,8 @@ public class player : MonoBehaviour
 
     void Update()
     {
+        // Update player sprite and animation
+
         // Detect up and down arrow keyboard input; also compatible with wasd type controls
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) 
         {

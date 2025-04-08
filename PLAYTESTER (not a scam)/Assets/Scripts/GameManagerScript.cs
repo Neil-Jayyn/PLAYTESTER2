@@ -167,6 +167,7 @@ public class GameManagerScript : MonoBehaviour
         // coin runner audio control specifically for now
         if (minigamesPlayed == 1 && !coinMinigameManager.IsGameOver() && coinMinigameManager.isGlitch)
         {
+            
             glitchCooldownTimer -= Time.deltaTime;
 
             // If the cooldown timer reaches 0, check for glitch chance
@@ -175,21 +176,25 @@ public class GameManagerScript : MonoBehaviour
                 // Reset the cooldown timer
                 glitchCooldownTimer = glitchCooldown;
 
-                if (!isGlitchActive && Random.value < coinMinigameManager.glitchFreq)
+                if (coinMinigameManager.isGlitch && coinMinigameManager.randomValue < coinMinigameManager.glitchFreq)
                 {
                     Debug.Log("Starting coin glitch");
                     StartCoroutine(HandleCoinMinigameAudio());
                 }
             }
 
-            // cupcake game for now 
-            if (minigamesPlayed == 0 && day == 2) {
-                MusicPlayer.clip = glitchedCupcakeTrack;
-            }
 
-            if (minigamesPlayed == 0 && !cupcakeGameManager.gamePlaying && cupcakeGameManager.isGlitch) {
-                MusicPlayer.clip = glitchedCupcakeTrack;
-            }
+        }
+
+        // cupcake game for now 
+        if (minigamesPlayed == 0 && day == 2)
+        {
+            MusicPlayer.clip = glitchedCupcakeTrack;
+        }
+
+        if (minigamesPlayed == 0 && !cupcakeGameManager.gamePlaying && cupcakeGameManager.isGlitch)
+        {
+            MusicPlayer.clip = glitchedCupcakeTrack;
         }
     }
 
@@ -331,23 +336,25 @@ public class GameManagerScript : MonoBehaviour
     // Audio glitch handling for coin runner minigame
     private IEnumerator HandleCoinMinigameAudio()
     {
-        isGlitchActive = true;
-
+        Debug.Log("In HandleCoinMinigameAudio");
         MusicPlayer.mute = true;
         GlitchMusicPlayer.mute = false;
 
-        yield return new WaitForSeconds(glitchDuration); // glitch lasts this long (ie 1 second)
-
+        while (coinMinigameManager.isGlitch) // keep playing glitched version until glitch ends
+        {
+            yield return null;
+        }
+        
         MusicPlayer.mute = false;
         GlitchMusicPlayer.mute = true;
 
-        isGlitchActive = false;
+        
 
     }
 
     private IEnumerator HandleCupcakeMinigameAudio()
     {
-        isGlitchActive = true;
+        isGlitchActive = true; // Neila, use the cupcake minigame manager's isGlitch variable to track; check mine above for reference
 
         MusicPlayer.mute = true;
         GlitchMusicPlayer.mute = false;
