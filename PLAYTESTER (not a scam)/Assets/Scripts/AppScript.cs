@@ -48,6 +48,8 @@ public class AppScript : MonoBehaviour
     private TMPro.TextMeshProUGUI rebellionText;
     private TMPro.TextMeshProUGUI complicitText;
     ComplicitEndingManager complicitMgManager;
+    GameObject complicitMgButton;
+    public bool isComplicitMgButton;
 
     // Audio
     public AudioClip captchaSFX; // sfx for captcha confirmation
@@ -84,6 +86,8 @@ public class AppScript : MonoBehaviour
         rebellionText = GameObject.Find("Rebellion Text").GetComponent<TMPro.TextMeshProUGUI>();
         //complicitText= GameObject.Find("Complicit Text").GetComponent<TMPro.TextMeshProUGUI>();
         complicitMgManager = GameObject.Find("Complicit GameManager").GetComponent<ComplicitEndingManager>();
+
+        complicitMgButton = GameObject.Find("Ending Mg Button");
 
         
     }
@@ -194,7 +198,7 @@ public class AppScript : MonoBehaviour
                     //TODO: trigger an ending here
                     GameManager.GetComponent<GameManagerScript>().TestEndings(1);
                     //Checks from HP what ending they have (RN PLACEHOLDER NUMBERS)
-                    ending=GameManager.GetComponent<GameManagerScript>().CheckPlayerEnding();
+                    ending = GameManager.GetComponent<GameManagerScript>().CheckPlayerEnding();
 
                     //TODO: go to pos of each ending
                     switch (ending) {
@@ -205,7 +209,7 @@ public class AppScript : MonoBehaviour
                             StartCoroutine(RebellionEnding());
                             break;
                         case 1:
-                            
+
                             Debug.Log("confusion ending");
                             //COMPANY POPUP OF NOTING THE END OF THE WEEK DAY AND HOW THEY'RE SEEING YOU AS INCOMPETENT
                             StartCoroutine(ConfusionEnding());
@@ -216,9 +220,12 @@ public class AppScript : MonoBehaviour
 
                         case 2:
                             Debug.Log("complicit ending");
-                            UIController.GetComponent<ComputerUIScript>().GoToPosition(complicitEndingLocation);
-                            GameManager.GetComponent<GameManagerScript>().PlayComplicitMinigameTheme();
-                            complicitMgManager.StartComplicitMinigame();
+                            
+                            UIController.GetComponent<ComputerUIScript>().TriggerPopup(new Vector3(0, 0, -2), "COMPLICIT");
+                            complicitMgButton.GetComponent<SpriteRenderer>().enabled = true;
+                            //UIController.GetComponent<ComputerUIScript>().GoToPosition(complicitEndingLocation);
+
+
 
 
                             //StartCoroutine(ComplicitEnding());
@@ -235,17 +242,17 @@ public class AppScript : MonoBehaviour
                 }
 
             }
-            else if(isCompanyMessageButton)
+            else if (isCompanyMessageButton)
             {
                 GameManager.GetComponent<GameManagerScript>().DisplayCompanyMessage();
             }
-            else if(isStartButton)
+            else if (isStartButton)
             {
                 audio.PlayOneShot(jobAccept);
                 GameManager.GetComponent<GameManagerScript>().StartedGame();
                 UIController.GetComponent<ComputerUIScript>().GoToPosition(myScreenLocation);
             }
-            else if(isNewsAppButton)
+            else if (isNewsAppButton)
             {
                 audio.PlayOneShot(clickSFX);
                 UIController.GetComponent<ComputerUIScript>().GoToPosition(myScreenLocation);
@@ -256,13 +263,22 @@ public class AppScript : MonoBehaviour
                 //clear notification once clicked on
                 newsNotif.transform.position = new Vector3(0, 8, -1);
             }
-            else if(isPhotoAppButton)
+            else if (isPhotoAppButton)
             {
                 audio.PlayOneShot(clickSFX);
                 UIController.GetComponent<ComputerUIScript>().GoToPosition(myScreenLocation);
 
                 //clear notification once clicked on
                 photoNotif.transform.position = new Vector3(0, 9, -1);
+            }
+            else if (isComplicitMgButton)  // red button that goes to the kys mg
+            {
+                audio.PlayOneShot(clickSFX);
+
+                UIController.GetComponent<ComputerUIScript>().TriggerPopup(new Vector3(150, 50, -10),"");
+                UIController.GetComponent<ComputerUIScript>().GoToPosition(complicitEndingLocation);
+                complicitMgManager.StartComplicitMinigame();
+                GameManager.GetComponent<GameManagerScript>().PlayComplicitMinigameTheme();
             }
             else
             {
@@ -402,6 +418,7 @@ public class AppScript : MonoBehaviour
         }
 
     }
+
 
     IEnumerator ComplicitEnding()
     {
