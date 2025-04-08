@@ -67,21 +67,27 @@ public class player : MonoBehaviour
             {
                 CoinGameManager.AddPoints(1);
                 Debug.Log("+1 point");
+                // Play the good coin related sound effect from MinigameManager
+                if (CoinGameManager != null && CoinGameManager.goodCoinSFX != null)
+                {
+                    CoinGameManager.goodCoinSFX.Play(); // Play sound effect
+                }
             } else if (other.CompareTag("EvilCoin"))
             {
                 CoinGameManager.AddPoints(-1);
                 Debug.Log("-1 point");
 
+                // Play the bad coin related sound effect from MinigameManager
+                if (CoinGameManager != null && CoinGameManager.badCoinSFX != null)
+                {
+                    CoinGameManager.badCoinSFX.Play(); // Play sound effect
+                }
                 // Decrease speed
                 CoinGameManager.scrollSpeed -= CoinGameManager.slowDownAmount;
                 CoinGameManager.scrollSpeed = Mathf.Clamp(CoinGameManager.scrollSpeed, CoinGameManager.minSpeed, CoinGameManager.maxSpeed); // make sure speed is between set bounds
             }
                 
-            // Play the assigned sound effect from MinigameManager
-            if (CoinGameManager != null && CoinGameManager.sfx != null)
-            {
-                CoinGameManager.sfx.Play(); // Play sound effect
-            }
+            
 
             Destroy(other.gameObject);
             

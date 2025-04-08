@@ -41,11 +41,17 @@ public class MinigameManager : MonoBehaviour
     public int points;
 
     // Audio management
-    public AudioSource sfx;
-    public AudioClip normalSFX;
-    public AudioClip glitchedSFX;
+    public AudioSource goodCoinSFX;
+    //public AudioClip normalSFX;
+    public AudioClip[] goodCoinObtainedSFX;
+    public AudioClip[] screamsSFX;
+    public AudioSource badCoinSFX;
+    public AudioClip badCoinObtainedSFX;
+    public AudioClip[] trashHitSFX;
+   
 
-
+    // spawnables
+    
     // General variables
     private int timesPlayed;
     // bg1, bg2 
@@ -82,12 +88,14 @@ public class MinigameManager : MonoBehaviour
         SpawnMg = GameObject.Find("SpawnMg");
 
         GameObject.Find("Player").GetComponent<Animator>().enabled = false;
-        
+
 
         // SFX
-        sfx = GetComponent<AudioSource>();
-        sfx.clip = normalSFX;
+        goodCoinSFX = GetComponent<AudioSource>();
+        int index = Random.Range(0, goodCoinObtainedSFX.Length);
+        goodCoinSFX.clip = goodCoinObtainedSFX[index]; // first sound by default
 
+        badCoinSFX.clip = badCoinObtainedSFX;
     //  playerRenderer.sprite = pirateSprite; // Set starting sprite as pirate
         // normalPlayerColor = playerRenderer.color; // Set starting color as player's uncorrupted color
 
@@ -126,8 +134,9 @@ public class MinigameManager : MonoBehaviour
             isTutorialPlaying = false;
             InitializeCoinrunnerGame();
             
-        } else // day 3; need a variable to determine which route to take
+        } else // day 3; need a variable to determine which route to take (not anymore if glitching regardless)
         {
+            glitchFreq = 1f;
             isTutorialPlaying = false;
             InitializeCoinrunnerGame();
             glitchFreq=MainGameManager.GetComponent<GameManagerScript>().GlitchFreqFromEnding();
@@ -178,7 +187,12 @@ public class MinigameManager : MonoBehaviour
         // playerRenderer.sprite = robotSprite;
         //playerRenderer.color = glitchPlayerColor;
         playerAnimator.Play("RobotAnimation");
-        sfx.clip = glitchedSFX;
+        int screamIndex = Random.Range(0, screamsSFX.Length); // randomly choose a scream sfx
+        goodCoinSFX.clip = screamsSFX[screamIndex];
+
+        int trashIndex = Random.Range(0, trashHitSFX.Length); // randomly choose a trash hit sfx
+        badCoinSFX.clip = trashHitSFX[trashIndex];
+        // goodCoinSFX.clip = glitchedSFX;
 
         yield return new WaitForSeconds(1f); // Glitch lasts 1 second
         
@@ -187,8 +201,13 @@ public class MinigameManager : MonoBehaviour
         {
            isGlitch = false;
             //     playerRenderer.sprite = pirateSprite;
-            playerAnimator.Play("PirateAnimation");
-            sfx.clip = normalSFX;
+           playerAnimator.Play("PirateAnimation");
+
+           int goodCoinIndex = Random.Range(0, goodCoinObtainedSFX.Length); // randomly choose a good coin sfx
+           goodCoinSFX.clip = goodCoinObtainedSFX[goodCoinIndex];
+           
+           badCoinSFX.clip = badCoinObtainedSFX;
+
            GlitchEffect.intensity = 0;
            AnalogGlitchEffect.colorDrift = 0;
 

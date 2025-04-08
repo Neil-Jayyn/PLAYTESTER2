@@ -48,7 +48,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a319dec4df3aa4468dab565f4a1e815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
   xThreshold: 60
 --- !u!212 &5215108846132524574
 SpriteRenderer:
@@ -145,7 +144,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5215108846132524561}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: de6e9e0193273a94ba02269b44eb8d4f, type: 2}
   m_CullingMode: 0
