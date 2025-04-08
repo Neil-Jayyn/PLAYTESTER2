@@ -20225,7 +20225,7 @@ MonoBehaviour:
   UIController: {fileID: 0}
   glitchFreq: 0
   glitchWaitTime: 1
-  gameDur: 2
+  gameDur: 40
   isGlitch: 0
   randomValue: 0
   GlitchEffect: {fileID: 519420030}

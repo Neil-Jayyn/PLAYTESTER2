@@ -42,13 +42,20 @@ public class MinigameManager : MonoBehaviour
 
     // Audio management
     public AudioSource goodCoinSFX;
-    //public AudioClip normalSFX;
+    // for spawnables
     public AudioClip[] goodCoinObtainedSFX;
     public AudioClip[] screamsSFX;
     public AudioSource badCoinSFX;
     public AudioClip badCoinObtainedSFX;
     public AudioClip[] trashHitSFX;
-   
+    // for player
+    public AudioSource pirateYarrSFX; // replaced with robotSuccess in glitches
+    public AudioSource pirateNarrSFX; // replaced with robotFailure in glitches
+    public AudioClip[] pirateYarrClip;
+    public AudioClip[] pirateNarrClip;
+    public AudioClip[] robotSuccessClip;
+    public AudioClip[] robotFailureClip;
+
 
     // spawnables
     
@@ -90,12 +97,19 @@ public class MinigameManager : MonoBehaviour
         GameObject.Find("Player").GetComponent<Animator>().enabled = false;
 
 
-        // SFX
+        // SFX CONTINUE HERE!!!
+        // for coins
         goodCoinSFX = GetComponent<AudioSource>();
-        int index = Random.Range(0, goodCoinObtainedSFX.Length);
-        goodCoinSFX.clip = goodCoinObtainedSFX[index]; // first sound by default
-
+        int goodCoinIndex = Random.Range(0, goodCoinObtainedSFX.Length);
+        goodCoinSFX.clip = goodCoinObtainedSFX[goodCoinIndex];
         badCoinSFX.clip = badCoinObtainedSFX;
+
+        // for player
+        //pirateYarrSFX = GetComponent<AudioSource>();
+        int pirateYarrIndex = Random.Range(0, pirateYarrClip.Length);
+        pirateYarrSFX.clip = goodCoinObtainedSFX[pirateYarrIndex];
+        
+        
     //  playerRenderer.sprite = pirateSprite; // Set starting sprite as pirate
         // normalPlayerColor = playerRenderer.color; // Set starting color as player's uncorrupted color
 
