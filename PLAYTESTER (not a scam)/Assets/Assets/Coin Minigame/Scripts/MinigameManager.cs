@@ -55,26 +55,23 @@ public class MinigameManager : MonoBehaviour
     public AudioClip[] pirateNarrClip;
     public AudioClip[] robotSuccessClip;
     public AudioClip[] robotFailureClip;
+    // For Robot's chainsaw
+    public AudioSource ChainsawKillSFX;
+    public AudioSource ChainsawMissSFX;
+    public AudioClip ChainsawKillClip;
+    public AudioClip ChainsawMissClip;
+    // For footsteps
+    public AudioSource FootstepsSFX;
+    public AudioClip[] pirateFootstepsClip;
+    public AudioClip[] robotFootstepsClip;
 
 
-    // spawnables
-    
-    // General variables
     private int timesPlayed;
-    // bg1, bg2 
-    // public SpriteRenderer bg1Renderer;
-    // public SpriteRenderer bg2Renderer;
-    // Good spawnable
+   
   
-    // player color can change
     public SpriteRenderer playerRenderer;
-    //public Color glitchPlayerColor = new Color(0f, 0f, 0f, 1f); // Black
-    //private Color normalPlayerColor;
     public Animator playerAnimator;
 
-    // player sprite can change
-    //public Sprite pirateSprite;
-    //public Sprite robotSprite;
     public AnimationClip pirateAnimation;
     public AnimationClip robotAnimation;
 
@@ -82,11 +79,11 @@ public class MinigameManager : MonoBehaviour
     public TMP_Text LeaderboardText;
 
     // Speed variables
-    public float scrollSpeed = 2f;
-    public float speedIncreaseRate = 0.1f; // +0.1 speed per second
-    public float maxSpeed = 6f;
-    public float minSpeed = 1f;
-    public float slowDownAmount = 1f;
+    public float scrollSpeed = 3f;
+    public float speedIncreaseRate = 0.2f; // +0.2 speed per second
+    public float maxSpeed = 10f;
+    public float minSpeed = 3f;
+    public float SlowDownSpeed = 3f;
 
     void Start()
     {
@@ -96,22 +93,19 @@ public class MinigameManager : MonoBehaviour
 
         GameObject.Find("Player").GetComponent<Animator>().enabled = false;
 
-
-        // SFX CONTINUE HERE!!!
+        // SFX 
         // for coins
         goodCoinSFX = GetComponent<AudioSource>();
         int goodCoinIndex = Random.Range(0, goodCoinObtainedSFX.Length);
         goodCoinSFX.clip = goodCoinObtainedSFX[goodCoinIndex];
         badCoinSFX.clip = badCoinObtainedSFX;
 
-        // for player
-        //pirateYarrSFX = GetComponent<AudioSource>();
+        // for player      
         int pirateYarrIndex = Random.Range(0, pirateYarrClip.Length);
-        pirateYarrSFX.clip = goodCoinObtainedSFX[pirateYarrIndex];
-        
-        
-    //  playerRenderer.sprite = pirateSprite; // Set starting sprite as pirate
-        // normalPlayerColor = playerRenderer.color; // Set starting color as player's uncorrupted color
+        pirateYarrSFX.clip = pirateYarrClip[pirateYarrIndex];
+
+        int pirateNarrIndex = Random.Range(0, pirateNarrClip.Length);
+        pirateNarrSFX.clip = pirateNarrClip[pirateNarrIndex];
 
         isGameOver = true;
         points = 0;
@@ -158,6 +152,7 @@ public class MinigameManager : MonoBehaviour
 
         }
 
+         // playFootstepsSFX(); DO NOT UNCOMMENT THIS IT WILL BREAK GAME
 
     }
 
@@ -170,7 +165,28 @@ public class MinigameManager : MonoBehaviour
             if (hasInitialized) { 
             scrollSpeed += speedIncreaseRate * Time.deltaTime;
             scrollSpeed = Mathf.Clamp(scrollSpeed, minSpeed, maxSpeed); // make sure speed is between set bounds
+
+            
             }
+        }
+    }
+
+    void playFootstepsSFX()
+    {
+        while (!isGameOver)
+        { 
+        Debug.Log("Footsteps");
+        if (isGlitch)
+        {
+            int footstepsIndex = Random.Range(0, robotFootstepsClip.Length);
+            FootstepsSFX.clip = robotFootstepsClip[footstepsIndex];
+        } else
+        {
+            int footstepsIndex = Random.Range(0, pirateFootstepsClip.Length);
+            FootstepsSFX.clip = pirateFootstepsClip[footstepsIndex];
+        }
+
+            FootstepsSFX.Play();
         }
     }
 
@@ -196,17 +212,27 @@ public class MinigameManager : MonoBehaviour
         // Kino effect
         GlitchEffect.intensity = Random.Range(0f, 0.3f); // can adjust
         AnalogGlitchEffect.colorDrift = Random.Range(0f, 0.3f);
-
-        Debug.Log("Robot");
-        // playerRenderer.sprite = robotSprite;
-        //playerRenderer.color = glitchPlayerColor;
+        
         playerAnimator.Play("RobotAnimation");
+
+        // For SFX
+        // For collectibles
         int screamIndex = Random.Range(0, screamsSFX.Length); // randomly choose a scream sfx
         goodCoinSFX.clip = screamsSFX[screamIndex];
 
         int trashIndex = Random.Range(0, trashHitSFX.Length); // randomly choose a trash hit sfx
         badCoinSFX.clip = trashHitSFX[trashIndex];
-        // goodCoinSFX.clip = glitchedSFX;
+
+        // For player
+        int robotSuccessIndex = Random.Range(0, robotSuccessClip.Length);
+        pirateYarrSFX.clip = robotSuccessClip[robotSuccessIndex];
+        
+        int robotFailureIndex = Random.Range(0, robotFailureClip.Length);
+        pirateNarrSFX.clip = robotSuccessClip[robotFailureIndex];
+
+        // For robot's chainsaw
+        ChainsawKillSFX.clip = ChainsawKillClip;
+        ChainsawMissSFX.clip = ChainsawMissClip;
 
         yield return new WaitForSeconds(1f); // Glitch lasts 1 second
         
@@ -214,15 +240,29 @@ public class MinigameManager : MonoBehaviour
         if (glitchFreq != 1)
         {
            isGlitch = false;
-            //     playerRenderer.sprite = pirateSprite;
+
            playerAnimator.Play("PirateAnimation");
 
+           // For SFX
+           // For Collectibles
            int goodCoinIndex = Random.Range(0, goodCoinObtainedSFX.Length); // randomly choose a good coin sfx
            goodCoinSFX.clip = goodCoinObtainedSFX[goodCoinIndex];
            
            badCoinSFX.clip = badCoinObtainedSFX;
 
-           GlitchEffect.intensity = 0;
+            // For player
+           int pirateYarrIndex = Random.Range(0, pirateYarrClip.Length);
+           pirateYarrSFX.clip = pirateYarrClip[pirateYarrIndex];
+
+           int pirateNarrIndex = Random.Range(0, pirateNarrClip.Length);
+           pirateNarrSFX.clip = pirateNarrClip[pirateNarrIndex];
+
+            // For chainsaw
+            ChainsawKillSFX.clip = null;
+            ChainsawMissSFX.clip = null;
+
+            GlitchEffect.intensity = 0;
+           
            AnalogGlitchEffect.colorDrift = 0;
 
         }

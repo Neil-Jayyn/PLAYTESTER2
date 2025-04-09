@@ -9,14 +9,8 @@ public class player : MonoBehaviour
 {
     public Transform[] lanes;
     private int curLane = 1; // middle lane
-    //public TMP_Text pointsText;
-    //private int points = 0;
-
-    // UnityEngine.Color colorOne = new UnityEngine.Color(1f, 1f, 0f, 1f); // yellow
-    // UnityEngine.Color colorTwo = new UnityEngine.Color(0.5f, 0f, 0.5f, 1f); // purple
 
     MinigameManager CoinGameManager;
-
 
     void Start()
     {
@@ -66,24 +60,40 @@ public class player : MonoBehaviour
             if (other.CompareTag("Coin"))
             {
                 CoinGameManager.AddPoints(1);
-                Debug.Log("+1 point");
-                // Play the good coin related sound effect from MinigameManager
+
+                // Sound effects               
                 if (CoinGameManager != null && CoinGameManager.goodCoinSFX != null)
                 {
-                    CoinGameManager.goodCoinSFX.Play(); // Play sound effect
+                    CoinGameManager.goodCoinSFX.Play(); 
                 }
+                if (CoinGameManager != null && CoinGameManager.pirateYarrSFX != null)
+                {
+                    CoinGameManager.pirateYarrSFX.Play(); 
+                }
+                if (CoinGameManager != null && CoinGameManager.ChainsawKillSFX != null)
+                {
+                    CoinGameManager.ChainsawKillSFX.Play();
+                }
+
             } else if (other.CompareTag("EvilCoin"))
             {
                 CoinGameManager.AddPoints(-1);
-                Debug.Log("-1 point");
 
-                // Play the bad coin related sound effect from MinigameManager
+                // Sound effects
                 if (CoinGameManager != null && CoinGameManager.badCoinSFX != null)
                 {
-                    CoinGameManager.badCoinSFX.Play(); // Play sound effect
+                    CoinGameManager.badCoinSFX.Play(); 
                 }
+                if (CoinGameManager != null && CoinGameManager.pirateNarrSFX != null)
+                {
+                    CoinGameManager.pirateNarrSFX.Play(); 
+                }
+                //if (CoinGameManager != null && CoinGameManager.ChainsawMissSFX != null)
+                //{
+                //    CoinGameManager.ChainsawMissSFX.Play();
+                //}
                 // Decrease speed
-                CoinGameManager.scrollSpeed -= CoinGameManager.slowDownAmount;
+                CoinGameManager.scrollSpeed = CoinGameManager.SlowDownSpeed;
                 CoinGameManager.scrollSpeed = Mathf.Clamp(CoinGameManager.scrollSpeed, CoinGameManager.minSpeed, CoinGameManager.maxSpeed); // make sure speed is between set bounds
             }
                 

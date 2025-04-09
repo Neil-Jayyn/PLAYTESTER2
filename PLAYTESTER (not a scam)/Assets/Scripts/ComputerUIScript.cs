@@ -74,6 +74,7 @@ public class ComputerUIScript : MonoBehaviour
         GameObject.Find("Close Popup").GetComponent<PopupCloseScript>().ClosePopup();
 
         bigPopup.GetComponent<Transform>().position = pos;
+      //bigPopup.GetComponent<RectTransform>().sizeDelta = size ?? new Vector2(4.198084f, 3.569702f);
         bigPopup.transform.GetChild(1).transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().SetText(text);
 
     }

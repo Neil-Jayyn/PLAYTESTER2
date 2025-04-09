@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class spawnable : MonoBehaviour
 {
+    
     // public float speed = 2f;
     public float xThreshold;
 
