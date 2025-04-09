@@ -132,7 +132,7 @@ public class MinigameManager : MonoBehaviour
         if (timesPlayed == 1)
         {
             Debug.Log("First Time Playing CoinRunner");
-            glitchFreq = 0.5f; // NEED TO CHANGE TO ZERO LATER!!
+            glitchFreq = 0.0f; // NEED TO CHANGE TO ZERO LATER!!
             UIController.TriggerPopup(new Vector3(50, 36, -8), "Use the up and down arrows to move lanes. Grab all the gold coins!");
             isTutorialPlaying = true;
             freezeOverlay.SetActive(true);
