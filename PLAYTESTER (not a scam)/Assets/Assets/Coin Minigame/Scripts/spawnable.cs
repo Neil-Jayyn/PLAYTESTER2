@@ -27,6 +27,7 @@ public class spawnable : MonoBehaviour
         { 
             bool glitchState = CoinGameManager.isGlitch;
             animator.SetBool("isGlitch", glitchState);
+            transform.localScale = new Vector3(-3.5f, 3.5f, 1);
         }
 
         if (CompareTag("EvilCoin"))
