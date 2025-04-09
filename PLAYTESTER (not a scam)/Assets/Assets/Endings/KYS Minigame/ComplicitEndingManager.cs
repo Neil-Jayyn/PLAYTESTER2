@@ -9,7 +9,7 @@ public class ComplicitEndingManager : MonoBehaviour
     //complicit ending cutscene vars
     ComputerUIScript UIController;
     private Vector3 tempEndingLocation = new Vector3(150, 50, -10);
-    private Vector3 complicitEndingLocation = new Vector3(120, 50, -8);
+    private Vector3 complicitEndingLocation = new Vector3(120, 50, -8.5f);
 
     public bool gameOver;
     public GameObject crosshair;
@@ -30,6 +30,7 @@ public class ComplicitEndingManager : MonoBehaviour
     bool isTutorialPlaying;
     public GameObject popup;
     Vector3 popupHome;
+    public GameObject freezeOverlay;
 
     // Start is called before the first frame update
     void Start()
@@ -48,6 +49,8 @@ public class ComplicitEndingManager : MonoBehaviour
         //tut handling
         popup = GameObject.Find("Popup");
         popupHome = new Vector3(0, 10, 0);
+
+        freezeOverlay.SetActive(true);
     }
 
     public void StartComplicitMinigame()
@@ -63,6 +66,8 @@ public class ComplicitEndingManager : MonoBehaviour
     public void InitializeComplicitMinigame() {
         crosshair.SetActive(true);
         player.SetActive(true);
+        freezeOverlay.SetActive(false);
+
         StartCoroutine(StartTimer());
         KYSScreen.GetComponent<Animator>().enabled = true;
     }
@@ -93,6 +98,7 @@ public class ComplicitEndingManager : MonoBehaviour
         hasShotThemselves = true;
         sfx.clip = gunshot;
         sfx.Play();
+        GameOver();
     }
 
     public bool DidPlayerShoot() {
