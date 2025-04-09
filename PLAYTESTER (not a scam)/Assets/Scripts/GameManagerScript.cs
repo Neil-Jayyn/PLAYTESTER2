@@ -31,6 +31,7 @@ public class GameManagerScript : MonoBehaviour
     public AudioClip duckTrack;
     public AudioClip glitchedCoinTrack;
     public AudioClip glitchedCupcakeTrack;
+    public AudioClip glitchedDuckTrack;
     public AudioClip titleScreenAudio;
     public AudioClip newsTrack;
     public AudioClip scaryNewsTrack;
@@ -86,6 +87,8 @@ public class GameManagerScript : MonoBehaviour
     // Reference to coin runner minigame manager
     public MinigameManager coinMinigameManager;
 
+    public DuckGameManager duckGameManager;
+
     //Ref to cupcake mg manager
     public CupcakeGameManager cupcakeGameManager;
 
@@ -130,6 +133,7 @@ public class GameManagerScript : MonoBehaviour
         }
         GlitchMusicPlayer.loop = true;
         GlitchMusicPlayer.mute = true;
+        GlitchMusicPlayer.volume = 0.2f;
 
         //Get the news article text stuff
         ValText1 = GameObject.Find("Val Text 1").GetComponent<TMPro.TextMeshProUGUI>();
@@ -186,6 +190,27 @@ public class GameManagerScript : MonoBehaviour
                 {
                     Debug.Log("Starting coin glitch");
                     StartCoroutine(HandleCoinMinigameAudio());
+                }
+            }
+
+
+        }
+
+        if (minigamesPlayed == 2 && !duckGameManager.gameOver && duckGameManager.isGlitch)
+        {
+
+            glitchCooldownTimer -= Time.deltaTime;
+
+            // If the cooldown timer reaches 0, check for glitch chance
+            if (glitchCooldownTimer <= 0f)
+            {
+                Debug.Log("duck curse theme");
+                // Reset the cooldown timer
+                glitchCooldownTimer = glitchCooldown;
+
+                if (duckGameManager.isGlitch && duckGameManager.randomValue < duckGameManager.glitchFreq)
+                {
+                    StartCoroutine(HandleDuckMinigameAudio());
                 }
             }
 
@@ -400,7 +425,9 @@ public class GameManagerScript : MonoBehaviour
         {
             //playing duck
             MusicPlayer.clip = duckTrack;
-            
+            GlitchMusicPlayer.clip = glitchedDuckTrack;
+
+
         }
         MusicPlayer.Play();
         GlitchMusicPlayer.Play();
@@ -422,6 +449,21 @@ public class GameManagerScript : MonoBehaviour
         GlitchMusicPlayer.mute = true;
 
         
+
+    }
+
+    private IEnumerator HandleDuckMinigameAudio()
+    {
+        MusicPlayer.mute = true;
+        GlitchMusicPlayer.mute = false;
+
+        while (duckGameManager.isGlitch) // keep playing glitched version until glitch ends
+        {
+            yield return null;
+        }
+
+        MusicPlayer.mute = false;
+        GlitchMusicPlayer.mute = true;
 
     }
 

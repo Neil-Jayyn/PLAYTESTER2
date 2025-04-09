@@ -19,9 +19,10 @@ public class DuckGameManager : MonoBehaviour
     public TMP_Text timerText; //TMP to show timer
 
     // Glitch variables
-    private float glitchFreq;
+    public float glitchFreq;
     private float glitchWaitTime = 1f;
     public bool isGlitch = false;
+    public float randomValue = 0f;
 
     //bg glitch
     public GameObject bg;
@@ -37,11 +38,30 @@ public class DuckGameManager : MonoBehaviour
     public AudioClip normalSFX;
     public AudioClip glitchedSFX;
 
+    public AudioSource trashAudioSource;
+    public AudioClip trashSFX;
+    public AudioSource awwAudioSource;
+    public AudioClip awwSFX;
+    public AudioSource successHitAudioSource;
+    public AudioClip[] successHitSFX;
+    public AudioClip[] screamSFX;
+    public AudioSource quackAudioSource;
+    public AudioClip[] quackSFX;
+    public AudioSource missAudioSource;
+    public AudioClip hmmSFX;
+    public AudioSource gunAudioSource;
+    public AudioClip wholesomeGunSFX;
+    public AudioClip realGunshotSFX;
+    public AudioSource boardSmackAudioSource;
+    public AudioClip boardSmackSFX;
+
+
+
     //leaderboard text
     public TMP_Text LeaderboardText;
 
     //Tutorial freeze management (Neila note: The code for it is bad but it works)
-    private bool isTutorialPlaying; //checks if there is a tutorial on screen
+    public bool isTutorialPlaying; //checks if there is a tutorial on screen
     public GameObject popup;
     Vector3 popupHome;
     private bool hasInitialized; //checks if the game started game elements yet 
@@ -126,7 +146,7 @@ public class DuckGameManager : MonoBehaviour
            
             isTutorialPlaying = true;
             Debug.Log("first time playing");
-            glitchFreq = 0;
+            glitchFreq = 0.2f;
             UIController.TriggerPopup(new Vector3(48f, 22.5f, -9.1f), "Use the mouse to aim and left click to shoot.Take down all the ducks!");
         } else if (timesPlayed == 2)
         {
@@ -159,7 +179,8 @@ public class DuckGameManager : MonoBehaviour
         {
             yield return new WaitForSeconds(glitchWaitTime); // Check every second
 
-            if (glitchFreq > 0 && Random.value < glitchFreq) // If we get a random value less than the glitch frequency, the glitches will occur
+            randomValue = Random.value;
+            if (glitchFreq > 0 && randomValue < glitchFreq) // If we get a random value less than the glitch frequency, the glitches will occur
             {
                 StartCoroutine(ActivateGlitch());
             }
