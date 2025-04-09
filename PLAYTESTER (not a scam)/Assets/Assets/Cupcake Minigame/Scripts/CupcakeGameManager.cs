@@ -50,7 +50,9 @@ public class CupcakeGameManager : MonoBehaviour
     //sound effect
     public AudioSource sfx;
     public AudioClip sfxNormalYay;
-    public AudioClip sfxGlitchedYay;
+    public AudioClip[] sfxGlitchedHit;
+    public AudioClip[] sfxSpeedyHit;
+
 
     //public AudioSource track;
     //public AudioClip trackNormal;
@@ -60,11 +62,14 @@ public class CupcakeGameManager : MonoBehaviour
     public GameObject popup;
     Vector3 popupHome;
     GameObject freezeOverlay;
+    bool hasInitialized = false;
 
     EnemySpawner spawner1;
     EnemySpawner spawner2;
 
     public CupcakeMovement cupcakeScript;
+
+    SpriteRenderer spriteRendererBg;
 
     // Leaderboard variables
     public TMP_Text LeaderboardText;
@@ -73,20 +78,23 @@ public class CupcakeGameManager : MonoBehaviour
     {
         gamePlaying = false;
         timesPlayed = 0;
-
+        
         UIController = GameObject.Find("UI Controller").GetComponent<ComputerUIScript>();
         MainGameManager = GameObject.Find("Game Manager");
         sfx = GetComponent<AudioSource>();
 
+        //tutorial
         popup = GameObject.Find("Popup");
         popupHome = new Vector3(0, 10, 0);
         freezeOverlay = GameObject.Find("FreezeOverlay");
         GameObject.Find("cupcakeHolder").GetComponent<Animator>().enabled = false;
 
+        //spawners
         spawner1 = GameObject.Find("EnemySpawner").GetComponent<EnemySpawner>();
         spawner2 = GameObject.Find("EnemySpawner (1)").GetComponent<EnemySpawner>();
 
-
+        //glitch prep
+       
     }
 
     //This is the function that will be called by the AppScript script. It should contain
@@ -126,7 +134,7 @@ public class CupcakeGameManager : MonoBehaviour
             
         } else // day 3; need a variable to determine which route to take
         {
-            glitchFrequency=MainGameManager.GetComponent<GameManagerScript>().GlitchFreqFromEnding();
+            glitchFrequency = 1f;
             tutorialPlaying=false;
             freezeOverlay.SetActive(false);
             spawner1.SetNumOfEnemies(27);
@@ -146,16 +154,7 @@ public class CupcakeGameManager : MonoBehaviour
 
         if (gamePlaying) //camera moved over to minigame
         {
-            if (tutorialPlaying == false)
-            {
-                InitializeCupcakeGame();
-            } 
-            else if (popup.transform.position == popupHome) //if tutorial left screen
-            {
-                tutorialPlaying = false;
-                InitializeCupcakeGame();
-            }
-
+            CheckIfTutorialClosed();
             if (!tutorialPlaying) //tutorial left screen or no tutorial
             {
                 //InitializeCupcakeGame();
@@ -178,7 +177,36 @@ public class CupcakeGameManager : MonoBehaviour
         GameObject.Find("EnemySpawner (1)").GetComponent<EnemySpawner>().playCupcakeMinigame = true;
         GameObject.Find("cupcakeHolder").GetComponent<playerMovement>().playCupcakeMinigame = true;
         GameObject.Find("cupcakeHolder").GetComponent<Animator>().enabled = true;
-        StartCoroutine(GlitchCheckRoutine());
+        if (glitchFrequency != 1)
+        {
+            StartCoroutine(GlitchCheckRoutine());
+        }
+        else {
+            GlitchesDayThree();
+        }
+        //GlitchesDayThree();
+        
+
+        
+    }
+
+    void CheckIfTutorialClosed()
+    {
+        if (gamePlaying && !hasInitialized)
+        {
+            if (!tutorialPlaying)
+            {
+                InitializeCupcakeGame();
+                hasInitialized = true;
+            }
+            else if (popup.transform.position == popupHome) //if tutorial left screen
+            {
+                tutorialPlaying = false;
+                hasInitialized = true;
+                InitializeCupcakeGame();
+            }
+
+        }
     }
 
     IEnumerator GlitchCheckRoutine()
@@ -204,8 +232,8 @@ public class CupcakeGameManager : MonoBehaviour
         //Kino Effect
         GlitchEffect.intensity = Random.Range(0f, 0.3f); // can adjust
         AnalogGlitchEffect.colorDrift = Random.Range(0f, 0.3f);
-        SpriteRenderer spriteRenderer = bg.GetComponent<SpriteRenderer>(); // initialize to change background
-        spriteRenderer.sprite = bgGlitched;
+        SpriteRenderer spriteRendererBg = bg.GetComponent<SpriteRenderer>(); // initialize to change background
+        spriteRendererBg.sprite = bgGlitched;
 
         yield return new WaitForSeconds(glitchLength); // Glitch lasts 1 second
 
@@ -218,9 +246,21 @@ public class CupcakeGameManager : MonoBehaviour
             isGlitch = false;
             GlitchEffect.intensity = 0;
             AnalogGlitchEffect.colorDrift = 0;
-            spriteRenderer.sprite = bgNormal;
+            spriteRendererBg.sprite = bgNormal;
             //track.clip = trackNormal;
         } 
+    }
+
+
+    void GlitchesDayThree() {
+        isGlitch = true;
+        //bg
+        SpriteRenderer spriteRendererBg = bg.GetComponent<SpriteRenderer>(); // initialize to change background
+        spriteRendererBg.sprite = bgGlitched;
+
+        //kino effects
+        GlitchEffect.intensity = Random.Range(0f, 0.3f); // can adjust
+        AnalogGlitchEffect.colorDrift = Random.Range(0f, 0.10f);
     }
 
     private void GameOver()
@@ -229,6 +269,7 @@ public class CupcakeGameManager : MonoBehaviour
         gameOver = true;
         tutorialPlaying = true;
         timerText.text = "Game Stop!";
+        isGlitch = false;
         //Time.timeScale = 0f; // Stop everything
 
         //set the enemy spawners script to false
@@ -266,7 +307,8 @@ public class CupcakeGameManager : MonoBehaviour
     public void SfxCupcakeHit(bool isGlitch) {
         if (isGlitch) //plays sfx depending if glitches are happening or not
         {
-            sfx.clip = sfxGlitchedYay;
+            int index = Random.Range(0, sfxGlitchedHit.Length);
+            sfx.clip = sfxGlitchedHit[index];
             sfx.Play();
         }
         else { 
@@ -274,6 +316,24 @@ public class CupcakeGameManager : MonoBehaviour
             sfx.Play();
         }
     }
+
+    public void SfxSpeedyHit(bool isGlitch)
+    {
+        if (isGlitch) //plays sfx depending if glitches are happening or not
+        {
+            int index = Random.Range(0, sfxGlitchedHit.Length);
+            sfx.clip = sfxGlitchedHit[index];
+        }
+        else
+        {
+            //TODO: wow!!
+            int index = Random.Range(0, sfxSpeedyHit.Length);
+            sfx.clip = sfxSpeedyHit[index];
+            sfx.Play();
+        }
+    }
+
+
 
     private int ScoreCalculation(int points) {
         float score;

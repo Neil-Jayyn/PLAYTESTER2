@@ -18,6 +18,11 @@ public class playerMovement : MonoBehaviour
 
     public bool playCupcakeMinigame; //turned to true by the cupcake game manager script
     AudioSource sfxDrop;
+    public AudioClip[] sfxDrops;
+
+    public AudioSource sfxOven;
+    public AudioClip[] sfxDrone;
+    public AudioClip[] sfxOvenTick;
 
 
     public Animator anim;
@@ -46,6 +51,12 @@ public class playerMovement : MonoBehaviour
 
     void Awake() { 
         sfxDrop=GetComponent<AudioSource>();
+
+        //if (sfxOven != null) { 
+       //     sfxOven=gameObject.AddComponent<AudioSource>();
+       // }
+        
+
     }
 
     // Update is called once per frame
@@ -57,6 +68,15 @@ public class playerMovement : MonoBehaviour
         {
             //player input
             PlayerInput();
+
+            //Drop sfx
+            SfxDropping(gameManager.isGlitch);
+
+            //Drone sfx if it is glitched
+            //SfxDroneMoving(gameManager.isGlitch);
+
+            //Oven
+            //SfxOvenTick();
                        
                 //reload time
                 waitTime -= Time.deltaTime;
@@ -67,6 +87,8 @@ public class playerMovement : MonoBehaviour
                     isReady = true;
                     if (isReady == true && readyTime >= 0.0F) //ding 
                     {
+                    sfxDrop.clip = sfxOvenTick[0];
+                    sfxDrop.Play();
                         //have isReady state true
                         readyTime -= Time.deltaTime;
                         //TODO: SFX FOR DING
@@ -100,7 +122,8 @@ public class playerMovement : MonoBehaviour
                     }
                 }
 
-            }
+            SfxDropping(gameManager.isGlitch);
+        }
     }
 
     void AnimationCheck() {
@@ -138,6 +161,9 @@ public class playerMovement : MonoBehaviour
         }
         else {
             anim.SetBool("isGlitch", true);
+            //anim.enabled = false;
+            //SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+            //spriteRenderer.sprite = glitched;
         }
     }
 
@@ -145,11 +171,76 @@ public class playerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
             transform.position += Vector3.left * Time.deltaTime * speed;
+            spriteRenderer.flipX = false;
         }
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
             transform.position += Vector3.right * Time.deltaTime * speed;
+            spriteRenderer.flipX = true;
         }
+    }
+
+    private void SfxDropping(bool isGlitch) {
+        // 0:cupcake drop 1:bomb drop
+        if (!isGlitch)
+        {
+            sfxDrop.clip = sfxDrops[0];
+        }
+        else {
+            sfxDrop.clip = sfxDrops[1];
+        }
+    }
+
+    private void SfxDroneMoving(bool isGlitch) {
+        if (isGlitch==true)
+        {
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+            {
+                //if oven moves
+                sfxOven.clip = sfxDrone[0];
+                sfxOven.Play();
+
+            }
+            else
+            {
+                //if oven is stationary
+                sfxOven.clip = sfxDrone[1];
+                sfxOven.Play();
+            }
+
+
+            
+        }
+    }
+
+    private void SfxOvenTick() {
+        if (anim.GetBool("isReady"))
+        {
+            sfxOven.clip = sfxOvenTick[0];
+        }
+        else if (anim.GetBool("isReloading"))
+        {
+            sfxOven.clip = sfxOvenTick[1];
+        }
+        if (sfxOven != null)
+         {
+            sfxOven.Play();
+        }
+    }
+
+    private void SoundCheck(bool isGlitch)
+    {
+        
+
+            if (anim.GetBool("isReady"))
+            {
+                //ding ding sound if ready
+            }
+            else if (anim.GetBool("isReloading"))
+            {
+                //if oven is reloading
+            }
+        
     }
 
     public void UpdateReloadRate(float multiplier) { 
