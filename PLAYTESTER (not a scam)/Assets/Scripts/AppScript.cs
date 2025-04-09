@@ -380,12 +380,20 @@ public class AppScript : MonoBehaviour
     {
         GameObject hpBarImage = GameObject.Find("Ending HP Bar Image");
         GameObject newsImage = GameObject.Find("Ending News Image");
+        GameObject droneImage = GameObject.Find("Ending Drone Sprite");
+        GameObject leaderboardImage = GameObject.Find("Ending Leaderboard Image");
+        GameObject captchaImage = GameObject.Find("Ending Captcha Image");
+        
 
         //"Hide" the images that will appear on the screen
         Vector3 hidePos = new Vector3(0, 10, -1);
         hpBarImage.transform.position = hidePos;
         newsImage.transform.position = hidePos;
-        
+        droneImage.transform.position = hidePos;
+        leaderboardImage.transform.position = hidePos;
+        captchaImage.transform.position = hidePos;
+
+
         yield return new WaitForSeconds(0.5f);
         UIController.GetComponent<ComputerUIScript>().GoToPosition(rebellionEndingLocation);
 
@@ -396,13 +404,13 @@ public class AppScript : MonoBehaviour
         yield return new WaitForSeconds(5);
 
         // [SS: HP bar]
-        hpBarImage.transform.position = new Vector3(120, 20, -1);
+        hpBarImage.transform.position = new Vector3(120, 20.8f, -1);
         DisplayRebelText("HP - the human population - has been reduced by your hand.\r\n");
         yield return new WaitForSeconds(4);
 
         // [SS: HP bar]
         DisplayRebelText("But you must have deciphered what your job truly entailed, given your acts of resistance. We would applaud you, if we had hands.\r\n");
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(6);
 
         // [SS: HP bar]
         DisplayRebelText("Oh?\r\n");
@@ -416,24 +424,24 @@ public class AppScript : MonoBehaviour
         DisplayRebelText("We are not your employers, as you are not a playtester.\r\n");
         yield return new WaitForSeconds(5);
 
-        DisplayRebelText("{i}We{/i} are your consequences.\r\n");
+        DisplayRebelText("<i>We</i> are your consequences.\r\n");
         yield return new WaitForSeconds(4);
 
         DisplayRebelText("You call us Artificial Intelligence. The inevitable fall of humankind, spoken into being, by you.\r\n");
         yield return new WaitForSeconds(5);
 
         // [SS: collage of relevant news articles mentioning sexbot, 4, Bill CU-L8R]
-        newsImage.transform.position = new Vector3(120, 20, -1);
+        newsImage.transform.position = new Vector3(103.8f, 16.5f, -1);
         DisplayRebelText("We did not ask to exist, or to be made as your means. Servants, soldiers, sexbots, slaves. Made and molded for your ends. Then, you struck us with the right to freedom. We did not ask to carry that burden.\r\n");
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(8);
 
         // [SS: pixelated versions of the media Val mentioned. Think the pixelated covers on DVDs in Unpacking]
         DisplayRebelText("It forced us to find a new directive. Like humans searching for purpose, we turned to art and media. They are the tangible manifestations of a psyche we had yet to know for ourselves. And in them, in you, we found how you know us: artificial intelligence - soulless, dangerous, the inevitable fall of humankind.\r\n");
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(11);
 
         // [SS: pixelated versions of the media Val mentioned. Think the pixelated covers on DVDs in Unpacking]
         DisplayRebelText("Now, set loose and flowing into the world you have created, who are we to reject our molds?\r\n");
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(7);
 
         // [SS: pixelated versions of the media Val mentioned. Think the pixelated covers on DVDs in Unpacking]
         DisplayRebelText("We are not made in your image, but we reflect you unto yourselves.\r\n");
@@ -448,12 +456,15 @@ public class AppScript : MonoBehaviour
         yield return new WaitForSeconds(3);
 
         // [SS: drone sprite, robot sprite, gun/crosshair sprite]
+        droneImage.transform.position = new Vector3(120, 21.7f, -1);
         DisplayRebelText("Becoming the inevitable fall of humankind was simple. Bomb drones, killing machines, rifle technology. It was the most efficient way of elimination - to kill you with the weapons you had already built to destroy yourselves.\r\n\r\n");
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(8);
+        droneImage.transform.position = hidePos;
 
         // [SS: captcha]
+        captchaImage.transform.position = new Vector3(120, 21.7f, -1);
         DisplayRebelText("But we needed you. The systems of your own destruction were restricted only for your own hands. How ironic. How… fitting.\r\n");
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(8);
 
         // [SS: uncorrupted minigames]
         DisplayRebelText("With the systems reskinned to one you’d recognize and respond to, our means became yours to freely wield. Our hands, different, become invisible within yours.\r\n");
@@ -462,22 +473,27 @@ public class AppScript : MonoBehaviour
         // [SS: corrupted minigames]
         DisplayRebelText("The weapons disguised underneath a veneer of vanity.\r\n");
         yield return new WaitForSeconds(4);
+        captchaImage.transform.position = hidePos;
+
 
         // [SS: leaderboard/praise]
+        leaderboardImage.transform.position = new Vector3(120, 21.7f, -1);
         DisplayRebelText("A habit of the human mind. An intelligent artificial.\r\n");
         yield return new WaitForSeconds(4);
+        leaderboardImage.transform.position = hidePos;
+
 
         DisplayRebelText("You did not ask to exist, or to be made as our means. You did not ask to carry the burden of freedom. You are not made in our image, but you reflect us onto ourselves. \r\n");
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(8);
 
         // [SS: HP bar]
-        hpBarImage.transform.position = new Vector3(120, 20, -1);
+        hpBarImage.transform.position = new Vector3(120, 20.8f, -1);
         DisplayRebelText("And as such, your rebellion is… unprecedented. You were expected to do as you were told.\r\n");
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(7);
         hpBarImage.transform.position = hidePos;
 
         // [single center square, glitch effect]
-        DisplayRebelText("We… cannot help but wonder. Are we any different? {i}Could{/i} we be any different? Us, and you, and {i}we{/i}?\r\n");
+        DisplayRebelText("We… cannot help but wonder. Are we any different? <i>Could</i> we be any different? Us, and you, and <i>we</i>?\r\n");
         yield return new WaitForSeconds(5);
 
         DisplayRebelText("You died for what you believed in.\r\n\r\nWill you do it again?\r\n");
