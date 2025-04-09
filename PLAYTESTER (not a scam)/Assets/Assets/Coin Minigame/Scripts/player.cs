@@ -53,6 +53,12 @@ public class player : MonoBehaviour
         }
     }
 
+    void ChooseSFX(AudioSource audioaudioClipsSource, AudioClip[] audioClips)
+    {
+        int index = Random.Range(0, audioClips.Length);
+        audioaudioClipsSource.clip = audioClips[index];
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (CoinGameManager.IsGameOver() == false)
@@ -64,10 +70,25 @@ public class player : MonoBehaviour
                 // Sound effects               
                 if (CoinGameManager != null && CoinGameManager.goodCoinSFX != null)
                 {
+                    if (!CoinGameManager.isGlitch)
+                    {
+                        ChooseSFX(CoinGameManager.goodCoinSFX, CoinGameManager.goodCoinObtainedSFX);
+                    }
+                    else
+                    {
+                        ChooseSFX(CoinGameManager.goodCoinSFX, CoinGameManager.screamsSFX);
+                    }
                     CoinGameManager.goodCoinSFX.Play(); 
                 }
                 if (CoinGameManager != null && CoinGameManager.pirateYarrSFX != null)
                 {
+                    if (!CoinGameManager.isGlitch)
+                    {
+                        ChooseSFX(CoinGameManager.pirateYarrSFX, CoinGameManager.pirateYarrClip);
+                    } else
+                    {
+                        ChooseSFX(CoinGameManager.pirateYarrSFX, CoinGameManager.robotSuccessClip);
+                    }
                     CoinGameManager.pirateYarrSFX.Play(); 
                 }
                 if (CoinGameManager != null && CoinGameManager.ChainsawKillSFX != null)
@@ -86,6 +107,13 @@ public class player : MonoBehaviour
                 }
                 if (CoinGameManager != null && CoinGameManager.pirateNarrSFX != null)
                 {
+                    if (!CoinGameManager.isGlitch)
+                    {
+                        ChooseSFX(CoinGameManager.pirateNarrSFX, CoinGameManager.pirateNarrClip);
+                    } else
+                    {
+                        ChooseSFX(CoinGameManager.pirateNarrSFX, CoinGameManager.robotFailureClip);
+                    }
                     CoinGameManager.pirateNarrSFX.Play(); 
                 }
                 //if (CoinGameManager != null && CoinGameManager.ChainsawMissSFX != null)

@@ -166,7 +166,12 @@ public class MinigameManager : MonoBehaviour
             scrollSpeed += speedIncreaseRate * Time.deltaTime;
             scrollSpeed = Mathf.Clamp(scrollSpeed, minSpeed, maxSpeed); // make sure speed is between set bounds
 
-            
+
+            //if (!isGlitch && !pirateYarrSFX.isPlaying)
+            //    {
+            //        int pirateYarrIndex = Random.Range(0, pirateYarrClip.Length);
+            //        pirateYarrSFX.clip = pirateYarrClip[pirateYarrIndex];
+            //    }
             }
         }
     }
@@ -217,18 +222,16 @@ public class MinigameManager : MonoBehaviour
 
         // For SFX
         // For collectibles
-        int screamIndex = Random.Range(0, screamsSFX.Length); // randomly choose a scream sfx
-        goodCoinSFX.clip = screamsSFX[screamIndex];
 
         int trashIndex = Random.Range(0, trashHitSFX.Length); // randomly choose a trash hit sfx
         badCoinSFX.clip = trashHitSFX[trashIndex];
 
         // For player
-        int robotSuccessIndex = Random.Range(0, robotSuccessClip.Length);
-        pirateYarrSFX.clip = robotSuccessClip[robotSuccessIndex];
+        //int robotSuccessIndex = Random.Range(0, robotSuccessClip.Length);
+        //pirateYarrSFX.clip = robotSuccessClip[robotSuccessIndex];
         
-        int robotFailureIndex = Random.Range(0, robotFailureClip.Length);
-        pirateNarrSFX.clip = robotSuccessClip[robotFailureIndex];
+        //int robotFailureIndex = Random.Range(0, robotFailureClip.Length);
+        //pirateNarrSFX.clip = robotSuccessClip[robotFailureIndex];
 
         // For robot's chainsaw
         ChainsawKillSFX.clip = ChainsawKillClip;
@@ -244,18 +247,18 @@ public class MinigameManager : MonoBehaviour
            playerAnimator.Play("PirateAnimation");
 
            // For SFX
-           // For Collectibles
-           int goodCoinIndex = Random.Range(0, goodCoinObtainedSFX.Length); // randomly choose a good coin sfx
-           goodCoinSFX.clip = goodCoinObtainedSFX[goodCoinIndex];
+           //// For Collectibles
+           //int goodCoinIndex = Random.Range(0, goodCoinObtainedSFX.Length); // randomly choose a good coin sfx
+           //goodCoinSFX.clip = goodCoinObtainedSFX[goodCoinIndex];
            
            badCoinSFX.clip = badCoinObtainedSFX;
 
             // For player
-           int pirateYarrIndex = Random.Range(0, pirateYarrClip.Length);
-           pirateYarrSFX.clip = pirateYarrClip[pirateYarrIndex];
+           //int pirateYarrIndex = Random.Range(0, pirateYarrClip.Length);
+           //pirateYarrSFX.clip = pirateYarrClip[pirateYarrIndex];
 
-           int pirateNarrIndex = Random.Range(0, pirateNarrClip.Length);
-           pirateNarrSFX.clip = pirateNarrClip[pirateNarrIndex];
+           //int pirateNarrIndex = Random.Range(0, pirateNarrClip.Length);
+           //pirateNarrSFX.clip = pirateNarrClip[pirateNarrIndex];
 
             // For chainsaw
             ChainsawKillSFX.clip = null;
