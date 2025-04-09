@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManagerScript : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class GameManagerScript : MonoBehaviour
     public int HP; //Tracks the current HP (0 to 100)
     public bool EMPHappened;
     private Vector3 EMPLocation = new Vector3(0, -15, -10);
+
+    public int rebelliousLowerBound = 70; //min score for the rebel ending. anything in between is the confusion ending
+    public int complicitUpperBound = 30; //max score for the complicit ending
 
     private GameObject Bar;
     public AudioSource MusicPlayer;
@@ -29,7 +33,11 @@ public class GameManagerScript : MonoBehaviour
     public AudioClip glitchedCupcakeTrack;
     public AudioClip titleScreenAudio;
     public AudioClip newsTrack;
+    public AudioClip scaryNewsTrack;
+    public AudioClip photoTrack;
     public AudioClip complicitTrack;
+    public AudioClip confusionTrack;
+    public AudioClip rebellionTrack;
     public bool isGlitchActive = false;
     public float glitchDuration = 1.0f;
     private float glitchCooldown = 1f; // Cooldown for glitch check (1 second)
@@ -233,15 +241,42 @@ public class GameManagerScript : MonoBehaviour
 
     public void PlayNewsTheme()
     {
-        MusicPlayer.clip = newsTrack;
+
+        if (day == 3 && CheckPlayerEnding() == 2) //complicit ending
+        {
+            MusicPlayer.clip = scaryNewsTrack;
+        }
+        else
+        {
+            MusicPlayer.clip = newsTrack;
+        }
+
         MusicPlayer.Play();
 
+    }
+
+    public void StartPhotoAppTheme()
+    {
+        MusicPlayer.clip = photoTrack;
+        MusicPlayer.Play();
     }
 
     //Play kys theme : not workin yet i just put it for future me
     public void PlayComplicitMinigameTheme()
     {
         MusicPlayer.clip = complicitTrack;
+        MusicPlayer.Play();
+    }
+
+    public void PlayRebellionMusic()
+    {
+        MusicPlayer.clip = rebellionTrack;
+        MusicPlayer.Play();
+    }
+
+    public void PlayConfusionMusic()
+    {
+        MusicPlayer.clip = confusionTrack;
         MusicPlayer.Play();
     }
 
@@ -323,7 +358,7 @@ public class GameManagerScript : MonoBehaviour
     {
         newsNotif.transform.position = newsNotifLocation;
 
-        if(day == 1) 
+        if(day == 1 || day == 3) 
         {
             photoNotif.transform.position = photoNotifLocation;
         }
@@ -704,7 +739,7 @@ public class GameManagerScript : MonoBehaviour
         else
         {
             //day 3
-            if(HP > 60)
+            if(HP > 60) 
             {
                 //rebellious ending
                 UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(companyPopupLocation, "You have been performing very poorly. You must do better. We are disappointed. \r\n\r\nToday is your final day to attempt the highest rank on the leaderboard. Use this opportunity wisely, or else. \r\n\r\nGood luck. Have fun. \r\n");
@@ -878,15 +913,15 @@ public class GameManagerScript : MonoBehaviour
 
     public int CheckPlayerEnding() {
         //checks and gives which ending the player got
-        //TODO: actually change placeholders to be final things
+
         int ending;
         int finalHP = GetHP();
         Debug.Log("HP:"+finalHP);
-        if (finalHP >= 75  && finalHP<=100)
+        if (finalHP > rebelliousLowerBound)
         {
             ending = 0; //rebellion
         }
-        else if (finalHP > 40 && finalHP<70)
+        else if (finalHP < rebelliousLowerBound && finalHP > complicitUpperBound)
         {
             ending = 1; //confusion
         }
@@ -936,51 +971,6 @@ public class GameManagerScript : MonoBehaviour
     
 
     public void ResetGame() {
-        day = 1;
-        minigamesPlayed = 0;
-        HP = 100;
-        EMPHappened = false;
-
-        //Hide the checkmarks
-        HideCheckmarks();
-
-        //Set the audio stuff
-        MusicPlayer.clip = mainTrack;
-        MusicPlayer.loop = true;
-        MusicPlayer.Play();
-
-        //Get the news article text stuff
-        ValText1 = GameObject.Find("Val Text 1").GetComponent<TMPro.TextMeshProUGUI>();
-        ValArticleTitle = GameObject.Find("Val Article Name").GetComponent<TMPro.TextMeshProUGUI>();
-        ValTitle = GameObject.Find("Val Title Text").GetComponent<TMPro.TextMeshProUGUI>();
-        ValDate = GameObject.Find("Val Date").GetComponent<TMPro.TextMeshProUGUI>();
-
-
-        LexaText1 = GameObject.Find("Lexa Text 1").GetComponent<TMPro.TextMeshProUGUI>();
-        LexaArticleTitle = GameObject.Find("Lexa Article Name").GetComponent<TMPro.TextMeshProUGUI>();
-        LexaTitle = GameObject.Find("Lexa Title Text").GetComponent<TMPro.TextMeshProUGUI>();
-        LexaDate = GameObject.Find("Lexa Date").GetComponent<TMPro.TextMeshProUGUI>();
-
-
-        CleeText1 = GameObject.Find("Clee Text 1").GetComponent<TMPro.TextMeshProUGUI>();
-        CleeArticleTitle = GameObject.Find("Clee Article Name").GetComponent<TMPro.TextMeshProUGUI>();
-        CleeTitle = GameObject.Find("Clee Title Text").GetComponent<TMPro.TextMeshProUGUI>();
-        CleeDate = GameObject.Find("Clee Date").GetComponent<TMPro.TextMeshProUGUI>();
-
-
-        // TO START: make a popup appear
-        DisplayCompanyMessage();
-
-        // Slow down the title screen animation, news app captcha button
-        GameObject.Find("News App Captcha Button").GetComponent<Animator>().speed = 0.5f;
-
-        //Update news articles
-        UpdateNews();
-
-        UpdateNotifications();
-
-        //UIController.GetComponent<ComputerUIScript>().ResetGame();
-
-
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

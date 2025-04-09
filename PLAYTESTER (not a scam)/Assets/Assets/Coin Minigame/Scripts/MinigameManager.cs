@@ -308,13 +308,13 @@ public class MinigameManager : MonoBehaviour
 
     private int CalculateScore(int pointsEarned)
     {
-        float score = pointsEarned * -11;
-        //Let 16 be a reasonably good score to achieve -> update this once speed is added !!
-        score = score / 16;
+        float score = pointsEarned * -11; //because 11 is the target amount of points for a good run
+        //Let 30 be a good score 
+        score = score / 30;
 
-        if (score < -12) //dont let the score go beyond -12, since this is the max
+        if (score < -15) //dont let the score go beyond -15
         {
-            score = -12;
+            score = -15;
         }
 
         return (int)score;

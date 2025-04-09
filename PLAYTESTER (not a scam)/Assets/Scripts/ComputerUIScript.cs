@@ -20,12 +20,6 @@ public class ComputerUIScript : MonoBehaviour
         bigPopup = GameObject.Find("Company Popup");
 
         GoToPosition(titleScreen);
-
-        /* OLD VIDEO SCRIPT
-        //initialize camera to empty position in the game to play the video
-        camera.GetComponent<Transform>().position = new Vector3(-20, 50,-10);
-        StartCoroutine(WaitForVideo());
-        */
     }
 
 
@@ -35,15 +29,6 @@ public class ComputerUIScript : MonoBehaviour
         
     }
 
-    /* OLD CUSTSCENE SCRIPT
-    IEnumerator WaitForVideo()
-    {
-        //yield return new WaitForSeconds(14); //VIDEO SHOULD BE 14 SECONDS
-
-        yield return new WaitForSeconds(0.5f);
-        GoToPosition(titleScreen);
-    }
-    */
 
     // This method can be called to change the position of the camera. By default the camera should be set to z=-10
     public void GoToPosition(Vector3 pos)
@@ -74,7 +59,15 @@ public class ComputerUIScript : MonoBehaviour
         GameObject.Find("Close Popup").GetComponent<PopupCloseScript>().ClosePopup();
 
         bigPopup.GetComponent<Transform>().position = pos;
-      //bigPopup.GetComponent<RectTransform>().sizeDelta = size ?? new Vector2(4.198084f, 3.569702f);
+        bigPopup.transform.GetChild(1).transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().SetText(text);
+
+    }
+
+    public void TriggerEndingPopup(Vector3 pos, string text)
+    {
+        bigPopup = GameObject.Find("Ending Popup");
+
+        bigPopup.GetComponent<Transform>().position = pos;
         bigPopup.transform.GetChild(1).transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().SetText(text);
 
     }

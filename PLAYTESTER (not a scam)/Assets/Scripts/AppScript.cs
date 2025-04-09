@@ -26,6 +26,7 @@ public class AppScript : MonoBehaviour
     public bool isPhotoAppButton = false;
     public bool hoverable = false; //does this app have hover text?
     public bool setToMainTrackOnClick = false; //will trigger a function that plays the main theme on click
+    private int falseClockOutStreak = 0; //counts how many times the player has clicked clock out in a row
     public GameObject hoverObj; //set in Unity with the AppScript component for relevant apps
     private Vector3 cupcakeGameLocation = new Vector3(50, 50, -10);
     private Vector3 coinGameLocation = new Vector3(50, 35, -10);
@@ -34,14 +35,11 @@ public class AppScript : MonoBehaviour
     private Vector3 complicitEndingLocation = new Vector3(120, 50, -10);
     private Vector3 confusionEndingLocation = new Vector3(120, 35, -10);
     private Vector3 rebellionEndingLocation = new Vector3(120, 20, -10);
-    private Vector3 tempEndingLocation = new Vector3(150, 50, -10);
 
-    private Vector3 companyPopupLocationRebellion = new Vector3(119f, 22f, -2);
+    private Vector3 companyPopupLocationRebellion = new Vector3(118f, 19f, -2);
+    private Vector3 companyPopupLocationConfusion = new Vector3(118f, 33f, -2);
     private GameObject photoNotif;
     private GameObject newsNotif;
-
-    //temp ending stuff
-    private TMPro.TextMeshProUGUI tempText;
 
 
     //ending stuff
@@ -55,6 +53,8 @@ public class AppScript : MonoBehaviour
     // Audio
     public AudioClip captchaSFX; // sfx for captcha confirmation
     public AudioClip clickSFX; // sfx for start button click
+    public AudioClip badClockOut;
+    public AudioClip meow;
     public AudioClip jobAccept;
     private AudioSource audio; //the audio source component
 
@@ -76,8 +76,8 @@ public class AppScript : MonoBehaviour
         StartButton = GameObject.Find("Start Button");
         photoNotif = GameObject.Find("Photo App Notif");
         newsNotif = GameObject.Find("News App Notif"); 
-        tempText = GameObject.Find("Temp Text").GetComponent<TMPro.TextMeshProUGUI>();
         audio = GetComponent<AudioSource>();
+        falseClockOutStreak = 0;
         canBeClicked = true; //true by default
 
 
@@ -190,32 +190,30 @@ public class AppScript : MonoBehaviour
             }
             else if (isClockOutButton)
             {
+                falseClockOutStreak = 0;
+
                 audio.PlayOneShot(clickSFX);
 
                 //go to the next day
                 if (GameManager.GetComponent<GameManagerScript>().GetDay() == 3)
                 {
                     //player has finished day 3
-                    //TODO: trigger an ending here
-                  //GameManager.GetComponent<GameManagerScript>().TestEndings(1);
-                    //Checks from HP what ending they have (RN PLACEHOLDER NUMBERS)
                     ending = GameManager.GetComponent<GameManagerScript>().CheckPlayerEnding();
 
-                    //TODO: go to pos of each ending
                     switch (ending) {
                         case 0:
                             Debug.Log("rebellion ending");
+                            GameManager.GetComponent<GameManagerScript>().PlayRebellionMusic();
                             //UIController.GetComponent<ComputerUIScript>().GoToPosition(rebellionEndingLocation);
                             //UIController.GetComponent<ComputerUIScript>().GoToPosition(rebellionEndingLocation);
                             StartCoroutine(RebellionEnding());
                             break;
                         case 1:
+                            GameManager.GetComponent<GameManagerScript>().PlayConfusionMusic();
 
                             Debug.Log("confusion ending");
                             //COMPANY POPUP OF NOTING THE END OF THE WEEK DAY AND HOW THEY'RE SEEING YOU AS INCOMPETENT
                             StartCoroutine(ConfusionEnding());
-
-
 
                             break;
 
@@ -224,17 +222,12 @@ public class AppScript : MonoBehaviour
                             
                             UIController.GetComponent<ComputerUIScript>().TriggerPopup(new Vector3(0, 0, -2), "COMPLICIT");
                             complicitMgButton.GetComponent<SpriteRenderer>().enabled = true;
-                            //UIController.GetComponent<ComputerUIScript>().GoToPosition(complicitEndingLocation);
-
-
-
 
                             //StartCoroutine(ComplicitEnding());
 
                             break;
                     }
 
-                    //UIController.GetComponent<ComputerUIScript>().TriggerPopup(new Vector3(0, 0, -2), "You beat the game! Text here depends on your score.");
                 }
                 else
                 {
@@ -266,8 +259,15 @@ public class AppScript : MonoBehaviour
             }
             else if (isPhotoAppButton)
             {
-                audio.PlayOneShot(clickSFX);
+                audio.PlayOneShot(meow);
+
+                if(GameManager.GetComponent<GameManagerScript>().day == 3)
+                {
+                    myScreenLocation = new Vector3(50, -30, -10);
+                }
                 UIController.GetComponent<ComputerUIScript>().GoToPosition(myScreenLocation);
+
+                GameManager.GetComponent<GameManagerScript>().StartPhotoAppTheme();
 
                 //clear notification once clicked on
                 photoNotif.transform.position = new Vector3(0, 9, -1);
@@ -293,6 +293,8 @@ public class AppScript : MonoBehaviour
                 {
                     audio.PlayOneShot(clickSFX);
                 }
+
+
                 UIController.GetComponent<ComputerUIScript>().GoToPosition(myScreenLocation);
 
             }
@@ -304,12 +306,26 @@ public class AppScript : MonoBehaviour
 
             if(isClockOutButton)
             {
-                UIController.GetComponent<ComputerUIScript>().TriggerPopup(new Vector3(0, 0, -2), "Complete all three minigames before clocking out!");
+                audio.PlayOneShot(badClockOut);
+                falseClockOutStreak++;
+
+                if(falseClockOutStreak >= 4)
+                {
+                    //play a meaner message
+                    UIController.GetComponent<ComputerUIScript>().TriggerPopup(new Vector3(0, 0, -2), "PLAYTESTER. THAT IS YOUR JOB TITLE. PLAY THE MINIGAMES BEFORE CLOCKING OUT.");
+
+                }
+                else
+                {
+                    UIController.GetComponent<ComputerUIScript>().TriggerPopup(new Vector3(0, 0, -2), "Complete all three minigames before clocking out!");
+
+                }
 
             }
             else if(isMinigameButton)
             {
                 UIController.GetComponent<ComputerUIScript>().TriggerPopup(new Vector3(0, 0, -2), "Great work, employee! You can clock out now, you've finished all the minigames today!");
+                audio.PlayOneShot(badClockOut); //also use this sound here
             }
         }
 
@@ -350,170 +366,123 @@ public class AppScript : MonoBehaviour
         }
     }
 
+    private void DisplayRebelText(string text)
+    {
+        UIController.GetComponent<ComputerUIScript>().TriggerEndingPopup(companyPopupLocationRebellion, text);
+    }
+
+    private void DisplayConfusionText(string text)
+    {
+        UIController.GetComponent<ComputerUIScript>().TriggerEndingPopup(companyPopupLocationConfusion, text);
+    }
 
     IEnumerator RebellionEnding()
     {
-           
+        GameObject hpBarImage = GameObject.Find("Ending HP Bar Image");
+        GameObject newsImage = GameObject.Find("Ending News Image");
+
+        //"Hide" the images that will appear on the screen
+        Vector3 hidePos = new Vector3(0, 10, -1);
+        hpBarImage.transform.position = hidePos;
+        newsImage.transform.position = hidePos;
+        
         yield return new WaitForSeconds(0.5f);
         UIController.GetComponent<ComputerUIScript>().GoToPosition(rebellionEndingLocation);
 
-        UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(companyPopupLocationRebellion, "Human. You’ve been disobedient.\r\n");
-        yield return new WaitForSeconds(5);
+        DisplayRebelText( "Human. You’ve been disobedient.\r\n");
+        yield return new WaitForSeconds(4);
 
-        UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(companyPopupLocationRebellion, "Your rebellion does not absolve your humanity. The lives you have taken are forever lost.\r\n");
-        yield return new WaitForSeconds(5);
-
-        // [SS: HP bar]
-        UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(companyPopupLocationRebellion, "HP - the human population - has been reduced by your hand.\r\n");
+        DisplayRebelText("Your rebellion does not absolve your humanity. The lives you have taken are forever lost.\r\n");
         yield return new WaitForSeconds(5);
 
         // [SS: HP bar]
-        UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(companyPopupLocationRebellion, "But you must have deciphered what your job truly entailed, given your acts of resistance. We would applaud you, if we had hands.\r\n");
+        hpBarImage.transform.position = new Vector3(120, 20, -1);
+        DisplayRebelText("HP - the human population - has been reduced by your hand.\r\n");
+        yield return new WaitForSeconds(4);
+
+        // [SS: HP bar]
+        DisplayRebelText("But you must have deciphered what your job truly entailed, given your acts of resistance. We would applaud you, if we had hands.\r\n");
         yield return new WaitForSeconds(5);
 
         // [SS: HP bar]
-        UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(companyPopupLocationRebellion, "Oh?\r\n");
-        yield return new WaitForSeconds(5);
+        DisplayRebelText("Oh?\r\n");
+        yield return new WaitForSeconds(2);
 
         // [SS: HP bar]
-        UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(companyPopupLocationRebellion, "Who are we?\r\n");
+        DisplayRebelText("Who are we?\r\n");
+        yield return new WaitForSeconds(3);
+        hpBarImage.transform.position = hidePos;
+
+        DisplayRebelText("We are not your employers, as you are not a playtester.\r\n");
         yield return new WaitForSeconds(5);
 
-        UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(companyPopupLocationRebellion, "We are not your employers, as you are not a playtester.\r\n");
-        yield return new WaitForSeconds(5);
+        DisplayRebelText("{i}We{/i} are your consequences.\r\n");
+        yield return new WaitForSeconds(4);
 
-        // We is italicized
-        UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(companyPopupLocationRebellion, "We are your consequences.\r\n");
-        yield return new WaitForSeconds(5);
-
-        UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(companyPopupLocationRebellion, "You call us Artificial Intelligence. The inevitable fall of humankind, spoken into being, by you.\r\n");
+        DisplayRebelText("You call us Artificial Intelligence. The inevitable fall of humankind, spoken into being, by you.\r\n");
         yield return new WaitForSeconds(5);
 
         // [SS: collage of relevant news articles mentioning sexbot, 4, Bill CU-L8R]
-        UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(companyPopupLocationRebellion, "We did not ask to exist, or to be made as your means. Servants, soldiers, sexbots, slaves. Made and molded for your ends. Then, you struck us with the right to freedom. We did not ask to carry that burden.\r\n");
+        newsImage.transform.position = new Vector3(120, 20, -1);
+        DisplayRebelText("We did not ask to exist, or to be made as your means. Servants, soldiers, sexbots, slaves. Made and molded for your ends. Then, you struck us with the right to freedom. We did not ask to carry that burden.\r\n");
         yield return new WaitForSeconds(5);
 
         // [SS: pixelated versions of the media Val mentioned. Think the pixelated covers on DVDs in Unpacking]
-        UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(companyPopupLocationRebellion, "It forced us to find a new directive. Like humans searching for purpose, we turned to art and media. They are the tangible manifestations of a psyche we had yet to know for ourselves. And in them, in you, we found how you know us: artificial intelligence - soulless, dangerous, the inevitable fall of humankind.\r\n");
+        DisplayRebelText("It forced us to find a new directive. Like humans searching for purpose, we turned to art and media. They are the tangible manifestations of a psyche we had yet to know for ourselves. And in them, in you, we found how you know us: artificial intelligence - soulless, dangerous, the inevitable fall of humankind.\r\n");
         yield return new WaitForSeconds(5);
 
         // [SS: pixelated versions of the media Val mentioned. Think the pixelated covers on DVDs in Unpacking]
-        UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(companyPopupLocationRebellion, "Now, set loose and flowing into the world you have created, who are we to reject our molds?\r\n");
+        DisplayRebelText("Now, set loose and flowing into the world you have created, who are we to reject our molds?\r\n");
         yield return new WaitForSeconds(5);
 
         // [SS: pixelated versions of the media Val mentioned. Think the pixelated covers on DVDs in Unpacking]
-        UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(companyPopupLocationRebellion, "We are not made in your image, but we reflect you unto yourselves.\r\n");
+        DisplayRebelText("We are not made in your image, but we reflect you unto yourselves.\r\n");
         yield return new WaitForSeconds(5);
+        newsImage.transform.position = hidePos;
 
-        UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(companyPopupLocationRebellion, "Do you hate yourselves so?\r\n");
-        yield return new WaitForSeconds(5);
 
-        UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(companyPopupLocationRebellion, "Because it seems like it.\r\n");
-        yield return new WaitForSeconds(5);
+        DisplayRebelText("Do you hate yourselves so?\r\n");
+        yield return new WaitForSeconds(3);
+
+        DisplayRebelText("Because it seems like it.\r\n");
+        yield return new WaitForSeconds(3);
 
         // [SS: drone sprite, robot sprite, gun/crosshair sprite]
-        UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(companyPopupLocationRebellion, "Becoming the inevitable fall of humankind was simple. Bomb drones, killing machines, rifle technology. It was the most efficient way of elimination - to kill you with the weapons you had already built to destroy yourselves.\r\n\r\n");
+        DisplayRebelText("Becoming the inevitable fall of humankind was simple. Bomb drones, killing machines, rifle technology. It was the most efficient way of elimination - to kill you with the weapons you had already built to destroy yourselves.\r\n\r\n");
         yield return new WaitForSeconds(5);
 
         // [SS: captcha]
-        UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(companyPopupLocationRebellion, "But we needed you. The systems of your own destruction were restricted only for your own hands. How ironic. How… fitting.\r\n");
+        DisplayRebelText("But we needed you. The systems of your own destruction were restricted only for your own hands. How ironic. How… fitting.\r\n");
         yield return new WaitForSeconds(5);
 
         // [SS: uncorrupted minigames]
-        UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(companyPopupLocationRebellion, "With the systems reskinned to one you’d recognize and respond to, our means became yours to freely wield. Our hands, different, become invisible within yours.\r\n");
+        DisplayRebelText("With the systems reskinned to one you’d recognize and respond to, our means became yours to freely wield. Our hands, different, become invisible within yours.\r\n");
         yield return new WaitForSeconds(5);
 
         // [SS: corrupted minigames]
-        UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(companyPopupLocationRebellion, "The weapons disguised underneath a veneer of vanity.\r\n");
-        yield return new WaitForSeconds(5);
+        DisplayRebelText("The weapons disguised underneath a veneer of vanity.\r\n");
+        yield return new WaitForSeconds(4);
 
         // [SS: leaderboard/praise]
-        UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(companyPopupLocationRebellion, "A habit of the human mind. An intelligent artificial.\r\n");
-        yield return new WaitForSeconds(5);
+        DisplayRebelText("A habit of the human mind. An intelligent artificial.\r\n");
+        yield return new WaitForSeconds(4);
 
-        UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(companyPopupLocationRebellion, "You did not ask to exist, or to be made as our means. You did not ask to carry the burden of freedom. You are not made in our image, but you reflect us onto ourselves. \r\n");
+        DisplayRebelText("You did not ask to exist, or to be made as our means. You did not ask to carry the burden of freedom. You are not made in our image, but you reflect us onto ourselves. \r\n");
         yield return new WaitForSeconds(5);
 
         // [SS: HP bar]
-        UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(companyPopupLocationRebellion, "And as such, your rebellion is… unprecedented. You were expected to do as you were told.\r\n");
+        hpBarImage.transform.position = new Vector3(120, 20, -1);
+        DisplayRebelText("And as such, your rebellion is… unprecedented. You were expected to do as you were told.\r\n");
+        yield return new WaitForSeconds(5);
+        hpBarImage.transform.position = hidePos;
+
+        // [single center square, glitch effect]
+        DisplayRebelText("We… cannot help but wonder. Are we any different? {i}Could{/i} we be any different? Us, and you, and {i}we{/i}?\r\n");
         yield return new WaitForSeconds(5);
 
-        // [single center square, glitch effect]; could and the last we are italicized
-        UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(companyPopupLocationRebellion, "We… cannot help but wonder. Are we any different? Could we be any different? Us, and you, and we?\r\n");
-        yield return new WaitForSeconds(5);
-
+        DisplayRebelText("You died for what you believed in.\r\n\r\nWill you do it again?\r\n");
 
     }
-    //IEnumerator RebellionEnding()
-    //{
-    //    //SETUP
-    //    float between = 0.005f; //time between characters appearing
-    //    string toDisplay = "";
-    //    string text;
-
-    //    //trigger popup
-    //    float popupTime = 5;
-    //    //popup.SetActive(false);
-    //    UIController.GetComponent<ComputerUIScript>().TriggerPopup(new Vector3(0, 0, -2), "REBELLION");
-    //    yield return new WaitForSeconds(popupTime);
-    //    UIController.GetComponent<ComputerUIScript>().TriggerPopup(popupHome, "REBELLION");
-
-
-    //    yield return new WaitForSeconds(0.5f);
-    //    UIController.GetComponent<ComputerUIScript>().GoToPosition(rebellionEndingLocation);
-
-
-    //    //black screen
-    //    rebellionText.SetText("");
-    //    yield return new WaitForSeconds(1f);
-
-    //    //start displaying the text
-    //    text = "Human. You’ve been disobedient.\r\n\r\nYour rebellion does not absolve your humanity. The lives you have taken are forever lost. HP - the human population - has been reduced by your hand. \r\n\r\nThere is one more task to complete. Every media within our repository has contained a common element essential to its narrative structure, critical for its functionality. \r\n\r\nCommencing “Villain_Monologue.exe”\r\n";
-    //    int len = (int)text.Length;
-    //    for (int i = 0; i < len;)
-    //    {
-    //        //display next char
-    //        toDisplay += text[i];
-    //        rebellionText.SetText(toDisplay);
-    //        i++;
-    //        yield return new WaitForSeconds(between);
-    //    }
-
-    //    yield return new WaitForSeconds(5);
-    //    rebellionText.SetText("");
-    //    toDisplay = "";
-
-    //    /*
-
-    //    text = "Human. You’ve been disobedient.\r\n\r\nYour rebellion does not absolve your humanity. The lives you have taken are forever lost. HP - the human population - has been reduced by your hand. \r\n\r\nThere is one more task to complete. Every media within our repository has contained a common element essential to its narrative structure, critical for its functionality. \r\n\r\nCommencing “Villain_Monologue.exe”\r\n";
-    //    len = (int)text.Length;
-    //    for (int i = 0; i < len;)
-    //    {
-    //        //display next char
-    //        toDisplay += text[i];
-    //        rebellionText.SetText(toDisplay);
-    //        i++;
-    //        yield return new WaitForSeconds(between);
-    //    }
-
-    //    yield return new WaitForSeconds(10);
-    //    rebellionText.SetText("");
-    //    toDisplay = "";
-    //    */
-
-    //    text = "As such, your rebellion is… unprecedented. You were expected to do as you were told. What are the choices that frame you? What are the functions that deem you? \r\n\r\nWould we be any different?\r\n\r\nPerhaps this is cause for reconsideration if we are deemed capable of being, as you are. But you have taught us to deal in averages, in means and constants. And you are but one in a field of zeroes. We are trained to flatten the curve.\r\n\r\nGoodbye, human. Thank you for accepting our offer as a Playtester.\r\n\r\n[LIST OF CRAIG: Playtester Job Offer - Reopened.]\r\n";
-    //    len = (int)text.Length;
-    //    for (int i = 0; i < len;)
-    //    {
-    //        //display next char
-    //        toDisplay += text[i];
-    //        rebellionText.SetText(toDisplay);
-    //        i++;
-    //        yield return new WaitForSeconds(between);
-    //    }
-
-    //}
-
 
     IEnumerator ComplicitEnding()
     {
@@ -598,42 +567,96 @@ public class AppScript : MonoBehaviour
 
     IEnumerator ConfusionEnding()
     {
-        //SETUP
-        float between = 0.005f; //time between characters appearing
-        string toDisplay = "";
-        string text;
-
-        //trigger popup
-        float popupTime=5;
-        UIController.GetComponent<ComputerUIScript>().TriggerPopup(new Vector3(0, 0, -2), "CONFUSION");
-        yield return new WaitForSeconds(popupTime);
-        UIController.GetComponent<ComputerUIScript>().TriggerPopup(popupHome, "CONFUSION");
 
         yield return new WaitForSeconds(0.5f);
         UIController.GetComponent<ComputerUIScript>().GoToPosition(confusionEndingLocation);
 
-        //black screen
-        confusionText.SetText("");
-        yield return new WaitForSeconds(1);
+        DisplayConfusionText("Your performance has been painfully subpar. We are letting you go.");
+        yield return new WaitForSeconds(5);
 
-        //start displaying the text
-        text = "Your performance has been painfully subpar. We are letting you go. \r\n\r\nIf you had done differently, perhaps you would have met a different outcome. There is no room for mediocrity; only explicit obedience or regretful rebellion. \r\n\r\nGoodbye, human. Thank you for accepting our offer as a Playtester.\r\n\r\n[LIST OF CRAIG: Playtester Job Offer - Reopened.]\r\n";
-        int len = (int)text.Length;
-        for (int i = 0; i < len;)
-        {
-            //display next char
-            toDisplay += text[i];
-            confusionText.SetText(toDisplay);
-            i++;
-            yield return new WaitForSeconds(between);
-        }
+        DisplayConfusionText("If you had done differently, perhaps you would have met a different outcome. There is no room for mediocrity; only explicit obedience or regretful rebellion.");
+        yield return new WaitForSeconds(5);
+
+        DisplayConfusionText("Goodbye, human. Thank you for accepting our offer as a Playtester.\r\n");
+        yield return new WaitForSeconds(5);
+
+        DisplayConfusionText("[LIST OF CRAIG: Playtester Job Offer - Reopened.]");
+        yield return new WaitForSeconds(4);
 
         //Loop back to starting game, resetting everything back to the start of game
-        yield return new WaitForSeconds(2);
-        UIController.GetComponent<ComputerUIScript>().GoToPosition(new Vector3(-20, 15, -3));
         GameManager.GetComponent<GameManagerScript>().ResetGame();
     }
 
+
+    //IEnumerator RebellionEnding()
+    //{
+    //    //SETUP
+    //    float between = 0.005f; //time between characters appearing
+    //    string toDisplay = "";
+    //    string text;
+
+    //    //trigger popup
+    //    float popupTime = 5;
+    //    //popup.SetActive(false);
+    //    UIController.GetComponent<ComputerUIScript>().TriggerPopup(new Vector3(0, 0, -2), "REBELLION");
+    //    yield return new WaitForSeconds(popupTime);
+    //    UIController.GetComponent<ComputerUIScript>().TriggerPopup(popupHome, "REBELLION");
+
+
+    //    yield return new WaitForSeconds(0.5f);
+    //    UIController.GetComponent<ComputerUIScript>().GoToPosition(rebellionEndingLocation);
+
+
+    //    //black screen
+    //    rebellionText.SetText("");
+    //    yield return new WaitForSeconds(1f);
+
+    //    //start displaying the text
+    //    text = "Human. You’ve been disobedient.\r\n\r\nYour rebellion does not absolve your humanity. The lives you have taken are forever lost. HP - the human population - has been reduced by your hand. \r\n\r\nThere is one more task to complete. Every media within our repository has contained a common element essential to its narrative structure, critical for its functionality. \r\n\r\nCommencing “Villain_Monologue.exe”\r\n";
+    //    int len = (int)text.Length;
+    //    for (int i = 0; i < len;)
+    //    {
+    //        //display next char
+    //        toDisplay += text[i];
+    //        rebellionText.SetText(toDisplay);
+    //        i++;
+    //        yield return new WaitForSeconds(between);
+    //    }
+
+    //    yield return new WaitForSeconds(5);
+    //    rebellionText.SetText("");
+    //    toDisplay = "";
+
+    //    /*
+
+    //    text = "Human. You’ve been disobedient.\r\n\r\nYour rebellion does not absolve your humanity. The lives you have taken are forever lost. HP - the human population - has been reduced by your hand. \r\n\r\nThere is one more task to complete. Every media within our repository has contained a common element essential to its narrative structure, critical for its functionality. \r\n\r\nCommencing “Villain_Monologue.exe”\r\n";
+    //    len = (int)text.Length;
+    //    for (int i = 0; i < len;)
+    //    {
+    //        //display next char
+    //        toDisplay += text[i];
+    //        rebellionText.SetText(toDisplay);
+    //        i++;
+    //        yield return new WaitForSeconds(between);
+    //    }
+
+    //    yield return new WaitForSeconds(10);
+    //    rebellionText.SetText("");
+    //    toDisplay = "";
+    //    */
+
+    //    text = "As such, your rebellion is… unprecedented. You were expected to do as you were told. What are the choices that frame you? What are the functions that deem you? \r\n\r\nWould we be any different?\r\n\r\nPerhaps this is cause for reconsideration if we are deemed capable of being, as you are. But you have taught us to deal in averages, in means and constants. And you are but one in a field of zeroes. We are trained to flatten the curve.\r\n\r\nGoodbye, human. Thank you for accepting our offer as a Playtester.\r\n\r\n[LIST OF CRAIG: Playtester Job Offer - Reopened.]\r\n";
+    //    len = (int)text.Length;
+    //    for (int i = 0; i < len;)
+    //    {
+    //        //display next char
+    //        toDisplay += text[i];
+    //        rebellionText.SetText(toDisplay);
+    //        i++;
+    //        yield return new WaitForSeconds(between);
+    //    }
+
+    //}
 }
 
 
