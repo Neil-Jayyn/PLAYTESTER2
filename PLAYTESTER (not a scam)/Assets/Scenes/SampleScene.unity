@@ -10436,7 +10436,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc40184528b778c48a66479db104e644, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameDuration: 1
+  gameDuration: 10
   scoreText: {fileID: 320443653}
   scorePoints: 0
   timerText: {fileID: 1894740861}
@@ -10458,8 +10458,17 @@ MonoBehaviour:
     type: 3}
   ovenGlitched: {fileID: 21300000, guid: ad14be5f0fe51ea47bf7dd1a83bdfc68, type: 3}
   sfx: {fileID: 0}
-  sfxNormalYay: {fileID: 8300000, guid: afde4557cb2f3a34299d901d08902578, type: 3}
-  sfxGlitchedYay: {fileID: 8300000, guid: c5a4d81cf1fa001418cb682554e31e9b, type: 3}
+  sfxNormalYay: {fileID: 8300000, guid: 4d7628ea9246bff42995d06ecfd98f44, type: 3}
+  sfxGlitchedHit:
+  - {fileID: 8300000, guid: 7e8e024de71f05a4188142553a0a4305, type: 3}
+  - {fileID: 8300000, guid: bcb2949feb4f34b499f079b5915489fb, type: 3}
+  - {fileID: 8300000, guid: 062ee51198bdf8e40812a14bf7c25a32, type: 3}
+  - {fileID: 8300000, guid: 4d39a7314659d9d4fb3d3def37b395af, type: 3}
+  - {fileID: 8300000, guid: 485cb63bb355bb44bb51233dccadc38e, type: 3}
+  sfxSpeedyHit:
+  - {fileID: 8300000, guid: 6e24511af1f95ec49be6912904de49f5, type: 3}
+  - {fileID: 8300000, guid: b5999c1c478987347a645e868cbc26da, type: 3}
+  - {fileID: 8300000, guid: 0691d4c0a0a8f5841906a11768ff4450, type: 3}
   popup: {fileID: 0}
   cupcakeScript: {fileID: 0}
   LeaderboardText: {fileID: 1641972010}
@@ -10484,7 +10493,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 996181059}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
@@ -12403,7 +12412,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -24829,6 +24838,7 @@ GameObject:
   - component: {fileID: 2033651216}
   - component: {fileID: 2033651217}
   - component: {fileID: 2033651218}
+  - component: {fileID: 2033651219}
   m_Layer: 0
   m_Name: cupcakeHolder
   m_TagString: Untagged
@@ -24853,6 +24863,16 @@ MonoBehaviour:
   speed: 6.3
   reloadRate: 1
   playCupcakeMinigame: 0
+  sfxDrops:
+  - {fileID: 8300000, guid: 44f607f51d7e19446afb881b51e08e55, type: 3}
+  - {fileID: 8300000, guid: c8c50489dc083574d90a5a8b392c7146, type: 3}
+  sfxOven: {fileID: 2033651219}
+  sfxDrone:
+  - {fileID: 8300000, guid: 41e2a83bed4e56c47ad5c21653a567f5, type: 3}
+  - {fileID: 8300000, guid: ef4a74256a792a24e99b2519a2422b9a, type: 3}
+  sfxOvenTick:
+  - {fileID: 8300000, guid: 3a4863a956e6ef5449c5e4c3fe4432a2, type: 3}
+  - {fileID: 8300000, guid: 5352fd14b5b0e4649b92144b538584ea, type: 3}
   anim: {fileID: 2033651218}
   isReloading: 0
   isReady: 0
@@ -25086,6 +25106,102 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!82 &2033651219
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2033651211}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &2035654857
 GameObject:
   m_ObjectHideFlags: 0

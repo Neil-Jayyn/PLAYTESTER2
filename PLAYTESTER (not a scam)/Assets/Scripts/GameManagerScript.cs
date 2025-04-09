@@ -350,6 +350,7 @@ public class GameManagerScript : MonoBehaviour
             MusicPlayer.clip = cupcakeTrack;
             GlitchMusicPlayer.clip = glitchedCupcakeTrack;
             GlitchMusicPlayer.mute = true;
+            
            
         }
         else if (minigamesPlayed == 1)
@@ -928,6 +929,10 @@ public class GameManagerScript : MonoBehaviour
         minigamesPlayed = 3;
     }
 
+    public void TestDay(int testDay) {
+        day = testDay;
+        minigamesPlayed = 0;
+    }
     
 
     public void ResetGame() {
