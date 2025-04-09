@@ -53,10 +53,18 @@ public class CupcakeGameManager : MonoBehaviour
     public AudioClip[] sfxGlitchedHit;
     public AudioClip[] sfxSpeedyHit;
 
+    //sfx oven ticks
+    public Animator anim;
+    public AudioSource ovenAudioSource;
+    public AudioClip[] sfxOvenTicks;
+    private bool sfxIsDing = false;
+    private bool sfxIsOvertime = false;
 
-    //public AudioSource track;
-    //public AudioClip trackNormal;
-    //public AudioClip trackGlitched;
+    //sfx drone moving
+    public AudioSource droneAudioSource;
+    public AudioClip[] sfxDrone;
+    private bool isDroneMoving = false;
+    private bool isDroneStationary = true;
 
     //tutorial freeze
     public GameObject popup;
@@ -93,8 +101,12 @@ public class CupcakeGameManager : MonoBehaviour
         spawner1 = GameObject.Find("EnemySpawner").GetComponent<EnemySpawner>();
         spawner2 = GameObject.Find("EnemySpawner (1)").GetComponent<EnemySpawner>();
 
-        //glitch prep
-       
+        //sfx oven ticks
+        ovenAudioSource.mute = true;
+        droneAudioSource.mute = true;
+        ovenAudioSource.loop = true;
+        droneAudioSource.loop = true;
+
     }
 
     //This is the function that will be called by the AppScript script. It should contain
@@ -109,6 +121,7 @@ public class CupcakeGameManager : MonoBehaviour
         scorePoints = 0;
         UpdateScoreText();
 
+        //show timer text
         timerText.text = "Time Left: " + gameDuration.ToString();
         
         //set the timer for the game
@@ -120,7 +133,7 @@ public class CupcakeGameManager : MonoBehaviour
         if (timesPlayed == 1)
         {
             tutorialPlaying = true;
-            glitchFrequency = 0f;  //CHANGE TO 0 LATER
+            glitchFrequency = 0.5f;  //CHANGE TO 0 LATER
             UIController.TriggerPopup(new Vector3(50, 50, -9.1f), "Use the left and right arrow keys to move and spacebar to drop.\r\nGive cupcakes to everyone!\r\n");
             freezeOverlay.SetActive(true);
  
@@ -142,10 +155,7 @@ public class CupcakeGameManager : MonoBehaviour
             glitchLength = 3.0f;
 
         }
-
-        // Start glitch checking
-
-       
+      
     }
 
     // Update is called once per frame
@@ -157,7 +167,7 @@ public class CupcakeGameManager : MonoBehaviour
             CheckIfTutorialClosed();
             if (!tutorialPlaying) //tutorial left screen or no tutorial
             {
-                //InitializeCupcakeGame();
+                //change timer tiext
                 freezeOverlay.SetActive(false);
                 timeRemaining -= Time.deltaTime;
                 timerText.text = "Time Left: " + Mathf.RoundToInt(timeRemaining);
@@ -173,6 +183,7 @@ public class CupcakeGameManager : MonoBehaviour
     }
 
     void InitializeCupcakeGame() {
+        //start all the game objects and glitch check routine
         GameObject.Find("EnemySpawner").GetComponent<EnemySpawner>().playCupcakeMinigame = true;
         GameObject.Find("EnemySpawner (1)").GetComponent<EnemySpawner>().playCupcakeMinigame = true;
         GameObject.Find("cupcakeHolder").GetComponent<playerMovement>().playCupcakeMinigame = true;
@@ -182,12 +193,15 @@ public class CupcakeGameManager : MonoBehaviour
             StartCoroutine(GlitchCheckRoutine());
         }
         else {
-            GlitchesDayThree();
+            GlitchesDayThree(); //glitches on day three are constant
         }
-        //GlitchesDayThree();
-        
+        ovenAudioSource.mute = false;
+        droneAudioSource.mute = false;
 
-        
+        //GlitchesDayThree();
+
+
+
     }
 
     void CheckIfTutorialClosed()
@@ -235,6 +249,9 @@ public class CupcakeGameManager : MonoBehaviour
         SpriteRenderer spriteRendererBg = bg.GetComponent<SpriteRenderer>(); // initialize to change background
         spriteRendererBg.sprite = bgGlitched;
 
+        droneAudioSource.mute = false;
+        ovenAudioSource.mute = true;
+
         yield return new WaitForSeconds(glitchLength); // Glitch lasts 1 second
 
         //track.clip = trackGlitched;
@@ -247,6 +264,8 @@ public class CupcakeGameManager : MonoBehaviour
             GlitchEffect.intensity = 0;
             AnalogGlitchEffect.colorDrift = 0;
             spriteRendererBg.sprite = bgNormal;
+            droneAudioSource.mute = true;
+            ovenAudioSource.mute = false;
             //track.clip = trackNormal;
         } 
     }
@@ -257,6 +276,10 @@ public class CupcakeGameManager : MonoBehaviour
         //bg
         SpriteRenderer spriteRendererBg = bg.GetComponent<SpriteRenderer>(); // initialize to change background
         spriteRendererBg.sprite = bgGlitched;
+
+        //drone sfx
+        droneAudioSource.mute = false;
+        ovenAudioSource.mute = true;
 
         //kino effects
         GlitchEffect.intensity = Random.Range(0f, 0.3f); // can adjust
@@ -276,7 +299,7 @@ public class CupcakeGameManager : MonoBehaviour
         GameObject.Find("EnemySpawner").GetComponent<EnemySpawner>().playCupcakeMinigame = false;
         GameObject.Find("EnemySpawner (1)").GetComponent<EnemySpawner>().playCupcakeMinigame = false;
 
-        //TODO: calculate score to send to the hp based on the points earned in the round
+        //calculate score to send to the hp based on the points earned in the round
 
         int score = ScoreCalculation(scorePoints);
         LeaderboardText.SetText(scorePoints + " Points!");
@@ -289,6 +312,9 @@ public class CupcakeGameManager : MonoBehaviour
         GameObject.Find("cupcakeHolder").GetComponent<playerMovement>().playCupcakeMinigame = false;
         GameObject.Find("cupcakeHolder").GetComponent<Animator>().enabled = false;
 
+        //disable audio source
+        ovenAudioSource.mute = true;
+        droneAudioSource.mute = true;
 
         //TODO: add a wait a second before go to the leaderboard screen.
         GameObject.Find("UI Controller").GetComponent<ComputerUIScript>().GoToPosition(new Vector3(90, 50, -10)); //go to the leaderboard
@@ -303,7 +329,70 @@ public class CupcakeGameManager : MonoBehaviour
         scorePoints+=points;
         UpdateScoreText();
     }
-   
+
+    public void SfxOvenTick()
+    {
+        if (!gameOver && !isGlitch)
+        {
+            if (anim.GetBool("isReady") && !sfxIsDing)
+            {
+                //ding!
+                ovenAudioSource.clip = sfxOvenTicks[0];
+                ovenAudioSource.Play();
+                sfxIsDing = true;
+                sfxIsOvertime = false;
+            }
+            else if (anim.GetBool("isReloading") && sfxIsDing)
+            {
+                //tick tick to fill
+                ovenAudioSource.clip = sfxOvenTicks[1];
+                ovenAudioSource.Play();
+                sfxIsDing = false;
+                sfxIsOvertime = false;
+            }
+            else if (!anim.GetBool("isReloading") && !anim.GetBool("isReady") && !sfxIsOvertime)
+            {
+                // tick tick for overtime
+                ovenAudioSource.clip = sfxOvenTicks[1];
+                ovenAudioSource.Play();
+                sfxIsOvertime = true;
+
+            }
+        }
+    }
+
+    public void SfxDroneMoving()
+    {
+        if (!gameOver)
+        {
+            if (isGlitch == true)
+            {
+                if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) && !isDroneMoving)
+                {
+                    //if oven moves
+                    droneAudioSource.clip = sfxDrone[0];
+                    droneAudioSource.Play();
+                    isDroneMoving = true;
+                    isDroneStationary = false;
+
+                }
+                else if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) && isDroneMoving)
+                {
+                    //if moving but playing the sound 
+                }
+                else if(!isDroneStationary)
+                { 
+                    //if oven is stationary
+                    droneAudioSource.clip = sfxDrone[1];
+                    droneAudioSource.Play();
+                    isDroneMoving = false;
+                    isDroneStationary = true;
+                }
+
+            }
+        }
+    }
+
     public void SfxCupcakeHit(bool isGlitch) {
         if (isGlitch) //plays sfx depending if glitches are happening or not
         {

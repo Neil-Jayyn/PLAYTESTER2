@@ -199,6 +199,7 @@ public class AppScript : MonoBehaviour
                 {
                     //player has finished day 3
                     ending = GameManager.GetComponent<GameManagerScript>().CheckPlayerEnding();
+                    //GameManager.GetComponent<GameManagerScript>().TestEndings(1)
 
                     switch (ending) {
                         case 0:
