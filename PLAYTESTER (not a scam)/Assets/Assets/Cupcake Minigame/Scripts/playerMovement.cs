@@ -20,10 +20,6 @@ public class playerMovement : MonoBehaviour
     AudioSource sfxDrop;
     public AudioClip[] sfxDrops;
 
-    public AudioSource sfxOven;
-    public AudioClip[] sfxDrone;
-    public AudioClip[] sfxOvenTick;
-
 
     public Animator anim;
     public bool isReloading=true;
@@ -73,9 +69,11 @@ public class playerMovement : MonoBehaviour
             SfxDropping(gameManager.isGlitch);
 
             //Drone sfx if it is glitched
+            gameManager.SfxDroneMoving();
             //SfxDroneMoving(gameManager.isGlitch);
 
             //Oven
+            gameManager.SfxOvenTick();
             //SfxOvenTick();
                        
                 //reload time
@@ -87,7 +85,7 @@ public class playerMovement : MonoBehaviour
                     isReady = true;
                     if (isReady == true && readyTime >= 0.0F) //ding 
                     {
-                    sfxDrop.clip = sfxOvenTick[0];
+                   
                     sfxDrop.Play();
                         //have isReady state true
                         readyTime -= Time.deltaTime;
@@ -191,57 +189,6 @@ public class playerMovement : MonoBehaviour
         }
     }
 
-    private void SfxDroneMoving(bool isGlitch) {
-        if (isGlitch==true)
-        {
-            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-            {
-                //if oven moves
-                sfxOven.clip = sfxDrone[0];
-                sfxOven.Play();
-
-            }
-            else
-            {
-                //if oven is stationary
-                sfxOven.clip = sfxDrone[1];
-                sfxOven.Play();
-            }
-
-
-            
-        }
-    }
-
-    private void SfxOvenTick() {
-        if (anim.GetBool("isReady"))
-        {
-            sfxOven.clip = sfxOvenTick[0];
-        }
-        else if (anim.GetBool("isReloading"))
-        {
-            sfxOven.clip = sfxOvenTick[1];
-        }
-        if (sfxOven != null)
-         {
-            sfxOven.Play();
-        }
-    }
-
-    private void SoundCheck(bool isGlitch)
-    {
-        
-
-            if (anim.GetBool("isReady"))
-            {
-                //ding ding sound if ready
-            }
-            else if (anim.GetBool("isReloading"))
-            {
-                //if oven is reloading
-            }
-        
-    }
 
     public void UpdateReloadRate(float multiplier) { 
         reloadRate= reloadRate * multiplier;
