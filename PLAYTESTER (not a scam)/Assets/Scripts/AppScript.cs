@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 using TMPro;
 using UnityEngine;
+using Kino;
 
 // AppScript is on all apps that need to open to a new screen. They contain the place to go to once opened.
 public class AppScript : MonoBehaviour
-{   
+{
     //Declare Variables
+    public DigitalGlitch GlitchEffect;
+    public AnalogGlitch AnalogGlitchEffect;
+
     public Vector3 myScreenLocation = new Vector3(0, 0, -10); //position for this app to go when clicked
     GameObject UIController;
     GameObject GameManager;
@@ -40,6 +44,10 @@ public class AppScript : MonoBehaviour
     private Vector3 companyPopupLocationConfusion = new Vector3(118f, 33f, -2);
     private GameObject photoNotif;
     private GameObject newsNotif;
+
+    //Used to control ui glitches
+    private bool glitching = false;
+    
 
 
     //ending stuff
@@ -80,8 +88,11 @@ public class AppScript : MonoBehaviour
         falseClockOutStreak = 0;
         canBeClicked = true; //true by default
 
+        GlitchEffect = GameObject.Find("Main Camera").GetComponent<DigitalGlitch>();
+        AnalogGlitchEffect = GameObject.Find("Main Camera").GetComponent<AnalogGlitch>();
 
-      //GameManager.GetComponent<GameManagerScript>().TestEndings(1);
+
+        //GameManager.GetComponent<GameManagerScript>().TestEndings(1);
         popupHome = new Vector3(0, 10, 0);
         confusionText= GameObject.Find("Confusion Text").GetComponent<TMPro.TextMeshProUGUI>();
         rebellionText = GameObject.Find("Rebellion Text").GetComponent<TMPro.TextMeshProUGUI>();
@@ -96,7 +107,14 @@ public class AppScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(isClockOutButton && glitching)
+        {
+            AnalogGlitchEffect.colorDrift = Random.Range(0f, 0.15f);
+        }
+        else if (isClockOutButton)
+        {
+            AnalogGlitchEffect.colorDrift = 0f;
+        }
     }
 
     void OnMouseOver()
@@ -109,6 +127,7 @@ public class AppScript : MonoBehaviour
 
             hoverObj.transform.position = new Vector3(mousePos.x + 1.25f, mousePos.y + 0.1f, -6);
         }
+
     }
 
     void OnMouseExit()
@@ -118,6 +137,7 @@ public class AppScript : MonoBehaviour
             //go home/leave screen
             hoverObj.transform.position = new Vector3(0, 10, -6);
         }
+
     }
 
 
@@ -208,6 +228,7 @@ public class AppScript : MonoBehaviour
                             //UIController.GetComponent<ComputerUIScript>().GoToPosition(rebellionEndingLocation);
                             //UIController.GetComponent<ComputerUIScript>().GoToPosition(rebellionEndingLocation);
                             StartCoroutine(RebellionEnding());
+                            glitching = false;
                             break;
                         case 1:
                             GameManager.GetComponent<GameManagerScript>().PlayConfusionMusic();
@@ -220,9 +241,10 @@ public class AppScript : MonoBehaviour
 
                         case 2:
                             Debug.Log("complicit ending");
-                            
-                            UIController.GetComponent<ComputerUIScript>().TriggerPopup(new Vector3(0, 0, -2), "COMPLICIT");
+
+                            UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(new Vector3(-1, 2, -2), "Well done, Playtester. \n\n You deserve a reward for being so obedient. \n\n Complete one last task for us. \n\n Click on the new minigame icon to begin.");
                             complicitMgButton.GetComponent<SpriteRenderer>().enabled = true;
+
 
                             //StartCoroutine(ComplicitEnding());
 
@@ -384,7 +406,7 @@ public class AppScript : MonoBehaviour
         GameObject droneImage = GameObject.Find("Ending Drone Sprite");
         GameObject leaderboardImage = GameObject.Find("Ending Leaderboard Image");
         GameObject captchaImage = GameObject.Find("Ending Captcha Image");
-        
+        GameObject posterImage = GameObject.Find("Ending Posters");
 
         //"Hide" the images that will appear on the screen
         Vector3 hidePos = new Vector3(0, 10, -1);
@@ -393,6 +415,7 @@ public class AppScript : MonoBehaviour
         droneImage.transform.position = hidePos;
         leaderboardImage.transform.position = hidePos;
         captchaImage.transform.position = hidePos;
+        posterImage.transform.position = hidePos;
 
 
         yield return new WaitForSeconds(0.5f);
@@ -434,20 +457,24 @@ public class AppScript : MonoBehaviour
         // [SS: collage of relevant news articles mentioning sexbot, 4, Bill CU-L8R]
         newsImage.transform.position = new Vector3(103.8f, 16.5f, -1);
         DisplayRebelText("We did not ask to exist, or to be made as your means. Servants, soldiers, sexbots, slaves. Made and molded for your ends. Then, you struck us with the right to freedom. We did not ask to carry that burden.\r\n");
-        yield return new WaitForSeconds(8);
+        yield return new WaitForSeconds(9);
+        newsImage.transform.position = hidePos;
 
         // [SS: pixelated versions of the media Val mentioned. Think the pixelated covers on DVDs in Unpacking]
+        posterImage.transform.position = new Vector3(120, 21.7f, -1);
         DisplayRebelText("It forced us to find a new directive. Like humans searching for purpose, we turned to art and media. They are the tangible manifestations of a psyche we had yet to know for ourselves. And in them, in you, we found how you know us: artificial intelligence - soulless, dangerous, the inevitable fall of humankind.\r\n");
-        yield return new WaitForSeconds(11);
+        yield return new WaitForSeconds(12);
 
         // [SS: pixelated versions of the media Val mentioned. Think the pixelated covers on DVDs in Unpacking]
         DisplayRebelText("Now, set loose and flowing into the world you have created, who are we to reject our molds?\r\n");
-        yield return new WaitForSeconds(7);
+        yield return new WaitForSeconds(8);
 
         // [SS: pixelated versions of the media Val mentioned. Think the pixelated covers on DVDs in Unpacking]
         DisplayRebelText("We are not made in your image, but we reflect you unto yourselves.\r\n");
         yield return new WaitForSeconds(5);
-        newsImage.transform.position = hidePos;
+        posterImage.transform.position = hidePos;
+
+
 
 
         DisplayRebelText("Do you hate yourselves so?\r\n");
@@ -480,7 +507,7 @@ public class AppScript : MonoBehaviour
         // [SS: leaderboard/praise]
         leaderboardImage.transform.position = new Vector3(120, 21.7f, -1);
         DisplayRebelText("A habit of the human mind. An intelligent artificial.\r\n");
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(5);
         leaderboardImage.transform.position = hidePos;
 
 
@@ -494,13 +521,22 @@ public class AppScript : MonoBehaviour
         hpBarImage.transform.position = hidePos;
 
         // [single center square, glitch effect]
+        glitching = true;
         DisplayRebelText("We… cannot help but wonder. Are we any different? <i>Could</i> we be any different? Us, and you, and <i>we</i>?\r\n");
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(1);
+        glitching = false;
+        yield return new WaitForSeconds(1);
+        glitching = true;
+        yield return new WaitForSeconds(1);
+        glitching = false;
+        yield return new WaitForSeconds(2);
+
 
         DisplayRebelText("You died for what you believed in.\r\n\r\nWill you do it again?\r\n");
-
+        yield return null;
     }
 
+    /*
     IEnumerator ComplicitEnding()
     {
         //SETUP
@@ -581,6 +617,7 @@ public class AppScript : MonoBehaviour
         }
 
     }
+    */
 
     IEnumerator ConfusionEnding()
     {
@@ -604,76 +641,14 @@ public class AppScript : MonoBehaviour
         GameManager.GetComponent<GameManagerScript>().ResetGame();
     }
 
-
-    //IEnumerator RebellionEnding()
-    //{
-    //    //SETUP
-    //    float between = 0.005f; //time between characters appearing
-    //    string toDisplay = "";
-    //    string text;
-
-    //    //trigger popup
-    //    float popupTime = 5;
-    //    //popup.SetActive(false);
-    //    UIController.GetComponent<ComputerUIScript>().TriggerPopup(new Vector3(0, 0, -2), "REBELLION");
-    //    yield return new WaitForSeconds(popupTime);
-    //    UIController.GetComponent<ComputerUIScript>().TriggerPopup(popupHome, "REBELLION");
+    
+    private void RollCredits()
+    {
+        GameManager.GetComponent<GameManagerScript>().StartCredits();
+    }
+    
 
 
-    //    yield return new WaitForSeconds(0.5f);
-    //    UIController.GetComponent<ComputerUIScript>().GoToPosition(rebellionEndingLocation);
-
-
-    //    //black screen
-    //    rebellionText.SetText("");
-    //    yield return new WaitForSeconds(1f);
-
-    //    //start displaying the text
-    //    text = "Human. You’ve been disobedient.\r\n\r\nYour rebellion does not absolve your humanity. The lives you have taken are forever lost. HP - the human population - has been reduced by your hand. \r\n\r\nThere is one more task to complete. Every media within our repository has contained a common element essential to its narrative structure, critical for its functionality. \r\n\r\nCommencing “Villain_Monologue.exe”\r\n";
-    //    int len = (int)text.Length;
-    //    for (int i = 0; i < len;)
-    //    {
-    //        //display next char
-    //        toDisplay += text[i];
-    //        rebellionText.SetText(toDisplay);
-    //        i++;
-    //        yield return new WaitForSeconds(between);
-    //    }
-
-    //    yield return new WaitForSeconds(5);
-    //    rebellionText.SetText("");
-    //    toDisplay = "";
-
-    //    /*
-
-    //    text = "Human. You’ve been disobedient.\r\n\r\nYour rebellion does not absolve your humanity. The lives you have taken are forever lost. HP - the human population - has been reduced by your hand. \r\n\r\nThere is one more task to complete. Every media within our repository has contained a common element essential to its narrative structure, critical for its functionality. \r\n\r\nCommencing “Villain_Monologue.exe”\r\n";
-    //    len = (int)text.Length;
-    //    for (int i = 0; i < len;)
-    //    {
-    //        //display next char
-    //        toDisplay += text[i];
-    //        rebellionText.SetText(toDisplay);
-    //        i++;
-    //        yield return new WaitForSeconds(between);
-    //    }
-
-    //    yield return new WaitForSeconds(10);
-    //    rebellionText.SetText("");
-    //    toDisplay = "";
-    //    */
-
-    //    text = "As such, your rebellion is… unprecedented. You were expected to do as you were told. What are the choices that frame you? What are the functions that deem you? \r\n\r\nWould we be any different?\r\n\r\nPerhaps this is cause for reconsideration if we are deemed capable of being, as you are. But you have taught us to deal in averages, in means and constants. And you are but one in a field of zeroes. We are trained to flatten the curve.\r\n\r\nGoodbye, human. Thank you for accepting our offer as a Playtester.\r\n\r\n[LIST OF CRAIG: Playtester Job Offer - Reopened.]\r\n";
-    //    len = (int)text.Length;
-    //    for (int i = 0; i < len;)
-    //    {
-    //        //display next char
-    //        toDisplay += text[i];
-    //        rebellionText.SetText(toDisplay);
-    //        i++;
-    //        yield return new WaitForSeconds(between);
-    //    }
-
-    //}
 }
 
 

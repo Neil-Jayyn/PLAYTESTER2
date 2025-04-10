@@ -36,6 +36,7 @@ public class GameManagerScript : MonoBehaviour
     public AudioClip newsTrack;
     public AudioClip scaryNewsTrack;
     public AudioClip photoTrack;
+    public AudioClip creditsTrack;
     public AudioClip complicitTrack;
     public AudioClip confusionTrack;
     public AudioClip rebellionTrack;
@@ -84,6 +85,12 @@ public class GameManagerScript : MonoBehaviour
     private TMPro.TextMeshProUGUI CleeArticleTitle; //set to the same thing as CleeTitle
     private TMPro.TextMeshProUGUI CleeDate;
 
+    //Credits vars
+    [TextArea(30, 100)]
+    public string creditsText;
+    private TMPro.TextMeshProUGUI CreditText;
+    private Vector3 creditsLocation = new Vector3(120, 0, -10);
+
     // Reference to coin runner minigame manager
     public MinigameManager coinMinigameManager;
 
@@ -122,6 +129,7 @@ public class GameManagerScript : MonoBehaviour
         newsNotif = GameObject.Find("News App Notif");
         gameNotif = GameObject.Find("Game App Notif");
         biosText = GameObject.Find("EMP Text").GetComponent<TMPro.TextMeshProUGUI>();
+        CreditText = GameObject.Find("Credits Text").GetComponent<TMPro.TextMeshProUGUI>();
 
         //Hide the checkmarks
         HideCheckmarks();
@@ -308,7 +316,8 @@ public class GameManagerScript : MonoBehaviour
     // Advances the minigame counter and changes the HP bar
     public void CompletedMinigame(int scoreChange)
     {
-        
+        StartCredits();
+
         minigamesPlayed += 1;
 
         HP += scoreChange;
@@ -516,7 +525,7 @@ public class GameManagerScript : MonoBehaviour
             {
                 if (cupcakeScores[i] >= score)
                 {
-                    stringToPush += cupcakeNames[i] + " " + cupcakeScores[i] + "\n";
+                    stringToPush += "<color=#DEDEDE>" + cupcakeNames[i] + " " + cupcakeScores[i] + "</color>\n";
                     i++;
                 }
                 else
@@ -526,7 +535,7 @@ public class GameManagerScript : MonoBehaviour
                     stringToPush += "<b>Playtester " + score + "</b>\n";
                     while(i < 4)
                     {
-                        stringToPush += cupcakeNames[i] + " " + cupcakeScores[i] + "\n";
+                        stringToPush += "<color=#DEDEDE>" + cupcakeNames[i] + " " + cupcakeScores[i] + "</color>\n";
                         i++;
                     }
                 }
@@ -551,7 +560,7 @@ public class GameManagerScript : MonoBehaviour
             {
                 if (coinScores[i] >= score)
                 {
-                    stringToPush += coinNames[i] + " " + coinScores[i] + "\n";
+                    stringToPush += "<color=#DEDEDE>" + coinNames[i] + " " + coinScores[i] + "</color>\n";
                     i++;
                 }
                 else
@@ -561,7 +570,7 @@ public class GameManagerScript : MonoBehaviour
                     stringToPush += "<b>Playtester " + score + "</b>\n";
                     while (i < 4)
                     {
-                        stringToPush += coinNames[i] + " " + coinScores[i] + "\n";
+                        stringToPush += "<color=#DEDEDE>" + coinNames[i] + " " + coinScores[i] + "</color>\n";
                         i++;
                     }
                 }
@@ -585,7 +594,7 @@ public class GameManagerScript : MonoBehaviour
             {
                 if (duckScores[i] >= score)
                 {
-                    stringToPush += duckNames[i] + " " + duckScores[i] + "\n";
+                    stringToPush += "<color=#DEDEDE>" + duckNames[i] + " " + duckScores[i] + "</color>\n";
                     i++;
                 }
                 else
@@ -595,7 +604,7 @@ public class GameManagerScript : MonoBehaviour
                     stringToPush += "<b>Playtester " + score + "</b>\n";
                     while (i < 4)
                     {
-                        stringToPush += duckNames[i] + " " + duckScores[i] + "\n";
+                        stringToPush += "<color=#DEDEDE>" + duckNames[i] + " " + duckScores[i] + "</color>\n";
                         i++;
                     }
                 }
@@ -617,6 +626,8 @@ public class GameManagerScript : MonoBehaviour
         return;
     }
 
+    
+
     //Function called by the AppScript when the EMP happens.
     public void StartEMP()
     {
@@ -631,6 +642,13 @@ public class GameManagerScript : MonoBehaviour
         UpdateNotifications();
 
 
+
+    }
+
+    public void StartCredits()
+    {
+        //Use the same technology as the emp boot up stuff to create the credits
+        StartCoroutine(CreditsCoroutine(creditsText));
 
     }
 
@@ -700,6 +718,44 @@ public class GameManagerScript : MonoBehaviour
         ShowMinigameNotif();
 
         UIController.GetComponent<ComputerUIScript>().GoToPosition(new Vector3(0, 0, -10));
+
+    }
+
+    //Used by the bios to incrementally display text (to EMP Text object)
+    IEnumerator CreditsCoroutine(string display)
+    {
+
+        //SETUP
+
+        yield return new WaitForSeconds(2);
+        float between = 0.005f; //time between characters appearing
+        string toDisplay = "";
+        int len = (int)display.Length;
+        CreditText.SetText("");
+
+        //cut to the actual credits screen
+        UIController.GetComponent<ComputerUIScript>().GoToPosition(creditsLocation);
+
+
+        yield return new WaitForSeconds(3f); //wait and let the sound finish playing
+
+        MusicPlayer.clip = creditsTrack;
+        MusicPlayer.Play();
+
+
+        //display the text
+        for (int i = 0; i < len;)
+        {
+
+            //display next char
+            toDisplay += display[i];
+            CreditText.SetText(toDisplay);
+            i++;
+            yield return new WaitForSeconds(between);
+
+
+        }
+
 
     }
 
@@ -857,10 +913,10 @@ public class GameManagerScript : MonoBehaviour
                 ValDate.SetText(currDate);
 
 
-                string cleeTitle = "Interview With Kathy, Who’s More Than Just Pixels and Numbers";
+                string cleeTitle = "Interview With Nuli Orfand";
                 CleeTitle.SetText(cleeTitle);
                 CleeArticleTitle.SetText(cleeTitle);
-                CleeText1.SetText("Clee: “How have you been affected by recent events? \r\n\r\nKathy, 20: “Lost my parents. And my brother.” \r\n\r\nClee: “Oh. Sorry. Uh, you don’t have to answer, but how did they…?”\r\n\r\nKathy: “Bombs. From the sky. Like out of nowhere. Like- like-”\r\n\r\nClee: “I suck at hugging, but… come here. Oof! Okay, oh. Let it out.” \r\n\r\nKathy: “I don’t even care who caused it, you know? I’m so sick of these damn wars. So sick of our lives trivialized. Those digital weapons make us look like - like pixels on a screen. Not people with lives. My mom loves - loved plants. My dad would try his best to water them when she’s away but they’d die and she’d just laugh instead of being mad. My brother sent me cat memes. I think of him every time I see a cat. And now-”\r\n\r\nClee: “...”\r\n\r\nKathy: “Can pixels fail miserably at watering plants? Can they laugh lovingly at their husbands? Can they find funny cat memes and send them to their sisters? My family is gone. Why? Just- shiffin’- pixels! We’re just pixels and numbers to them. Pixels and numbers.”\r\n");
+                CleeText1.SetText("Clee: “How have you been affected by recent events? \r\n\r\nNuli, 20: “Lost my parents. And my brother.” \r\n\r\nClee: “Oh. Sorry. Uh, you don’t have to answer, but how did they…?”\r\n\r\nNuli: “Bombs. From the sky. Like out of nowhere. Like- like-”\r\n\r\nClee: “I suck at hugging, but… come here. Oof! Okay, oh. Let it out.” \r\n\r\nNuli: “I don’t even care who caused it, you know? I’m so sick of these damn wars. So sick of our lives trivialized. Those digital weapons make us look like - like pixels on a screen. Not people with lives. My mom loves - loved plants. My dad would try his best to water them when she’s away but they’d die and she’d just laugh instead of being mad. My brother sent me cat memes. I think of him every time I see a cat. And now-”\r\n\r\nClee: “...”\r\n\r\nNuli: “Can pixels fail miserably at watering plants? Can they laugh lovingly at their husbands? Can they find funny cat memes and send them to their sisters? My family is gone. Why? Just- shiffin’- pixels! We’re just pixels and numbers to them. Pixels and numbers.”\r\n");
                 CleeDate.SetText(currDate);
 
             }

@@ -26,6 +26,7 @@ public class complicitPlayer : MonoBehaviour
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             crosshairSprite.transform.position = mousePos;
 
+            
             if (Input.GetMouseButtonDown(0)) // Left click
             {
                 if (hasShot) {
@@ -35,12 +36,15 @@ public class complicitPlayer : MonoBehaviour
                 }
 
                 hasShot = false;
+
+                complicitManager.shotAudio();
                 //sfx.clip = shootSFX;
                 //sfx.Play();
                 //duckGameManager.audioSources[2].Play();
                 
-                
+               
             }
+            
 
         }
 
@@ -74,4 +78,5 @@ public class complicitPlayer : MonoBehaviour
             
         }
     }
+    
 }
