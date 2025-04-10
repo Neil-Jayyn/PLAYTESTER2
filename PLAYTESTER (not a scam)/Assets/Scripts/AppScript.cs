@@ -46,7 +46,7 @@ public class AppScript : MonoBehaviour
     private GameObject newsNotif;
 
     //Used to control ui glitches
-    private bool glitching = false;
+    //private bool glitching = false;
     
 
 
@@ -107,6 +107,8 @@ public class AppScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        /*
         if(isClockOutButton && glitching)
         {
             AnalogGlitchEffect.colorDrift = Random.Range(0f, 0.15f);
@@ -115,6 +117,7 @@ public class AppScript : MonoBehaviour
         {
             AnalogGlitchEffect.colorDrift = 0f;
         }
+        */
     }
 
     void OnMouseOver()
@@ -228,7 +231,7 @@ public class AppScript : MonoBehaviour
                             //UIController.GetComponent<ComputerUIScript>().GoToPosition(rebellionEndingLocation);
                             //UIController.GetComponent<ComputerUIScript>().GoToPosition(rebellionEndingLocation);
                             StartCoroutine(RebellionEnding());
-                            glitching = false;
+                            //glitching = false;
                             break;
                         case 1:
                             GameManager.GetComponent<GameManagerScript>().PlayConfusionMusic();
@@ -401,6 +404,8 @@ public class AppScript : MonoBehaviour
 
     IEnumerator RebellionEnding()
     {
+        GameManager.GetComponent<GameManagerScript>().PlayRebellionMusic();
+
         GameObject hpBarImage = GameObject.Find("Ending HP Bar Image");
         GameObject newsImage = GameObject.Find("Ending News Image");
         GameObject droneImage = GameObject.Find("Ending Drone Sprite");
@@ -521,18 +526,20 @@ public class AppScript : MonoBehaviour
         hpBarImage.transform.position = hidePos;
 
         // [single center square, glitch effect]
-        glitching = true;
+        //glitching = true;
         DisplayRebelText("We… cannot help but wonder. Are we any different? <i>Could</i> we be any different? Us, and you, and <i>we</i>?\r\n");
         yield return new WaitForSeconds(1);
-        glitching = false;
+        //glitching = false;
         yield return new WaitForSeconds(1);
-        glitching = true;
+        //glitching = true;
         yield return new WaitForSeconds(1);
-        glitching = false;
+        //glitching = false;
         yield return new WaitForSeconds(2);
 
 
         DisplayRebelText("You died for what you believed in.\r\n\r\nWill you do it again?\r\n");
+        
+        RollCredits();
         yield return null;
     }
 
@@ -621,6 +628,7 @@ public class AppScript : MonoBehaviour
 
     IEnumerator ConfusionEnding()
     {
+        GameManager.GetComponent<GameManagerScript>().PlayConfusionMusic();
 
         yield return new WaitForSeconds(0.5f);
         UIController.GetComponent<ComputerUIScript>().GoToPosition(confusionEndingLocation);

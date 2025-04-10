@@ -65,6 +65,8 @@ public class ComplicitEndingManager : MonoBehaviour
         gameOver = false;
         isTutorialPlaying = true;
 
+        GameObject.Find("Game Manager").GetComponent<GameManagerScript>().PlayComplicitMinigameTheme();
+
         //trigger tutorial popup
         UIController.TriggerPopup(complicitEndingLocation, "You know what to do.");
     }

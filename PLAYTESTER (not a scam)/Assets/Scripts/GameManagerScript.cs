@@ -201,7 +201,6 @@ public class GameManagerScript : MonoBehaviour
                 }
             }
 
-
         }
 
         if (minigamesPlayed == 2 && !duckGameManager.gameOver && duckGameManager.isGlitch)
@@ -648,6 +647,9 @@ public class GameManagerScript : MonoBehaviour
     public void StartCredits()
     {
         //Use the same technology as the emp boot up stuff to create the credits
+        MusicPlayer.clip = creditsTrack;
+        MusicPlayer.Play();
+
         StartCoroutine(CreditsCoroutine(creditsText));
 
     }
@@ -825,7 +827,7 @@ public class GameManagerScript : MonoBehaviour
         else if(day == 2 && !EMPHappened)
         {
             //regular day 2 message
-            UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(companyPopupLocation, "You are doing well. Keep playing to the best of your ability. We are getting good data from you. Focus on your job. You will be rewarded.\r\n");
+            UIController.GetComponent<ComputerUIScript>().TriggerCompanyPopup(companyPopupLocation, "Keep playing to the best of your ability. We are getting good data from you. Focus on your job. You will be rewarded.\r\n");
 
         }
         else if(day == 2 && EMPHappened)

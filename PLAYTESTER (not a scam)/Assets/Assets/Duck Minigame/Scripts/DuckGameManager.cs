@@ -78,6 +78,9 @@ public class DuckGameManager : MonoBehaviour
         UIController = GameObject.Find("UI Controller").GetComponent<ComputerUIScript>();
         MainGameManager = GameObject.Find("Game Manager");
 
+        GlitchEffect = GameObject.Find("Main Camera").GetComponent<DigitalGlitch>();
+        AnalogGlitchEffect = GameObject.Find("Main Camera").GetComponent<AnalogGlitch>();
+
         // SFX
         audioSources = GetComponents<AudioSource>();
         audioSources[0].clip = normalSFX;

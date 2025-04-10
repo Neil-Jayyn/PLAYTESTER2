@@ -92,6 +92,10 @@ public class CupcakeGameManager : MonoBehaviour
         MainGameManager = GameObject.Find("Game Manager");
         sfx = GetComponent<AudioSource>();
 
+        //glitch
+        GlitchEffect = GameObject.Find("Main Camera").GetComponent<DigitalGlitch>();
+        AnalogGlitchEffect = GameObject.Find("Main Camera").GetComponent<AnalogGlitch>();
+
         //tutorial
         popup = GameObject.Find("Popup");
         popupHome = new Vector3(0, 10, 0);
@@ -107,6 +111,8 @@ public class CupcakeGameManager : MonoBehaviour
         droneAudioSource.mute = true;
         ovenAudioSource.loop = true;
         droneAudioSource.loop = true;
+
+
 
     }
 
@@ -140,7 +146,8 @@ public class CupcakeGameManager : MonoBehaviour
  
         } else if (timesPlayed == 2)
         {
-            tutorialPlaying=false;
+            InitializeCupcakeGame();
+            tutorialPlaying =false;
             glitchFrequency = 0.3f;
             freezeOverlay.SetActive(false);
             spawner1.SetNumOfEnemies(25);
@@ -148,6 +155,7 @@ public class CupcakeGameManager : MonoBehaviour
             
         } else // day 3; need a variable to determine which route to take
         {
+            InitializeCupcakeGame();
             glitchFrequency = 1f;
             tutorialPlaying=false;
             freezeOverlay.SetActive(false);
@@ -189,17 +197,14 @@ public class CupcakeGameManager : MonoBehaviour
         GameObject.Find("EnemySpawner (1)").GetComponent<EnemySpawner>().playCupcakeMinigame = true;
         GameObject.Find("cupcakeHolder").GetComponent<playerMovement>().playCupcakeMinigame = true;
         GameObject.Find("cupcakeHolder").GetComponent<Animator>().enabled = true;
-        if (glitchFrequency != 1)
-        {
-            StartCoroutine(GlitchCheckRoutine());
-        }
-        else {
-            GlitchesDayThree(); //glitches on day three are constant
-        }
+        
+
+        StartCoroutine(GlitchCheckRoutine());
+
         ovenAudioSource.mute = false;
         droneAudioSource.mute = false;
 
-        //GlitchesDayThree();
+        GlitchesDayThree();
 
 
 
@@ -391,6 +396,7 @@ public class CupcakeGameManager : MonoBehaviour
                 }
 
             }
+
         }
     }
 
@@ -431,12 +437,12 @@ public class CupcakeGameManager : MonoBehaviour
 
         //these calculation are from LILY, based on the high score I got of 17 (so let 16 be a very good score)
         score = points * -11;
-        score /= 16;
+        score /= 12;
         
         //dont let score go beyond -12 (max)
-        if (score < -12) 
+        if (score < -13) 
         {
-            score = -12;
+            score = -13;
         }
 
         return (int)score;
