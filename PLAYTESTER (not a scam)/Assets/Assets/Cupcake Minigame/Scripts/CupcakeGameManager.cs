@@ -52,6 +52,7 @@ public class CupcakeGameManager : MonoBehaviour
     public AudioClip sfxNormalYay;
     public AudioClip[] sfxGlitchedHit;
     public AudioClip[] sfxSpeedyHit;
+    public AudioSource bombAudioSource;
 
     //sfx oven ticks
     public Animator anim;
@@ -133,7 +134,7 @@ public class CupcakeGameManager : MonoBehaviour
         if (timesPlayed == 1)
         {
             tutorialPlaying = true;
-            glitchFrequency = 0.5f;  //CHANGE TO 0 LATER
+            glitchFrequency = 0.0f;  //CHANGE TO 0 LATER
             UIController.TriggerPopup(new Vector3(50, 50, -9.1f), "Use the left and right arrow keys to move and spacebar to drop.\r\nGive cupcakes to everyone!\r\n");
             freezeOverlay.SetActive(true);
  
@@ -399,6 +400,7 @@ public class CupcakeGameManager : MonoBehaviour
             int index = Random.Range(0, sfxGlitchedHit.Length);
             sfx.clip = sfxGlitchedHit[index];
             sfx.Play();
+            bombAudioSource.Play();
         }
         else { 
             sfx.clip = sfxNormalYay;

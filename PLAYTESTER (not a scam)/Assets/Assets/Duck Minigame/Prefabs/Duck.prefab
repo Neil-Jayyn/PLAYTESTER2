@@ -122,5 +122,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   duckPrefab: {fileID: 8164428300482638484}
-  duck: {fileID: 21300000, guid: b9a75a4f4a97ee248aa49d9fee47a97e, type: 3}
-  human: {fileID: 21300000, guid: 0f43490fb0758644895f99dcec7d5048, type: 3}
+  duck: {fileID: 21300000, guid: 3a3c50c17822d004dbd9409009d11e7a, type: 3}
+  human: {fileID: 21300000, guid: 959a5bba0bae78d4ab87620e1fc303eb, type: 3}
