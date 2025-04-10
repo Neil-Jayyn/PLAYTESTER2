@@ -12096,7 +12096,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc40184528b778c48a66479db104e644, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameDuration: 1
+  gameDuration: 40
   scoreText: {fileID: 320443653}
   scorePoints: 0
   timerText: {fileID: 1894740861}
@@ -23833,7 +23833,7 @@ MonoBehaviour:
   gameDur: 40
   isGlitch: 0
   randomValue: 0
-  GlitchEffect: {fileID: 0}
+  GlitchEffect: {fileID: 519420030}
   AnalogGlitchEffect: {fileID: 519420033}
   timerText: {fileID: 1396497652}
   popup: {fileID: 0}

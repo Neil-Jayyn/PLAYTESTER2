@@ -147,7 +147,7 @@ public class MinigameManager : MonoBehaviour
             glitchFreq = 1f;
             isTutorialPlaying = false;
             InitializeCoinrunnerGame();
-            glitchFreq=MainGameManager.GetComponent<GameManagerScript>().GlitchFreqFromEnding();
+           // glitchFreq=MainGameManager.GetComponent<GameManagerScript>().GlitchFreqFromEnding();
 
 
         }

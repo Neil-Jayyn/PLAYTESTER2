@@ -146,7 +146,7 @@ public class DuckGameManager : MonoBehaviour
            
             isTutorialPlaying = true;
             Debug.Log("first time playing");
-            glitchFreq = 0.2f;
+            glitchFreq = 0.0f;
             UIController.TriggerPopup(new Vector3(48f, 22.5f, -9.1f), "Use the mouse to aim and left click to shoot.Take down all the ducks!");
         } else if (timesPlayed == 2)
         {
@@ -156,8 +156,9 @@ public class DuckGameManager : MonoBehaviour
             
         } else // day 3; need a variable to determine which route to take
         {
+            glitchFreq = 1.0f;
             isTutorialPlaying = false;
-            glitchFreq=MainGameManager.GetComponent<GameManagerScript>().GlitchFreqFromEnding();
+          //  glitchFreq=MainGameManager.GetComponent<GameManagerScript>().GlitchFreqFromEnding();
             //GlitchFreqFromEnding();
             //InitializeDuckGame();
 

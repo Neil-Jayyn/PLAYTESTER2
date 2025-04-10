@@ -316,7 +316,7 @@ public class GameManagerScript : MonoBehaviour
     // Advances the minigame counter and changes the HP bar
     public void CompletedMinigame(int scoreChange)
     {
-        StartCredits();
+       // StartCredits();
 
         minigamesPlayed += 1;
 
