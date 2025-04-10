@@ -66,7 +66,7 @@ public class playerMovement : MonoBehaviour
             PlayerInput();
 
             //Drop sfx
-            SfxDropping(gameManager.isGlitch);
+            SfxDropping(gameManager.getIsGlitch());
 
             //Drone sfx if it is glitched
             gameManager.SfxDroneMoving();
@@ -120,13 +120,13 @@ public class playerMovement : MonoBehaviour
                     }
                 }
 
-            SfxDropping(gameManager.isGlitch);
+            SfxDropping(gameManager.getIsGlitch());
         }
     }
 
     void AnimationCheck() {
         anim.speed = reloadRate;
-        if (!gameManager.isGlitch)
+        if (!gameManager.getIsGlitch())
         {
             anim.SetBool("isGlitch", false);
             if (playCupcakeMinigame)

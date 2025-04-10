@@ -19,7 +19,7 @@ public class SpriteChanger : MonoBehaviour
     void Update()
     {
         SpriteRenderer spriteRenderer = cupcakePrefab.GetComponent<SpriteRenderer>();
-        if (GameManager.isGlitch)
+        if (GameManager.getIsGlitch())
         {
             spriteRenderer.sprite = bomb; // if glitching we want the sprite to be a bomb
         }

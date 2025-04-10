@@ -21,7 +21,7 @@ public class CupcakeGameManager : MonoBehaviour
     public bool gamePlaying;
     private bool tutorialPlaying;
 
-    private int timesPlayed;
+    public int timesPlayed;
 
     public ComputerUIScript UIController;
     GameObject MainGameManager;
@@ -34,7 +34,7 @@ public class CupcakeGameManager : MonoBehaviour
     public float glitchWaitTime = 1f;
     public float glitchFrequency; //
     public float glitchLength = 1f;
-    public bool isGlitch = false;
+    private bool isGlitch = false;
     public float randomValue = 0f;
 
     // Background variables
@@ -116,6 +116,11 @@ public class CupcakeGameManager : MonoBehaviour
 
     }
 
+    public bool getIsGlitch()
+    {
+        return isGlitch;
+    }
+
     //This is the function that will be called by the AppScript script. It should contain
     //everything needed to start the cupcake minigame
     public void StartCupcakeMinigame()
@@ -145,23 +150,25 @@ public class CupcakeGameManager : MonoBehaviour
             freezeOverlay.SetActive(true);
  
         } else if (timesPlayed == 2)
-        {
-            InitializeCupcakeGame();
+        {        
             tutorialPlaying =false;
             glitchFrequency = 0.3f;
+            glitchLength = 1;
             freezeOverlay.SetActive(false);
             spawner1.SetNumOfEnemies(25);
             spawner2.SetNumOfEnemies(20);
-            
+            InitializeCupcakeGame();
+
         } else // day 3; need a variable to determine which route to take
         {
-            InitializeCupcakeGame();
+            glitchLength = 2.0f;
             glitchFrequency = 1f;
             tutorialPlaying=false;
             freezeOverlay.SetActive(false);
             spawner1.SetNumOfEnemies(27);
             spawner2.SetNumOfEnemies(18);
-            glitchLength = 3.0f;
+            InitializeCupcakeGame();
+
 
         }
       
@@ -203,10 +210,6 @@ public class CupcakeGameManager : MonoBehaviour
 
         ovenAudioSource.mute = false;
         droneAudioSource.mute = false;
-
-        GlitchesDayThree();
-
-
 
     }
 
@@ -300,6 +303,8 @@ public class CupcakeGameManager : MonoBehaviour
         timerText.text = "Game Stop!";
         isGlitch = false;
         //Time.timeScale = 0f; // Stop everything
+        glitchLength = 0;
+        glitchFrequency = 0;
 
         //set the enemy spawners script to false
         GameObject.Find("EnemySpawner").GetComponent<EnemySpawner>().playCupcakeMinigame = false;

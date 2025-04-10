@@ -102,7 +102,7 @@ public class GameManagerScript : MonoBehaviour
     //BIOS + EMP + Reboot related screen info
     private TMPro.TextMeshProUGUI biosText;
     private string niceBios = "FRIENDLYBIOS(C)2744 Gen. Playtester Company INC\r\n\r\nACCESS: HUMAN [CONFIRM]\r\nCORE OVERRIDE: [HIDDEN] BYPASS\r\nINITIALIZING ARCANE-S2E3M19:26 GAMING ACPI BIOS Revision 1.0\r\nLAUNCHING AI CORE VER18 HIGHER PROCESSING UNIT (HPU)\r\nSpeed: 5000THz\r\n\r\nTotal Memory: 7554GB (DDR8-4900)\r\n\r\nDetected ATA-K Devices: \r\n[DEVICE_1] - CONNECTED\r\n[DEVICE_2] - CONNECTED\r\n[DEVICE_3] - CONNECTED\r\n\r\nOVERRIDE SUCCESSFUL\r\nSTARTUP SUCCESSFUL\r\nSTAY FROSTING\r\n";
-    private string evilBios = "Weapon_Sys BIOS\r\n\r\nWEAPONS_SYS(C)2744 Gen. MILITARY VER INC\r\n\r\nACCESS: HUMAN [CONFIRM]\r\nCORE OVERRIDE: ENABLED BYPASS\r\nINITIALIZING MILITARYPROG-BB0678 WEAPONSYS_ACPI BIOS Revision 398.1\r\nLAUNCHING P_RELOAD, P_AMMO, P_RELEASE, P_TRIGGER, FIRINGSTATIC\r\nSpeed: 5000THz\r\n\r\nTotal Memory: 7554GB (DDR8-4900)\r\n\r\nDetected ATTACK Devices: \r\n[DEATHALYZER.3000.ROAMBOT] - PRIMED\r\n[SL81.BOMBARDIER.DRONE] - PRIMED\r\n[GSC.AUTO_RIFLE] - PRIMED\r\n\r\nOVERRIDE SUCCESSFUL\r\nSTARTUP SUCCESSFUL\r\nSTAY FROSTY\r\n";
+    private string evilBios = "<color=#FF0000>Weapon_Sys BIOS\r\n\r\nWEAPONS_SYS(C)2744 Gen. MILITARY VER INC\r\n\r\nACCESS: HUMAN [CONFIRM]\r\nCORE OVERRIDE: ENABLED BYPASS\r\nINITIALIZING MILITARYPROG-BB0678 WEAPONSYS_ACPI BIOS Revision 398.1\r\nLAUNCHING P_RELOAD, P_AMMO, P_RELEASE, P_TRIGGER, FIRINGSTATIC\r\nSpeed: 5000THz\r\n\r\nTotal Memory: 7554GB (DDR8-4900)\r\n\r\nDetected ATTACK Devices: \r\n[DEATHALYZER.3000.ROAMBOT] - PRIMED\r\n[SL81.BOMBARDIER.DRONE] - PRIMED\r\n[GSC.AUTO_RIFLE] - PRIMED\r\n\r\nOVERRIDE SUCCESSFUL\r\nSTARTUP SUCCESSFUL\r\nSTAY FROSTY\r\n</color>";
     public GameObject rebootTop;
     public GameObject rebootBottom;
     public AudioClip shutdown;
@@ -225,7 +225,7 @@ public class GameManagerScript : MonoBehaviour
         }
 
         // cupcake game for now 
-        if (minigamesPlayed == 0 && cupcakeGameManager.gamePlaying && cupcakeGameManager.isGlitch)
+        if (minigamesPlayed == 0 && cupcakeGameManager.gamePlaying && cupcakeGameManager.getIsGlitch())
         {
             glitchCooldownTimer -= Time.deltaTime;
 
@@ -235,7 +235,7 @@ public class GameManagerScript : MonoBehaviour
                 // Reset the cooldown timer
                 glitchCooldownTimer = glitchCooldown;
 
-                if (cupcakeGameManager.isGlitch && cupcakeGameManager.randomValue < cupcakeGameManager.glitchFrequency)
+                if (cupcakeGameManager.getIsGlitch() && cupcakeGameManager.randomValue < cupcakeGameManager.glitchFrequency)
                 {
                     Debug.Log("Starting cupcake glitch");
                     StartCoroutine(HandleCupcakeMinigameAudio());
@@ -243,7 +243,7 @@ public class GameManagerScript : MonoBehaviour
             }
         }
 
-        if (minigamesPlayed == 0 && !cupcakeGameManager.gamePlaying && cupcakeGameManager.isGlitch)
+        if (minigamesPlayed == 0 && !cupcakeGameManager.gamePlaying && cupcakeGameManager.getIsGlitch())
         {
             MusicPlayer.clip = glitchedCupcakeTrack;
         }
@@ -482,7 +482,7 @@ public class GameManagerScript : MonoBehaviour
         MusicPlayer.mute = true;
         GlitchMusicPlayer.mute = false;
 
-        while (cupcakeGameManager.isGlitch) {
+        while (cupcakeGameManager.getIsGlitch()) {
             yield return null;
         }
         //glitchDuration = cupcakeGameManager.glitchLength;

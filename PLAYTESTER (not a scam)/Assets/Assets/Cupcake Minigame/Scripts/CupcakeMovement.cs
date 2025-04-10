@@ -37,7 +37,7 @@ public class CupcakeMovement : MonoBehaviour
         }
         if (collision.gameObject.tag == "Person")
         {
-            GameManager.SfxCupcakeHit(GameManager.isGlitch); //plays yay sfx through game manager
+            GameManager.SfxCupcakeHit(GameManager.getIsGlitch()); //plays yay sfx through game manager
             GameManager.AddPoints(1);
             
             //decrease total enemies on screen
@@ -47,7 +47,7 @@ public class CupcakeMovement : MonoBehaviour
         }
         if (collision.gameObject.tag == "SpeedyPerson")
         {
-            GameManager.SfxCupcakeHit(GameManager.isGlitch); //plays yay sfx through game manager
+            GameManager.SfxCupcakeHit(GameManager.getIsGlitch()); //plays yay sfx through game manager
             GameManager.AddPoints(3);
 
             //decrease total enemies on screen

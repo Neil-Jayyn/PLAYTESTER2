@@ -556,7 +556,7 @@ ScriptsOnlyBuild:
     className: ControlTrack
   - hash:
       serializedVersion: 2
-      Hash: 2ae8169dab52d2f8cf663ae28840fccc
+      Hash: c1756ac5a804c687646bda146c113933
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CupcakeGameManager

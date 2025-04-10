@@ -12102,13 +12102,13 @@ MonoBehaviour:
   timerText: {fileID: 1894740861}
   timeRemaining: 0
   gamePlaying: 0
+  timesPlayed: 0
   UIController: {fileID: 0}
   GlitchEffect: {fileID: 0}
   AnalogGlitchEffect: {fileID: 519420033}
   glitchWaitTime: 1
   glitchFrequency: 0.5
   glitchLength: 1
-  isGlitch: 0
   randomValue: 0
   bg: {fileID: 1250666813}
   bgNormal: {fileID: 21300000, guid: 7614f06594ba5f045916c1ee7ae71d88, type: 3}
